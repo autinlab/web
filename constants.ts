@@ -130,7 +130,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: 'Quentin Tallon, PhD',
     role: 'Postdoctoral Researcher',
     bio: 'Expert in AI, high-performance computing, and software engineering. Driving the development of next-generation molecular simulation tools and GPU acceleration.',
-    imageUrl: 'https://via.placeholder.com/400x400/1e293b/2dd4bf?text=QT' 
+    imageUrl: 'https://avatars.githubusercontent.com/u/44683759?v=4' 
   }
 ];
 

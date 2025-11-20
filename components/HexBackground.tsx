@@ -4,6 +4,7 @@ interface Ripple {
   x: number;
   y: number;
   startTime: number;
+  type: 'click' | 'move'; // Differentiate to make move ripples more subtle
 }
 
 const HexBackground: React.FC = () => {
@@ -11,6 +12,7 @@ const HexBackground: React.FC = () => {
   const requestRef = useRef<number>(0);
   const mouseRef = useRef({ x: 0, y: 0 });
   const ripplesRef = useRef<Ripple[]>([]);
+  const lastMoveRippleRef = useRef<number>(0);
 
   const hexRadius = 25;
   const hexHeight = hexRadius * 2;
@@ -32,10 +34,22 @@ const HexBackground: React.FC = () => {
 
     const handleMouseMove = (e: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
-      mouseRef.current = {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      };
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      mouseRef.current = { x, y };
+
+      // Add subtle ripple on move (throttled)
+      const now = performance.now();
+      if (now - lastMoveRippleRef.current > 100) { // Create a ripple every 100ms on move
+        ripplesRef.current.push({
+          x,
+          y,
+          startTime: now,
+          type: 'move'
+        });
+        lastMoveRippleRef.current = now;
+      }
     };
 
     const handleClick = (e: MouseEvent) => {
@@ -43,10 +57,9 @@ const HexBackground: React.FC = () => {
        ripplesRef.current.push({
          x: e.clientX - rect.left,
          y: e.clientY - rect.top,
-         startTime: performance.now()
+         startTime: performance.now(),
+         type: 'click'
        });
-       // Limit ripples
-       if (ripplesRef.current.length > 5) ripplesRef.current.shift();
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -76,8 +89,10 @@ const HexBackground: React.FC = () => {
       const baseColor = 'rgba(15, 23, 42, 1)'; // Match bg-slate-900
       const strokeColor = 'rgba(30, 41, 59, 0.5)'; // Slate-800
 
+      // Cleanup old ripples
+      ripplesRef.current = ripplesRef.current.filter(r => (time - r.startTime) < 2500);
+
       // Grid Loop
-      // Offset coordinate system
       const cols = Math.ceil(canvas.width / hexWidth) + 2;
       const rows = Math.ceil(canvas.height / vertDist) + 2;
 
@@ -96,30 +111,40 @@ const HexBackground: React.FC = () => {
             let scale = 0.9;
             let activeStroke = strokeColor;
 
-            // Mouse Interaction
+            // Mouse Glow Interaction
             if (dist < 150) {
                 const intensity = 1 - dist / 150;
-                // Glow cyan/teal
-                fillColor = `rgba(45, 212, 191, ${intensity * 0.15})`; 
-                scale = 0.9 + (intensity * 0.15);
-                activeStroke = `rgba(45, 212, 191, ${intensity * 0.5})`;
+                // Very subtle glow
+                fillColor = `rgba(45, 212, 191, ${intensity * 0.1})`; 
+                scale = 0.9 + (intensity * 0.1);
+                activeStroke = `rgba(45, 212, 191, ${intensity * 0.3})`;
             }
 
             // Ripple Interaction
             ripplesRef.current.forEach(ripple => {
                 const rTime = time - ripple.startTime;
-                const waveSpeed = 0.2; // pixels per ms
+                const waveSpeed = 0.15; // Slower speed
                 const waveRadius = rTime * waveSpeed;
-                const waveWidth = 100;
+                const waveWidth = ripple.type === 'click' ? 120 : 80; // Click ripples are wider
                 
                 const rDist = Math.sqrt(Math.pow(cx - ripple.x, 2) + Math.pow(cy - ripple.y, 2));
                 
                 if (Math.abs(rDist - waveRadius) < waveWidth) {
-                    const waveIntensity = (1 - Math.abs(rDist - waveRadius) / waveWidth) * Math.max(0, 1 - rTime / 2000);
+                    const distFactor = 1 - Math.abs(rDist - waveRadius) / waveWidth;
+                    const timeFactor = Math.max(0, 1 - rTime / 2000);
+                    let waveIntensity = distFactor * timeFactor;
+
+                    // Move ripples are much more subtle
+                    if (ripple.type === 'move') waveIntensity *= 0.3; 
+
                      if (waveIntensity > 0.01) {
-                         fillColor = `rgba(168, 85, 247, ${waveIntensity * 0.3})`; // Purple ripple
-                         activeStroke = `rgba(168, 85, 247, ${waveIntensity * 0.8})`;
-                         scale = Math.max(scale, 0.9 + waveIntensity * 0.3);
+                         // Blend purple
+                         const alpha = waveIntensity * (ripple.type === 'click' ? 0.3 : 0.15);
+                         const strokeAlpha = waveIntensity * (ripple.type === 'click' ? 0.6 : 0.3);
+                         
+                         fillColor = `rgba(168, 85, 247, ${alpha})`; 
+                         activeStroke = `rgba(168, 85, 247, ${strokeAlpha})`;
+                         scale = Math.max(scale, 0.9 + waveIntensity * 0.2);
                      }
                 }
             });
@@ -127,9 +152,6 @@ const HexBackground: React.FC = () => {
             drawHex(cx, cy, fillColor, activeStroke, scale);
         }
       }
-      
-      // Cleanup old ripples
-      ripplesRef.current = ripplesRef.current.filter(r => (time - r.startTime) < 2000);
 
       requestRef.current = requestAnimationFrame(animate);
     };
@@ -148,7 +170,7 @@ const HexBackground: React.FC = () => {
     <canvas 
         ref={canvasRef} 
         className="fixed top-0 left-0 w-full h-full -z-10 opacity-60 pointer-events-none" 
-        style={{ pointerEvents: 'none' }} // Allow clicks to pass through for logical clicks, but we attach listener to window
+        style={{ pointerEvents: 'none' }} 
     />
   );
 };
