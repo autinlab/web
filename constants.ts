@@ -35,7 +35,7 @@ export const AFFILIATIONS: Affiliation[] = [
     name: 'Scripps Research',
     url: 'https://www.scripps.edu/',
     role: 'Home Institution',
-    logo: 'https://www.scripps.edu/_resources/images/scripps_research_logo_blue.svg' 
+    logo: 'assets/logo_scripps.png' 
   },
   {
     id: 'nih',

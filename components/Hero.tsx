@@ -59,7 +59,7 @@ const Hero: React.FC = () => {
         </h1>
         
         <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light">
-          We build advanced visualization tools and integrative models to reveal the invisible molecular machinery of life.
+          Welcome to LUDO's LAB at Scripps Research. We build the next generation of tools to model, simulate, and paint the molecular world. From CellPack to Mesoscope.
         </p>
 
         <a 

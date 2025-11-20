@@ -1,7 +1,12 @@
+
 import React, { useState, useEffect } from 'react';
 import { NAV_ITEMS } from '../constants';
 
-const Navbar: React.FC = () => {
+interface NavbarProps {
+  onContactClick: () => void;
+}
+
+const Navbar: React.FC<NavbarProps> = ({ onContactClick }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
@@ -64,6 +69,13 @@ const Navbar: React.FC = () => {
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-science-teal transition-all group-hover:w-full"></span>
             </a>
           ))}
+          
+          <button
+            onClick={onContactClick}
+            className="px-5 py-2 rounded-full border border-science-purple text-science-purple hover:bg-science-purple hover:text-white transition-all text-sm uppercase tracking-widest font-medium ml-4"
+          >
+            Contact
+          </button>
         </div>
       </div>
     </nav>
