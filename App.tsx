@@ -9,14 +9,19 @@ import TeamSection from './components/TeamSection';
 import PublicationsSection from './components/PublicationsSection';
 import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
+import HistoryModal from './components/HistoryModal';
 
 const App: React.FC = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
 
   return (
     <div className="font-sans text-slate-200 antialiased min-h-screen flex flex-col">
       <HexBackground />
-      <Navbar onContactClick={() => setIsContactOpen(true)} />
+      <Navbar 
+        onContactClick={() => setIsContactOpen(true)} 
+        onHistoryClick={() => setIsHistoryOpen(true)}
+      />
       
       <main className="flex-grow">
         <Hero />
@@ -31,6 +36,11 @@ const App: React.FC = () => {
       <ContactModal 
         isOpen={isContactOpen} 
         onClose={() => setIsContactOpen(false)} 
+      />
+      
+      <HistoryModal
+        isOpen={isHistoryOpen}
+        onClose={() => setIsHistoryOpen(false)}
       />
     </div>
   );

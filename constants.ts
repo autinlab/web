@@ -4,6 +4,7 @@ import { TeamMember, NavItem, Publication, ResearchArea, Software, SoftwareType,
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Research', href: '#research' },
   { label: 'Software', href: '#software' },
+  { label: 'History', href: '#history' },
   { label: 'Team', href: '#team' },
   { label: 'Publications', href: '#publications' },
 ];
@@ -78,7 +79,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     description: 'A unified tool for exploring and visualizing mesoscale biological models, built on the high-performance Mol* framework.',
     type: SoftwareType.WEB_APP,
     url: 'https://molstar.org/me/',
-    embedUrl: 'https://molstar.org/me/',
+    embedUrl: 'https://molstar.org/me/viewer/?example=cellpack-hiv-tour&hide-controls=1', 
     imageUrl: 'https://molstar.org/me/img/me.png', 
     features: ['Mol* Core', 'Mesoscale', 'Interactive', 'High Performance']
   },
@@ -109,7 +110,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     description: 'embedded Python Molecular Viewer. The bridge between state-of-the-art scientific simulation and professional 3D animation software like Blender, Maya, and Cinema 4D.',
     type: SoftwareType.LIBRARY,
     url: 'https://epmv.scripps.edu',
-    imageUrl: 'https://lh3.googleusercontent.com/sitesv/AAzXCkeYRbfilKCPrXHuWTT7fUhAusvFLtWcCaa5cGaskNpceExaGFL2_XkZVUuCiz93sYit4vhEc8WSJ3bPLKjrCx5IwpTDcQOBtL3A1gp8OEh3vf71g7kzMnEpghVdbc-n6FWKfYM-UzkNs8WIpqqilXAfMeUDEgDQsUNGnNCHwrhuY7KoZAf1RK3NbF1QBlHVJ7rX6w8QFWTuL7I=w1280',
+    imageUrl: 'https://cdn.ncbi.nlm.nih.gov/pmc/blobs/1163/3101797/f283cf010f86/nihms283232f6.jpg',
     features: ['Blender/Maya/C4D', 'High-end Rendering', 'Molecular Graphics', 'Python API'],
     buttonLabel: 'View Site'
   },

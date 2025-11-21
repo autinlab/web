@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { TEAM_MEMBERS } from '../constants';
 
@@ -51,6 +52,24 @@ const TeamSection: React.FC = () => {
               )}
             </div>
           ))}
+
+          {/* Recruitment Card */}
+          <a href="mailto:autin@scripps.edu" className="flex flex-col items-center text-center max-w-sm group cursor-pointer">
+            <div className="w-48 h-48 rounded-full p-1 bg-gradient-to-tr from-slate-700 to-slate-600 mb-6 shadow-lg group-hover:shadow-science-teal/40 transition-all relative">
+              <div className="w-full h-full rounded-full overflow-hidden bg-slate-800 border-4 border-dashed border-slate-600 group-hover:border-science-teal transition-colors flex items-center justify-center">
+                  <span className="text-7xl font-display font-bold text-slate-600 group-hover:text-science-teal transition-colors">?</span>
+              </div>
+            </div>
+            <h3 className="text-xl font-bold text-white mb-1 group-hover:text-science-teal transition-colors">Next?</h3>
+            <p className="text-slate-500 group-hover:text-science-teal text-sm font-medium uppercase tracking-wider mb-4 transition-colors">Future Lab Member</p>
+            <p className="text-slate-400 text-sm leading-relaxed mb-4 px-4 group-hover:text-white transition-colors">
+               That could be you! We are always looking for passionate minds to join our mission in painting the molecular world.
+            </p>
+             <div className="mt-2 text-science-teal text-sm font-bold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                Join the Lab <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+            </div>
+          </a>
+
         </div>
       </div>
     </section>
