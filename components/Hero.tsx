@@ -59,7 +59,7 @@ const Hero: React.FC = () => {
         </h1>
         
         <p className="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto mb-12 font-light">
-          Welcome to LUDO's LAB at Scripps Research. We build the next generation of tools to model, simulate, and paint the molecular world. From CellPack to Mesoscope.
+          Welcome to LUDO's LAB at <a href="http://scripps.edu/" target="_blank" rel="noopener noreferrer">Scripps Research</a>. One of the members of the <a href="http://ccsb.scripps.edu/" target="_blank" rel="noopener noreferrer">Center for Computational Structural Biology (CCSB)</a>, we build the next generation of tools to model, simulate, and paint the molecular world. From CellPack to Mesoscope.
         </p>
 
         <a 
