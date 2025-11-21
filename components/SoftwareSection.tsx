@@ -129,7 +129,7 @@ const SoftwareCard: React.FC<{ tool: Software; onPreview: (tool: Software) => vo
             rel="noreferrer"
             className="flex-grow inline-flex justify-center items-center gap-2 bg-slate-700 hover:bg-science-purple text-white py-3 rounded-xl transition-colors font-medium"
             >
-            {tool.type === SoftwareType.LIBRARY ? 'View Repository' : 'Open Tool'}
+            {tool.buttonLabel ? tool.buttonLabel : (tool.type === SoftwareType.LIBRARY ? 'View Repository' : 'Open Tool')}
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
             </a>
 

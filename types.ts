@@ -22,6 +22,7 @@ export interface Software {
   imageUrl: string;
   features: string[];
   githubUrl?: string; // Optional GitHub repository link
+  buttonLabel?: string; // Optional custom label for the primary button
 }
 
 export interface TeamMember {

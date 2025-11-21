@@ -54,37 +54,6 @@ export const AFFILIATIONS: Affiliation[] = [
 
 export const SOFTWARE_TOOLS: Software[] = [
   {
-    id: 'mesoscale-explorer',
-    name: 'Mesoscale Explorer',
-    description: 'A unified tool for exploring and visualizing mesoscale biological models, built on the high-performance Mol* framework.',
-    type: SoftwareType.WEB_APP,
-    url: 'https://molstar.org/me/',
-    embedUrl: 'https://molstar.org/me/',
-    imageUrl: 'https://molstar.org/me/img/me.png', 
-    features: ['Mol* Core', 'Mesoscale', 'Interactive', 'High Performance']
-  },
-  {
-    id: 'cellpaint',
-    name: 'CellPaint',
-    description: 'A digital painting tool for creating molecular landscapes. Paint with proteins, lipids, and DNA to create scientifically accurate illustrations of cellular environments directly in your browser.',
-    type: SoftwareType.WEB_APP,
-    url: 'https://mesoscope.scripps.edu/beta/cellPAINT_dev/',
-    embedUrl: 'https://mesoscope.scripps.edu/beta/cellPAINT_dev/',
-    imageUrl: 'https://ccsb.scripps.edu/cellpaint/wp-content/uploads/sites/30/2021/04/Frontiers_CellPAINT-800x617.jpg', 
-    features: ['Brush-based modeling', 'Real-time rendering', 'PDB integration', 'Interactive Painting']
-  },
-  {
-    id: 'illustrate',
-    name: 'Illustrate',
-    description: 'Web application for non-photorealistic rendering of biomolecules. Turn complex PDB structures into clear, publication-ready diagrams with custom shaders and outlines.',
-    type: SoftwareType.WEB_APP,
-    url: 'https://mesoscope.scripps.edu/beta/illustrate.html',
-    embedUrl: 'https://mesoscope.scripps.edu/beta/illustrate.html',
-    imageUrl: 'https://ccsb.scripps.edu/illustrate/wp-content/uploads/sites/35/2019/04/1ttt-400x630.jpg',
-    features: ['NPR Rendering', 'Outline generation', 'Ambient occlusion', 'Custom shaders'],
-    githubUrl: 'https://github.com/ccsb-scripps/Illustrate'
-  },
-  {
     id: 'mesoscope',
     name: 'Mesoscope',
     description: 'A web-based explorer for mesoscale biological models. Dive into HIV, Influenza, and blood plasma models directly in your browser.',
@@ -102,6 +71,47 @@ export const SOFTWARE_TOOLS: Software[] = [
     url: 'https://github.com/mesoscope/cellPACK',
     imageUrl: 'https://ccsb.scripps.edu/wp-content/uploads/2021/12/3layers_horizontal_dsgpalette_green_membrane-1200x1164.jpg',
     features: ['CUDA acceleration', 'Mesoscopic scale', 'Python API']
+  },
+  {
+    id: 'mesoscale-explorer',
+    name: 'Mesoscale Explorer',
+    description: 'A unified tool for exploring and visualizing mesoscale biological models, built on the high-performance Mol* framework.',
+    type: SoftwareType.WEB_APP,
+    url: 'https://molstar.org/me/',
+    embedUrl: 'https://molstar.org/me/',
+    imageUrl: 'https://molstar.org/me/img/me.png', 
+    features: ['Mol* Core', 'Mesoscale', 'Interactive', 'High Performance']
+  },
+  {
+    id: 'illustrate',
+    name: 'Illustrate',
+    description: 'Web application for non-photorealistic rendering of biomolecules. Turn complex PDB structures into clear, publication-ready diagrams with custom shaders and outlines.',
+    type: SoftwareType.WEB_APP,
+    url: 'https://mesoscope.scripps.edu/beta/illustrate.html',
+    embedUrl: 'https://mesoscope.scripps.edu/beta/illustrate.html',
+    imageUrl: 'https://ccsb.scripps.edu/illustrate/wp-content/uploads/sites/35/2019/04/1ttt-400x630.jpg',
+    features: ['NPR Rendering', 'Outline generation', 'Ambient occlusion', 'Custom shaders'],
+    githubUrl: 'https://github.com/ccsb-scripps/Illustrate'
+  },
+  {
+    id: 'cellpaint',
+    name: 'CellPaint',
+    description: 'A digital painting tool for creating molecular landscapes. Paint with proteins, lipids, and DNA to create scientifically accurate illustrations of cellular environments directly in your browser.',
+    type: SoftwareType.WEB_APP,
+    url: 'https://mesoscope.scripps.edu/beta/cellPAINT_dev/',
+    embedUrl: 'https://mesoscope.scripps.edu/beta/cellPAINT_dev/',
+    imageUrl: 'https://ccsb.scripps.edu/cellpaint/wp-content/uploads/sites/30/2021/04/Frontiers_CellPAINT-800x617.jpg', 
+    features: ['Brush-based modeling', 'Real-time rendering', 'PDB integration', 'Interactive Painting']
+  },
+  {
+    id: 'epmv',
+    name: 'ePMV',
+    description: 'embedded Python Molecular Viewer. The bridge between state-of-the-art scientific simulation and professional 3D animation software like Blender, Maya, and Cinema 4D.',
+    type: SoftwareType.LIBRARY,
+    url: 'https://epmv.scripps.edu',
+    imageUrl: 'https://lh3.googleusercontent.com/sitesv/AAzXCkeYRbfilKCPrXHuWTT7fUhAusvFLtWcCaa5cGaskNpceExaGFL2_XkZVUuCiz93sYit4vhEc8WSJ3bPLKjrCx5IwpTDcQOBtL3A1gp8OEh3vf71g7kzMnEpghVdbc-n6FWKfYM-UzkNs8WIpqqilXAfMeUDEgDQsUNGnNCHwrhuY7KoZAf1RK3NbF1QBlHVJ7rX6w8QFWTuL7I=w1280',
+    features: ['Blender/Maya/C4D', 'High-end Rendering', 'Molecular Graphics', 'Python API'],
+    buttonLabel: 'View Site'
   },
   {
     id: 'virus-lesson',
