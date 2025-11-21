@@ -130,7 +130,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     id: 'quentin',
     name: 'Quentin Tallon, PhD',
     role: 'Postdoctoral Researcher',
-    bio: 'Expert in AI, high-performance computing, and software engineering. Driving the development of next-generation molecular simulation tools and GPU acceleration.',
+    bio: 'Expert in AI, high-performance computing, and software engineering.',
     imageUrl: 'https://media.licdn.com/dms/image/v2/D4D03AQGhDe3fPg-o9w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1636013234417?e=1765411200&v=beta&t=ZkVhZpMeJ-eHJ_vaMWn1KtTqtlSH6apbLLlzPn7F5kU',
     links: {
       github: 'https://github.com/quental96'
