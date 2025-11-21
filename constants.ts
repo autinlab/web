@@ -47,7 +47,7 @@ export const AFFILIATIONS: Affiliation[] = [
   {
     id: 'bhive',
     name: 'BHIVE Center',
-    url: 'http://www.hivecenter.net', 
+    url: 'https://www.hivecenter.net', 
     role: 'Collaborative Center'
   }
 ];
