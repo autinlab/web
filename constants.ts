@@ -81,7 +81,8 @@ export const SOFTWARE_TOOLS: Software[] = [
     url: 'https://mesoscope.scripps.edu/beta/illustrate.html',
     embedUrl: 'https://mesoscope.scripps.edu/beta/illustrate.html',
     imageUrl: 'https://ccsb.scripps.edu/illustrate/wp-content/uploads/sites/35/2019/04/1ttt-400x630.jpg',
-    features: ['NPR Rendering', 'Outline generation', 'Ambient occlusion', 'Custom shaders']
+    features: ['NPR Rendering', 'Outline generation', 'Ambient occlusion', 'Custom shaders'],
+    githubUrl: 'https://github.com/ccsb-scripps/Illustrate'
   },
   {
     id: 'mesoscope',
@@ -118,7 +119,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     id: 'ludo',
     name: 'Ludovic Autin, PhD',
     role: 'Institute Investigator',
-    bio: 'Principal Investigator specializing in integrative structural modeling and visualization. The mind behind CellPack and Mesoscope, creating bridges between biological data and 3D graphics.',
+    bio: 'Principal Investigator specializing in integrative structural modeling and visualization. The mind behind Mesoscope, creating bridges between biological data and 3D graphics.',
     imageUrl: 'https://ccsb.scripps.edu/wp-content/uploads/2025/03/LudovicAutin-200x271.png', 
     links: {
       scholar: 'https://scholar.google.com/citations?user=LQzd0s4AAAAJ&hl=en&oi=ao',
@@ -130,7 +131,10 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: 'Quentin Tallon, PhD',
     role: 'Postdoctoral Researcher',
     bio: 'Expert in AI, high-performance computing, and software engineering. Driving the development of next-generation molecular simulation tools and GPU acceleration.',
-    imageUrl: 'https://media.licdn.com/dms/image/v2/D4D03AQGhDe3fPg-o9w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1636013234417?e=1765411200&v=beta&t=ZkVhZpMeJ-eHJ_vaMWn1KtTqtlSH6apbLLlzPn7F5kU' 
+    imageUrl: 'https://media.licdn.com/dms/image/v2/D4D03AQGhDe3fPg-o9w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1636013234417?e=1765411200&v=beta&t=ZkVhZpMeJ-eHJ_vaMWn1KtTqtlSH6apbLLlzPn7F5kU',
+    links: {
+      github: 'https://github.com/quental96'
+    }
   }
 ];
 
@@ -156,7 +160,7 @@ export const PUBLICATIONS: Publication[] = [
     pages: 'e11',
     year: 2022,
     publisher: 'Cambridge University Press',
-    link: 'https://doi.org/10.1017/qrd.2022.9'
+    link: 'https://doi.org/10.1017/qrd.2022.10'
   },
   {
     id: 'mycoplasma-2022',
@@ -188,7 +192,7 @@ export const PUBLICATIONS: Publication[] = [
     journal: 'MolVa: Workshop on Molecular Graphics and Visual Analysis of Molecular Data 2020',
     pages: '23',
     year: 2020,
-    link: 'https://doi.org/10.2312/molva.20201103'
+    link: 'https://doi.org/10.2312/molva.20201098'
   },
   {
     id: 'illustrate-2019',
@@ -200,6 +204,6 @@ export const PUBLICATIONS: Publication[] = [
     pages: '1716-1720. e1',
     year: 2019,
     publisher: 'Elsevier',
-    link: 'https://doi.org/10.1016/j.str.2019.09.001'
+    link: 'https://doi.org/10.1016/j.str.2019.08.011'
   }
 ];

@@ -21,6 +21,7 @@ export interface Software {
   embedUrl?: string;
   imageUrl: string;
   features: string[];
+  githubUrl?: string; // Optional GitHub repository link
 }
 
 export interface TeamMember {
