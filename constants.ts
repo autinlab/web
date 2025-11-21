@@ -47,7 +47,7 @@ export const AFFILIATIONS: Affiliation[] = [
   {
     id: 'bhive',
     name: 'BHIVE Center',
-    url: 'https://bhive.scripps.edu/', 
+    url: 'http://www.hivecenter.net', 
     role: 'Collaborative Center'
   }
 ];
@@ -60,7 +60,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     type: SoftwareType.WEB_APP,
     url: 'https://molstar.org/me/',
     embedUrl: 'https://molstar.org/me/',
-    imageUrl: 'https://molstar.org/img/viewer.jpg', 
+    imageUrl: 'https://molstar.org/me/img/me.png', 
     features: ['Mol* Core', 'Mesoscale', 'Interactive', 'High Performance']
   },
   {
@@ -70,7 +70,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     type: SoftwareType.WEB_APP,
     url: 'https://mesoscope.scripps.edu/beta/cellPAINT_dev/',
     embedUrl: 'https://mesoscope.scripps.edu/beta/cellPAINT_dev/',
-    imageUrl: 'https://mesoscope.scripps.edu/data/cellPAINT/cellpaint.jpg', 
+    imageUrl: 'https://ccsb.scripps.edu/cellpaint/wp-content/uploads/sites/30/2021/04/Frontiers_CellPAINT-800x617.jpg', 
     features: ['Brush-based modeling', 'Real-time rendering', 'PDB integration', 'Interactive Painting']
   },
   {
@@ -80,7 +80,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     type: SoftwareType.WEB_APP,
     url: 'https://mesoscope.scripps.edu/beta/illustrate.html',
     embedUrl: 'https://mesoscope.scripps.edu/beta/illustrate.html',
-    imageUrl: 'https://mesoscope.scripps.edu/data/illustrate/illustrate.jpg',
+    imageUrl: 'https://ccsb.scripps.edu/illustrate/wp-content/uploads/sites/35/2019/04/1ttt-400x630.jpg',
     features: ['NPR Rendering', 'Outline generation', 'Ambient occlusion', 'Custom shaders']
   },
   {
@@ -90,7 +90,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     type: SoftwareType.WEB_APP,
     url: 'https://mesoscope.scripps.edu/beta/',
     embedUrl: 'https://mesoscope.scripps.edu/beta/', 
-    imageUrl: 'https://mesoscope.scripps.edu/images/mesoscope_preview.jpg',
+    imageUrl: 'https://cdn.ncbi.nlm.nih.gov/pmc/blobs/f947/10624244/ac666dbcf8c2/nihms-1717637-f0001.jpg',
     features: ['WebGL visualization', 'Interactive annotations', 'Whole-cell models']
   },
   {
@@ -99,7 +99,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     description: 'High-performance algorithm for packing molecular structures into defined volumes using GPU acceleration. Essential for creating dense, realistic cytoplasmic models.',
     type: SoftwareType.LIBRARY,
     url: 'https://github.com/mesoscope/cellPACK',
-    imageUrl: 'https://media.springernature.com/full/springer-static/image/art%3A10.1038%2Fnmeth.3204/MediaObjects/41592_2015_Article_BFnmeth3204_Fig1_HTML.jpg',
+    imageUrl: 'https://ccsb.scripps.edu/wp-content/uploads/2021/12/3layers_horizontal_dsgpalette_green_membrane-1200x1164.jpg',
     features: ['CUDA acceleration', 'Mesoscopic scale', 'Python API']
   },
   {
@@ -108,7 +108,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     description: 'Interactive educational modules explaining viral structures, lifecycles, and vaccine mechanisms.',
     type: SoftwareType.EDUCATIONAL,
     url: 'https://mesoscope.scripps.edu/',
-    imageUrl: 'https://picsum.photos/seed/virus/400/300',
+    imageUrl: 'https://scontent-lax3-2.oculuscdn.com/v/t64.5771-25/491824583_3017757825060691_1670418159698158129_n.jpg?stp=dst-jpg_q92_s1440x1440_tt6&_nc_cat=103&ccb=1-7&_nc_sid=6e7a0a&_nc_ohc=bnmua9gwYXAQ7kNvwGwbHUH&_nc_oc=AdmweGsU-nbh88wVnTTs8qXd92tCrmSCE6Bo63ZagFabb6VCv5Ie2gh-XdqRsGSGQiU&_nc_zt=3&_nc_ht=scontent-lax3-2.oculuscdn.com&oh=00_Afid7dXw7cdxmv_UKgZclamQhaxeDvq0Lw0OPvSTfXWxig&oe=6925967E',
     features: ['Gamified learning', '3D exploration', 'Curriculum aligned']
   }
 ];
@@ -119,7 +119,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: 'Ludovic Autin, PhD',
     role: 'Institute Investigator',
     bio: 'Principal Investigator specializing in integrative structural modeling and visualization. The mind behind CellPack and Mesoscope, creating bridges between biological data and 3D graphics.',
-    imageUrl: 'https://avatars.githubusercontent.com/u/1666763?v=4', 
+    imageUrl: 'https://ccsb.scripps.edu/wp-content/uploads/2025/03/LudovicAutin-200x271.png', 
     links: {
       scholar: 'https://scholar.google.com/citations?user=LQzd0s4AAAAJ&hl=en&oi=ao',
       github: 'https://github.com/autinlab'
@@ -130,7 +130,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: 'Quentin Tallon, PhD',
     role: 'Postdoctoral Researcher',
     bio: 'Expert in AI, high-performance computing, and software engineering. Driving the development of next-generation molecular simulation tools and GPU acceleration.',
-    imageUrl: 'https://avatars.githubusercontent.com/u/44683759?v=4' 
+    imageUrl: 'https://media.licdn.com/dms/image/v2/D4D03AQGhDe3fPg-o9w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1636013234417?e=1765411200&v=beta&t=ZkVhZpMeJ-eHJ_vaMWn1KtTqtlSH6apbLLlzPn7F5kU' 
   }
 ];
 
