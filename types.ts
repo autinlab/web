@@ -64,3 +64,12 @@ export interface NavItem {
   label: string;
   href: string;
 }
+
+export interface IntegrativeModel {
+  id: string;
+  name: string;
+  description: string;
+  year?: string;
+  viewerUrl: string;
+  imageUrl?: string;
+}

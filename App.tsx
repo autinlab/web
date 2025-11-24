@@ -10,10 +10,12 @@ import PublicationsSection from './components/PublicationsSection';
 import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
 import HistoryModal from './components/HistoryModal';
+import ModelsModal from './components/ModelsModal';
 
 const App: React.FC = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isModelsOpen, setIsModelsOpen] = useState(false);
 
   return (
     <div className="font-sans text-slate-200 antialiased min-h-screen flex flex-col">
@@ -25,7 +27,7 @@ const App: React.FC = () => {
       
       <main className="flex-grow">
         <Hero />
-        <ResearchSection />
+        <ResearchSection onOpenModels={() => setIsModelsOpen(true)} />
         <SoftwareSection />
         <TeamSection />
         <PublicationsSection />
@@ -41,6 +43,11 @@ const App: React.FC = () => {
       <HistoryModal
         isOpen={isHistoryOpen}
         onClose={() => setIsHistoryOpen(false)}
+      />
+
+      <ModelsModal
+        isOpen={isModelsOpen}
+        onClose={() => setIsModelsOpen(false)}
       />
     </div>
   );

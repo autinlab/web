@@ -1,5 +1,5 @@
 
-import { TeamMember, NavItem, Publication, ResearchArea, Software, SoftwareType, Affiliation } from './types';
+import { TeamMember, NavItem, Publication, ResearchArea, Software, SoftwareType, Affiliation, IntegrativeModel } from './types';
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Research', href: '#research' },
@@ -217,4 +217,79 @@ export const PUBLICATIONS: Publication[] = [
     publisher: 'Elsevier',
     link: 'https://doi.org/10.1016/j.str.2019.08.011'
   }
+];
+
+export const INTEGRATIVE_MODELS: IntegrativeModel[] = [
+    {
+        id: 'hiv-2010',
+        name: 'HIV-1 in Blood Serum',
+        description: 'First generation integrative model of HIV-1 in blood serum environment.',
+        year: '2010',
+        viewerUrl: 'https://molstar.org/me/viewer/?example=cellpack-hiv1&hide-controls=1',
+        imageUrl: 'https://molstar.org/me/img/cellpack-hiv1.png'
+    },
+    {
+        id: 'hiv-2025',
+        name: 'HIV-1 Capsid',
+        description: 'Next-generation all-atom model of the HIV-1 capsid assembly.',
+        year: '2025',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'exosome',
+        name: 'Blood Plasma Exosome',
+        description: 'Structural model of an average blood plasma exosome.',
+        viewerUrl: 'https://molstar.org/me/viewer/?example=cellpack-exosome&hide-controls=1',
+        imageUrl: 'https://molstar.org/me/img/cellpack-exosome.png'
+    },
+    {
+        id: 'isg-mature',
+        name: 'Mature ISG',
+        description: 'Insulin Secretory Granule in its mature state.',
+        viewerUrl: 'https://molstar.org/me/viewer/?example=cellpack-isg_mature&hide-controls=1',
+        imageUrl: 'https://molstar.org/me/img/cellpack-isg_mature.png'
+    },
+    {
+        id: 'isg-immature',
+        name: 'Immature ISG',
+        description: 'Insulin Secretory Granule in its immature state during formation.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'mycoplasma',
+        name: 'Mycoplasma genitalium',
+        description: 'Whole-cell structural model of Mycoplasma genitalium.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'influenza',
+        name: 'Influenza A',
+        description: 'Structural organization of the Influenza A virion.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'nipah',
+        name: 'Nipah Virus',
+        description: 'Integrative model of the Nipah virus structure.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'sars-cov-2',
+        name: 'SARS-CoV-2',
+        description: 'Structural model of the SARS-CoV-2 virion.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'dyad',
+        name: 'Muscle Dyad',
+        description: 'Molecular architecture of the cardiac muscle dyad.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'machinery-life',
+        name: 'Machinery of Life',
+        description: 'Visualizing the central dogma and cellular machinery.',
+        viewerUrl: 'https://molstar.org/me/viewer/?example=machineryoflife&hide-controls=1',
+        imageUrl: 'https://molstar.org/me/img/cellpack-machinery.png'
+    }
 ];
