@@ -11,11 +11,13 @@ import Footer from './components/Footer';
 import ContactModal from './components/ContactModal';
 import HistoryModal from './components/HistoryModal';
 import ModelsModal from './components/ModelsModal';
+import InternPlannerModal from './components/InternPlannerModal';
 
 const App: React.FC = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isModelsOpen, setIsModelsOpen] = useState(false);
+  const [isInternPlannerOpen, setIsInternPlannerOpen] = useState(false);
 
   return (
     <div className="font-sans text-slate-200 antialiased min-h-screen flex flex-col">
@@ -29,7 +31,7 @@ const App: React.FC = () => {
         <Hero />
         <ResearchSection onOpenModels={() => setIsModelsOpen(true)} />
         <SoftwareSection />
-        <TeamSection />
+        <TeamSection onRecruitClick={() => setIsInternPlannerOpen(true)} />
         <PublicationsSection />
       </main>
       
@@ -48,6 +50,11 @@ const App: React.FC = () => {
       <ModelsModal
         isOpen={isModelsOpen}
         onClose={() => setIsModelsOpen(false)}
+      />
+
+      <InternPlannerModal
+        isOpen={isInternPlannerOpen}
+        onClose={() => setIsInternPlannerOpen(false)}
       />
     </div>
   );

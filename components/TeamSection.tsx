@@ -2,7 +2,11 @@
 import React from 'react';
 import { TEAM_MEMBERS } from '../constants';
 
-const TeamSection: React.FC = () => {
+interface TeamSectionProps {
+  onRecruitClick: () => void;
+}
+
+const TeamSection: React.FC<TeamSectionProps> = ({ onRecruitClick }) => {
   return (
     <section id="team" className="py-20 relative">
       <div className="container mx-auto px-6">
@@ -54,7 +58,12 @@ const TeamSection: React.FC = () => {
           ))}
 
           {/* Recruitment Card */}
-          <a href="mailto:autin@scripps.edu" className="flex flex-col items-center text-center max-w-sm group cursor-pointer">
+          <button
+            type="button"
+            onClick={onRecruitClick}
+            className="group flex max-w-sm cursor-pointer appearance-none flex-col items-center border-0 bg-transparent p-0 text-center"
+            aria-label="Open the Future Lab Member planner"
+          >
             <div className="w-48 h-48 rounded-full p-1 bg-gradient-to-tr from-slate-700 to-slate-600 mb-6 shadow-lg group-hover:shadow-science-teal/40 transition-all relative">
               <div className="w-full h-full rounded-full overflow-hidden bg-slate-800 border-4 border-dashed border-slate-600 group-hover:border-science-teal transition-colors flex items-center justify-center">
                   <span className="text-7xl font-display font-bold text-slate-600 group-hover:text-science-teal transition-colors">?</span>
@@ -66,9 +75,9 @@ const TeamSection: React.FC = () => {
                That could be you! We are always looking for passionate minds to join our mission in painting the molecular world.
             </p>
              <div className="mt-2 text-science-teal text-sm font-bold flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
-                Join the Lab <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                Open LabIntern <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
             </div>
-          </a>
+          </button>
 
         </div>
       </div>
