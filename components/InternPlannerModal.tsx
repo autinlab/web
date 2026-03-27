@@ -56,6 +56,8 @@ interface EmailDraft {
   body: string;
 }
 
+const GRAD_PROGRAM_URL = 'https://education.scripps.edu/graduate/about-the-graduate-school/';
+
 const plannerQuestions: PlannerQuestion[] = [
   {
     key: 'level',
@@ -64,7 +66,7 @@ const plannerQuestions: PlannerQuestion[] = [
     options: [
       { value: 'highschool', label: 'High School', hint: 'Short scope, visible outputs, lower technical risk' },
       { value: 'undergrad', label: 'Undergrad', hint: 'Moderate independence with coding or analysis' },
-      { value: 'grad', label: 'Graduate', hint: 'Higher autonomy and more technical depth' },
+      { value: 'grad', label: 'Graduate (PhD)', hint: 'PhD-track applicants should go through the Scripps Graduate School program' },
       { value: 'postdoc', label: 'Postdoc', hint: 'Independent researchers can still reach out even when funding is limited' },
     ],
   },
@@ -574,6 +576,12 @@ const InternPlannerModal: React.FC<InternPlannerModalProps> = ({ isOpen, onClose
   const [contactDraft, setContactDraft] = useState<ContactDraft>(initialContactDraft);
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'error'>('idle');
 
+  const resetPlannerState = () => {
+    setAnswers({});
+    setContactDraft(initialContactDraft);
+    setCopyState('idle');
+  };
+
   useEffect(() => {
     if (!isOpen) {
       return undefined;
@@ -594,9 +602,17 @@ const InternPlannerModal: React.FC<InternPlannerModalProps> = ({ isOpen, onClose
     };
   }, [isOpen, onClose]);
 
+  useEffect(() => {
+    if (!isOpen) {
+      resetPlannerState();
+    }
+  }, [isOpen]);
+
+  const isGradProgramPath = answers.level === 'grad';
   const isPostdocPath = answers.level === 'postdoc';
+  const isDirectPath = isGradProgramPath || isPostdocPath;
   const hasFullPlannerAnswers = plannerQuestions.every((question) => typeof answers[question.key] === 'string');
-  const completedAnswers = (!isPostdocPath && hasFullPlannerAnswers ? answers : null) as CompletedAnswers | null;
+  const completedAnswers = (!isDirectPath && hasFullPlannerAnswers ? answers : null) as CompletedAnswers | null;
 
   const ranking = useMemo(() => {
     if (!completedAnswers) {
@@ -635,7 +651,7 @@ const InternPlannerModal: React.FC<InternPlannerModalProps> = ({ isOpen, onClose
 
     window.setTimeout(() => {
       const nextQuestion = plannerQuestions[currentIndex + 1];
-      const nextElementId = key === 'level' && value === 'postdoc'
+      const nextElementId = key === 'level' && (value === 'postdoc' || value === 'grad')
         ? 'planner-results'
         : nextQuestion
           ? `planner-question-${nextQuestion.key}`
@@ -645,9 +661,7 @@ const InternPlannerModal: React.FC<InternPlannerModalProps> = ({ isOpen, onClose
   };
 
   const handleStartOver = () => {
-    setAnswers({});
-    setContactDraft(initialContactDraft);
-    setCopyState('idle');
+    resetPlannerState();
     window.setTimeout(() => {
       document.getElementById('planner-top')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }, 80);
@@ -672,7 +686,7 @@ const InternPlannerModal: React.FC<InternPlannerModalProps> = ({ isOpen, onClose
     setCopyState('idle');
   };
 
-  const visibleQuestions = isPostdocPath
+  const visibleQuestions = isDirectPath
     ? plannerQuestions.slice(0, 1)
     : plannerQuestions.filter((_, index) => index === 0 || answers[plannerQuestions[index - 1].key]);
   const mailtoLink = emailDraft
@@ -803,6 +817,68 @@ const InternPlannerModal: React.FC<InternPlannerModalProps> = ({ isOpen, onClose
                 </div>
               </section>
             ))}
+
+            {isGradProgramPath && (
+              <section
+                id="planner-results"
+                className="overflow-hidden rounded-[1.75rem] border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-6 md:p-8"
+              >
+                <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+                  <div>
+                    <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-science-purple/30 bg-science-purple/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-science-purple">
+                      PhD Route
+                    </div>
+                    <h3 className="font-display text-3xl font-bold text-white md:text-4xl">Graduate applicants should go through Scripps Graduate School</h3>
+                    <p className="mt-3 max-w-3xl text-sm leading-7 text-slate-300 md:text-base">
+                      This track is better treated as a PhD application rather than a short-term internship match. For four-year graduate training, the right entry point is the Scripps Graduate School program.
+                    </p>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleStartOver}
+                    className="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-950 px-5 py-3 text-sm font-semibold text-slate-300 transition-colors hover:border-science-teal hover:text-white"
+                  >
+                    Start over
+                  </button>
+                </div>
+
+                <div className="grid gap-6 md:grid-cols-[1.15fr_0.85fr]">
+                  <div className="rounded-[1.5rem] border border-slate-800 bg-slate-950/70 p-6">
+                    <h4 className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Next step</h4>
+                    <p className="mt-4 text-sm leading-7 text-slate-300 md:text-base">
+                      Review the graduate program details, admissions structure, and application path here:
+                    </p>
+                    <a
+                      href={GRAD_PROGRAM_URL}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-6 inline-flex items-center justify-center rounded-full bg-science-teal px-6 py-3 text-sm font-bold text-slate-950 transition-transform hover:scale-[1.02]"
+                    >
+                      Open Scripps Graduate School
+                    </a>
+                    <p className="mt-4 text-sm leading-7 text-slate-400">
+                      If someone is specifically interested in our lab, they can mention that in their graduate application materials and then reach out separately once they are in the proper admissions pipeline.
+                    </p>
+                  </div>
+
+                  <div className="rounded-[1.5rem] border border-slate-800 bg-slate-900/80 p-6">
+                    <h4 className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">Why this path</h4>
+                    <div className="mt-4 grid gap-3">
+                      <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-sm leading-6 text-slate-300">
+                        A PhD is a long-form training program, not a short-term intern-style placement.
+                      </div>
+                      <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-sm leading-6 text-slate-300">
+                        Admissions, rotations, and funding are handled through the graduate school structure.
+                      </div>
+                      <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-sm leading-6 text-slate-300">
+                        The LabIntern decision tree is better reserved for high school, undergraduate, and short research-placement cases.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+            )}
 
             {isPostdocPath && (
               <section
