@@ -1,0 +1,1 @@
+import{c as e,j as o,a as n,I as r}from"./InternPlannerModal-PG1Rk8hR.js";const t=document.getElementById("root");if(!t)throw new Error("Could not find root element to mount LabIntern");const s=e.createRoot(t);s.render(o.jsx(n.StrictMode,{children:o.jsx(r,{isOpen:!0,onClose:()=>{window.location.href="./"}})}));
