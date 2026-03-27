@@ -728,9 +728,9 @@ const InternPlannerModal: React.FC<InternPlannerModalProps> = ({ isOpen, onClose
         <div className="overflow-y-auto px-6 py-6 md:px-8 md:py-8">
           <div className="mb-8 grid gap-4 rounded-[1.75rem] border border-slate-800 bg-gradient-to-br from-slate-900 via-slate-900 to-slate-950 p-6 md:grid-cols-[1.4fr_0.9fr]">
             <div>
-              <h3 className="font-display text-2xl font-bold text-white">Use the same “Next?” entry point, but give it actual structure.</h3>
+              <h3 className="font-display text-2xl font-bold text-white">Find the right path into the lab.</h3>
               <p className="mt-3 max-w-2xl text-sm leading-7 text-slate-300 md:text-base">
-                This flow translates the LabIntern decision tree into the site, ranks feasible projects, and packages the output into a message you can review before sending.
+                This page helps prospective applicants understand which route fits best, from short-term internships to graduate or postdoctoral pathways, and gives each person a clearer next step before reaching out.
               </p>
             </div>
 
