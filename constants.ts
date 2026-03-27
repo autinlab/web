@@ -69,7 +69,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     name: 'CellPackGPU',
     description: 'High-performance algorithm for packing molecular structures into defined volumes using GPU acceleration. Essential for creating dense, realistic cytoplasmic models.',
     type: SoftwareType.LIBRARY,
-    url: 'https://github.com/mesoscope/cellPACK',
+    url: 'https://github.com/autinlab/cellpackgpu',
     imageUrl: 'https://ccsb.scripps.edu/wp-content/uploads/2021/12/3layers_horizontal_dsgpalette_green_membrane-1200x1164.jpg',
     features: ['CUDA acceleration', 'Mesoscopic scale', 'Python API']
   },
