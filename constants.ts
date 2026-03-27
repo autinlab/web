@@ -116,11 +116,11 @@ export const SOFTWARE_TOOLS: Software[] = [
   },
   {
     id: 'virus-lesson',
-    name: 'Virus Lesson',
+    name: 'The Virus Lesson',
     description: 'Interactive educational modules explaining viral structures, lifecycles, and vaccine mechanisms.',
     type: SoftwareType.EDUCATIONAL,
-    url: 'https://mesoscope.scripps.edu/',
-    imageUrl: 'https://scontent-lax3-2.oculuscdn.com/v/t64.5771-25/491824583_3017757825060691_1670418159698158129_n.jpg?stp=dst-jpg_q92_s1440x1440_tt6&_nc_cat=103&ccb=1-7&_nc_sid=6e7a0a&_nc_ohc=bnmua9gwYXAQ7kNvwGwbHUH&_nc_oc=AdmweGsU-nbh88wVnTTs8qXd92tCrmSCE6Bo63ZagFabb6VCv5Ie2gh-XdqRsGSGQiU&_nc_zt=3&_nc_ht=scontent-lax3-2.oculuscdn.com&oh=00_Afid7dXw7cdxmv_UKgZclamQhaxeDvq0Lw0OPvSTfXWxig&oe=6925967E',
+    url: 'https://www.meta.com/en-gb/experiences/the-virus-lesson/5389309677805355/',
+    imageUrl: 'assets/IMG_6933.jpg',
     features: ['Gamified learning', '3D exploration', 'Curriculum aligned']
   }
 ];
@@ -142,7 +142,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: 'Quentin Tallon, PhD',
     role: 'Postdoctoral Researcher',
     bio: 'Expert in AI, high-performance computing, and software engineering.',
-    imageUrl: 'https://media.licdn.com/dms/image/v2/D4D03AQGhDe3fPg-o9w/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1636013234417?e=1765411200&v=beta&t=ZkVhZpMeJ-eHJ_vaMWn1KtTqtlSH6apbLLlzPn7F5kU',
+    imageUrl: 'assets/qtallon.jpg',
     links: {
       github: 'https://github.com/quental96'
     }
