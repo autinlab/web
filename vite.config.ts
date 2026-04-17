@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         main: new URL('./index.html', import.meta.url).pathname,
         labintern: new URL('./labintern.html', import.meta.url).pathname,
+        xrstudy: new URL('./xrstudy.html', import.meta.url).pathname,
       },
     },
   },
