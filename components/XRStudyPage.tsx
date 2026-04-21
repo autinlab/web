@@ -10,8 +10,6 @@ type CopyState = 'idle' | 'copied' | 'failed';
 
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
-const [showConsent, setShowConsent] = useState(false);
-
 const normalizeParticipantCode = (value: string) =>
   value
     .toUpperCase()
@@ -58,6 +56,8 @@ const XRStudyPage: React.FC = () => {
   const [participantCode, setParticipantCode] = useState<string>(getInitialParticipantCode);
   const [activeSurvey, setActiveSurvey] = useState<XRSurveyDefinition | null>(null);
   const [copyState, setCopyState] = useState<CopyState>('idle');
+  const [showConsent, setShowConsent] = useState(false);
+  const [hasConsented, setHasConsented] = useState(false);
 
   useEffect(() => {
     if (!participantCode) {
@@ -67,6 +67,16 @@ const XRStudyPage: React.FC = () => {
 
     window.localStorage.setItem(XR_STUDY_STORAGE_KEY, participantCode);
   }, [participantCode]);
+
+  // Auto-check consent status on first load
+  useEffect(() => {
+    const consented = window.localStorage.getItem('xr-study-consent-accepted') === 'true';
+    setHasConsented(consented);
+    
+    if (!consented) {
+      setShowConsent(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!activeSurvey) {
@@ -108,6 +118,13 @@ const XRStudyPage: React.FC = () => {
       setCopyState('failed');
       window.setTimeout(() => setCopyState('idle'), 2400);
     }
+  };
+
+  // Updated accept function
+  const acceptConsent = () => {
+    window.localStorage.setItem('xr-study-consent-accepted', 'true');
+    setHasConsented(true);
+    setShowConsent(false);
   };
 
   const activeSurveyUrl = activeSurvey ? buildSurveyUrl(activeSurvey, participantCode) : '';
@@ -199,14 +216,24 @@ const XRStudyPage: React.FC = () => {
                 {XR_STUDY_COPY.privacy}
               </p>
 
-              {/* NEW: Consent button */}
-              <button
-                onClick={() => setShowConsent(true)}
-                className="mt-6 w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-200 hover:border-science-teal/40 hover:text-white transition flex items-center justify-center gap-2"
-              >
-                📜 View Study Consent &amp; Information Letter
-              </button>
-
+              {/* Consent button with green accepted flag */}
+              <div className="mt-6">
+                <button
+                  onClick={() => setShowConsent(true)}
+                  className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-200 hover:border-science-teal/40 hover:text-white transition flex items-center justify-between"
+                >
+                  <span className="flex items-center gap-2">
+                    📜 View Study Consent &amp; Information Letter
+                  </span>
+                  
+                  {hasConsented && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-medium text-emerald-400">
+                      <span className="text-emerald-400">✓</span>
+                      Accepted
+                    </span>
+                  )}
+                </button>
+              </div>
               <p className="mt-3 text-xs text-slate-400 text-center">
                 This study is approved by Scripps Research
               </p>
@@ -292,47 +319,78 @@ const XRStudyPage: React.FC = () => {
         </div>
       ) : null}
       {/* CONSENT MODAL */}
+      {/* CONSENT MODAL - Auto-opens on first visit */}
       {showConsent && (
-        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/85 p-4">
-          <div className="max-w-2xl w-full max-h-[90vh] overflow-hidden rounded-3xl border border-white/10 bg-slate-950 shadow-2xl">
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/90 p-4">
+          <div className="max-w-2xl w-full max-h-[90vh] overflow-hidden rounded-3xl border border-white/10 bg-slate-950 shadow-2xl flex flex-col">
+            
             {/* Header */}
             <div className="flex items-center justify-between border-b border-white/10 bg-slate-900 px-6 py-4">
               <h2 className="text-xl font-semibold text-white">Information Letter for Research</h2>
               <button
                 onClick={() => setShowConsent(false)}
-                className="text-slate-400 hover:text-white text-2xl leading-none"
+                className="text-slate-400 hover:text-white text-3xl leading-none"
               >
                 ×
               </button>
             </div>
 
-            {/* Content */}
-            <div className="p-6 overflow-auto max-h-[calc(90vh-73px)] text-slate-200 text-sm leading-relaxed">
+            {/* Scrollable content */}
+            <div className="flex-1 overflow-auto p-6 text-slate-200 text-sm leading-relaxed">
               <h3 className="font-semibold text-white mb-4">Shared Reality, Shared Understanding</h3>
-              <p className="mb-4"><strong>Principal Investigator:</strong> Ludovic Autin</p>
-              <p className="mb-4"><strong>Contact:</strong> (619) 919-7869</p>
-              <p className="mb-4"><strong>Research Site:</strong> Scripps Research</p>
+              <p><strong>Principal Investigator:</strong> Ludovic Autin</p>
+              <p><strong>Contact:</strong> (619) 919-7869</p>
+              <p><strong>Research Site:</strong> Scripps Research</p>
 
               <h4 className="font-semibold mt-6 mb-2">Overview</h4>
               <p className="mb-4">
                 The purpose of this minimal-risk research study is to compare conventional learning modalities, 
                 such as static figures, tangible models, and desktop 3D visualization, with co-located mixed reality 
-                and multiplayer interaction...
+                and multiplayer interaction. The study is designed to measure how these different modalities affect 
+                comprehension, shared understanding, and communication efficiency across different stakeholder groups.
               </p>
-              {/* (I’ve shortened the full text here for brevity — the full version is included in the complete code below) */}
+              <p className="mb-4">
+                The goals are to: (i) evaluate whether and why co-located mixed reality improves understanding of 
+                mechanistic information across different audiences; (ii) develop a reusable, modular software and 
+                evaluation toolkit for translational knowledge transfer; and (iii) generate design recommendations 
+                and effect size estimates to support future larger-scale studies and dissemination.
+              </p>
+              <p className="mb-4">
+                If you agree to participate in this study, you will be asked to complete a questionnaire and take 
+                part in activities using different modalities, including mixed reality, hands-on models, and standard 
+                screen-based visualization. Each activity will last approximately 10 to 40 minutes.
+              </p>
+              <p className="mb-4">
+                Your participation in this research is voluntary, and you do not have to participate if you do not 
+                want to. Your decision whether or not to participate will not affect your employment status, class 
+                standing, or any class credit you may receive.
+              </p>
 
-              <p className="mt-8 text-xs text-slate-400">
+              <h4 className="font-semibold mt-6 mb-2">Confidentiality</h4>
+              <p className="mb-6">
+                No identifiable information about you will be collected. All data collected (OR if applicable: survey 
+                responses) will be kept completely anonymous.
+              </p>
+
+              <p className="text-xs text-slate-400">
                 Your consent to be part of the study is implied if you complete the questionnaire.<br />
                 Version date: 4/3/2026
               </p>
             </div>
 
-            <div className="border-t border-white/10 px-6 py-4 flex justify-end">
+            {/* FIXED FOOTER WITH BUTTONS - always visible */}
+            <div className="border-t border-white/10 px-6 py-4 flex justify-end gap-3 bg-slate-900">
               <button
                 onClick={() => setShowConsent(false)}
-                className="bg-science-teal text-slate-950 px-6 py-2 rounded-2xl font-semibold"
+                className="px-6 py-2.5 text-slate-300 hover:text-white transition"
               >
                 Close
+              </button>
+              <button
+                onClick={acceptConsent}
+                className="bg-science-teal hover:bg-teal-400 text-slate-950 px-8 py-2.5 rounded-2xl font-semibold transition"
+              >
+                I have read and agree to participate
               </button>
             </div>
           </div>

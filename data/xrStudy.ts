@@ -15,7 +15,7 @@ export const XR_STUDY_STORAGE_KEY = 'xr-study-participant-code';
 export const XR_STUDY_COPY = {
   title: 'XR Structural Biology Study',
   intro:
-    'Use one participant code across all four surveys. The code stays in this browser so students can move between the pre-survey, the two station surveys, and the final survey without retyping it each time.',
+    'Use one participant code across all four surveys. The code stays in this browser so you can move between the pre-survey, the two station surveys, and the final survey without retyping it each time.',
   privacy:
     'This page stores only the participant code in local browser storage. It does not send responses anywhere except the Google Forms you open.',
   modalHint:
@@ -27,7 +27,7 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     key: 'pre',
     title: 'Pre-Survey',
     shortLabel: 'Start pre-survey',
-    description: 'Baseline experience and knowledge before the lesson starts.',
+    description: 'Baseline experience and knowledge before the lesson starts. These questions are not an evaluation, they will be asked again in the final survey and are simply a mean for the participant to assess how much they learned from the experience.',
     responderUrl:
       'https://docs.google.com/forms/d/e/1FkeATI42sjzWKQPDXZJYIxShl9qum6-yGmrttLpBvug/viewform',
     participantEntryId: '110202008',
