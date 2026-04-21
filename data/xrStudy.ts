@@ -29,7 +29,7 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     shortLabel: 'Start pre-survey',
     description: 'Baseline experience and knowledge before the lesson starts. These questions are not an evaluation, they will be asked again in the final survey and are simply a mean for the participant to assess how much they learned from the experience.',
     responderUrl:
-      'https://docs.google.com/forms/d/e/1FkeATI42sjzWKQPDXZJYIxShl9qum6-yGmrttLpBvug/viewform',
+      'https://docs.google.com/forms/d/e/1FAIpQLSdl0dJusVeBu0pF8suwui9kfsR4GmAZouc5OO10oXCZaefNqg/viewform',
     participantEntryId: '110202008',
   },
   {
@@ -38,7 +38,7 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     shortLabel: 'Start XR station survey',
     description: 'Station survey with the completed station prefilled as XR lesson.',
     responderUrl:
-      'https://docs.google.com/forms/d/e/1tZj85QdgBdKRdv8TQIulFm_FJCaoaaY38af_SXB9KHM/viewform',
+      'https://docs.google.com/forms/d/e/1FAIpQLSd425gifx4fTY66b2FKWZwb6_xNoWBnPe4eeaZr6E6nLOQ6Zw/viewform',
     participantEntryId: '1668278834',
     prefills: {
       'entry.1592057304': 'XR lesson',
@@ -50,7 +50,7 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     shortLabel: 'Start table station survey',
     description: 'Same station survey, prefilled as the 3D printed table activity.',
     responderUrl:
-      'https://docs.google.com/forms/d/e/1K8J6G85SFgvQm0Qg5eGUbTssplJJC31SpMa9gQ4VzAk/viewform',
+      'https://docs.google.com/forms/d/e/1FAIpQLSd425gifx4fTY66b2FKWZwb6_xNoWBnPe4eeaZr6E6nLOQ6Zw/viewform',
     participantEntryId: '1668278834',
     prefills: {
       'entry.1592057304': '3D printed table activity',
@@ -62,7 +62,7 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     shortLabel: 'Start final survey',
     description: 'End-of-lesson comparison and wrap-up survey.',
     responderUrl:
-      'https://docs.google.com/forms/d/e/1FAIpQLSci_nvYtQwp5DfOshNoaHkSpgwoOx_V7vc7eDDRVF4evB71Tg/viewform',
+      'https://docs.google.com/forms/d/e/1FAIpQLSd5xZuaygzpOPMRdvjMgxe7t2pakITfpMw7NfZLl3TUyS2FPw/viewform',
     participantEntryId: '653352900',
   },
 ];
