@@ -30,7 +30,7 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     description: 'Baseline experience and knowledge before the lesson starts. These questions are not an evaluation, they will be asked again in the final survey and are simply a mean for the participant to assess how much they learned from the experience.',
     responderUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLSdl0dJusVeBu0pF8suwui9kfsR4GmAZouc5OO10oXCZaefNqg/viewform',
-    participantEntryId: '110202008',
+    participantEntryId: '551913433',
   },
   {
     key: 'xr-station',
@@ -39,9 +39,9 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     description: 'Station survey with the completed station prefilled as XR lesson.',
     responderUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLSd425gifx4fTY66b2FKWZwb6_xNoWBnPe4eeaZr6E6nLOQ6Zw/viewform',
-    participantEntryId: '1668278834',
+    participantEntryId: '1725573988',
     prefills: {
-      'entry.1592057304': 'XR lesson',
+      'entry.2140009933': 'XR lesson',
     },
   },
   {
@@ -51,9 +51,9 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     description: 'Same station survey, prefilled as the 3D printed table activity.',
     responderUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLSd425gifx4fTY66b2FKWZwb6_xNoWBnPe4eeaZr6E6nLOQ6Zw/viewform',
-    participantEntryId: '1668278834',
+    participantEntryId: '1725573988',
     prefills: {
-      'entry.1592057304': '3D printed table activity',
+      'entry.2140009933': '3D printed table activity',
     },
   },
   {
@@ -63,6 +63,6 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     description: 'End-of-lesson comparison and wrap-up survey.',
     responderUrl:
       'https://docs.google.com/forms/d/e/1FAIpQLSd5xZuaygzpOPMRdvjMgxe7t2pakITfpMw7NfZLl3TUyS2FPw/viewform',
-    participantEntryId: '653352900',
+    participantEntryId: '1949747897',
   },
 ];
