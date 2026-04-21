@@ -29,7 +29,7 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     shortLabel: 'Start pre-survey',
     description: 'Baseline experience and knowledge before the lesson starts.',
     responderUrl:
-      'https://docs.google.com/forms/d/e/1FAIpQLSfzr-rdN7sou6LVd3TovzVVTV6Pbx2IqdlXOgKPQAw4Zyt8jw/viewform',
+      'https://docs.google.com/forms/d/e/1FkeATI42sjzWKQPDXZJYIxShl9qum6-yGmrttLpBvug/viewform',
     participantEntryId: '110202008',
   },
   {
@@ -38,7 +38,7 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     shortLabel: 'Start XR station survey',
     description: 'Station survey with the completed station prefilled as XR lesson.',
     responderUrl:
-      'https://docs.google.com/forms/d/e/1FAIpQLSdZI_7VwP3BOZXPsbluHzQCM17-Q1HWmqXQh1RjYNzNbpuh3A/viewform',
+      'https://docs.google.com/forms/d/e/1tZj85QdgBdKRdv8TQIulFm_FJCaoaaY38af_SXB9KHM/viewform',
     participantEntryId: '1668278834',
     prefills: {
       'entry.1592057304': 'XR lesson',
@@ -50,7 +50,7 @@ export const XR_SURVEYS: XRSurveyDefinition[] = [
     shortLabel: 'Start table station survey',
     description: 'Same station survey, prefilled as the 3D printed table activity.',
     responderUrl:
-      'https://docs.google.com/forms/d/e/1FAIpQLSdZI_7VwP3BOZXPsbluHzQCM17-Q1HWmqXQh1RjYNzNbpuh3A/viewform',
+      'https://docs.google.com/forms/d/e/1K8J6G85SFgvQm0Qg5eGUbTssplJJC31SpMa9gQ4VzAk/viewform',
     participantEntryId: '1668278834',
     prefills: {
       'entry.1592057304': '3D printed table activity',

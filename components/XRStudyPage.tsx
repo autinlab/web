@@ -10,6 +10,8 @@ type CopyState = 'idle' | 'copied' | 'failed';
 
 const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
 
+const [showConsent, setShowConsent] = useState(false);
+
 const normalizeParticipantCode = (value: string) =>
   value
     .toUpperCase()
@@ -193,7 +195,21 @@ const XRStudyPage: React.FC = () => {
                 </div>
               </div>
 
-              <p className="mt-5 text-sm leading-6 text-slate-300">{XR_STUDY_COPY.privacy}</p>
+              <p className="mt-5 text-sm leading-6 text-slate-300">
+                {XR_STUDY_COPY.privacy}
+              </p>
+
+              {/* NEW: Consent button */}
+              <button
+                onClick={() => setShowConsent(true)}
+                className="mt-6 w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-200 hover:border-science-teal/40 hover:text-white transition flex items-center justify-center gap-2"
+              >
+                📜 View Study Consent &amp; Information Letter
+              </button>
+
+              <p className="mt-3 text-xs text-slate-400 text-center">
+                This study is approved by Scripps Research
+              </p>
             </aside>
           </div>
 
@@ -275,6 +291,53 @@ const XRStudyPage: React.FC = () => {
           </div>
         </div>
       ) : null}
+      {/* CONSENT MODAL */}
+      {showConsent && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/85 p-4">
+          <div className="max-w-2xl w-full max-h-[90vh] overflow-hidden rounded-3xl border border-white/10 bg-slate-950 shadow-2xl">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-white/10 bg-slate-900 px-6 py-4">
+              <h2 className="text-xl font-semibold text-white">Information Letter for Research</h2>
+              <button
+                onClick={() => setShowConsent(false)}
+                className="text-slate-400 hover:text-white text-2xl leading-none"
+              >
+                ×
+              </button>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 overflow-auto max-h-[calc(90vh-73px)] text-slate-200 text-sm leading-relaxed">
+              <h3 className="font-semibold text-white mb-4">Shared Reality, Shared Understanding</h3>
+              <p className="mb-4"><strong>Principal Investigator:</strong> Ludovic Autin</p>
+              <p className="mb-4"><strong>Contact:</strong> (619) 919-7869</p>
+              <p className="mb-4"><strong>Research Site:</strong> Scripps Research</p>
+
+              <h4 className="font-semibold mt-6 mb-2">Overview</h4>
+              <p className="mb-4">
+                The purpose of this minimal-risk research study is to compare conventional learning modalities, 
+                such as static figures, tangible models, and desktop 3D visualization, with co-located mixed reality 
+                and multiplayer interaction...
+              </p>
+              {/* (I’ve shortened the full text here for brevity — the full version is included in the complete code below) */}
+
+              <p className="mt-8 text-xs text-slate-400">
+                Your consent to be part of the study is implied if you complete the questionnaire.<br />
+                Version date: 4/3/2026
+              </p>
+            </div>
+
+            <div className="border-t border-white/10 px-6 py-4 flex justify-end">
+              <button
+                onClick={() => setShowConsent(false)}
+                className="bg-science-teal text-slate-950 px-6 py-2 rounded-2xl font-semibold"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

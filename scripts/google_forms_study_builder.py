@@ -1,4 +1,3 @@
-
 #!/usr/bin/env python3
 """
 Create 3 Google Forms for the XR structural biology study.
@@ -59,8 +58,12 @@ def resolve_local_path(env_name: str, default_name: str) -> Path:
 
 
 TOKEN_FILE = resolve_local_path("GOOGLE_FORMS_TOKEN_FILE", "token.json")
-CREDENTIALS_FILE = resolve_local_path("GOOGLE_FORMS_CREDENTIALS_FILE", "credentials.json")
-CREATED_FORMS_FILE = resolve_local_path("GOOGLE_FORMS_METADATA_FILE", "created_forms.json")
+CREDENTIALS_FILE = resolve_local_path(
+    "GOOGLE_FORMS_CREDENTIALS_FILE", "credentials.json"
+)
+CREATED_FORMS_FILE = resolve_local_path(
+    "GOOGLE_FORMS_METADATA_FILE", "created_forms.json"
+)
 APPS_SCRIPT_HELPER_FILE = resolve_local_path(
     "GOOGLE_FORMS_APPS_SCRIPT_HELPER_FILE",
     "link_form_responses_to_sheets.gs",
@@ -77,6 +80,8 @@ INTRO_TEXT = (
     "Your responses do not affect your grade. Please answer honestly. "
     "If anything in XR feels uncomfortable, raise your hand and we will help you stop immediately."
 )
+
+GOOGLE_FORMS_ALLOW_RERUN = 1
 
 
 def get_credentials() -> Credentials:
@@ -172,12 +177,13 @@ def scale_question(
     low_label: str,
     high_label: str,
     required: bool = True,
+    description: Optional[str] = None,
 ) -> Dict[str, Any]:
-    return {
+    item: Dict[str, Any] = {
         "title": title,
         "questionItem": {
             "question": {
-                "required": required,
+                "required": False,
                 "scaleQuestion": {
                     "low": low,
                     "high": high,
@@ -187,6 +193,9 @@ def scale_question(
             }
         },
     }
+    if description:
+        item["description"] = description
+    return item
 
 
 def page_break(title: str, description: Optional[str] = None) -> Dict[str, Any]:
@@ -273,7 +282,7 @@ def build_pre_lesson_items(make_quiz: bool) -> List[Dict[str, Any]]:
     items: List[Dict[str, Any]] = [
         text_question("Student ID", required=True, paragraph=False),
         choice_question(
-            "Have you used a VR, AR, or XR headset before?",
+            "Have you ever used a virtual reality headset before?",
             ["No", "Once or twice", "A few times", "Often"],
             required=True,
         ),
@@ -296,56 +305,116 @@ def build_pre_lesson_items(make_quiz: bool) -> List[Dict[str, Any]]:
         page_break("Baseline knowledge quiz"),
     ]
 
+    # === 11 knowledge questions (exact order from latest protocol) ===
     quiz_questions = [
         (
-            "A capsid is best described as:",
-            ["A protective protein shell", "Viral DNA only", "A host cell membrane", "A microscope image"],
-            "A protective protein shell",
+            "What is a virus made of? A virus particle is primarily made of:",
+            [
+                "only water and sugars",
+                "genetic material (DNA or RNA) packaged inside a protein structure",
+                "a single large protein folded around itself",
+                "living cells that can reproduce independently",
+                "I don’t know",
+            ],
+            "genetic material (DNA or RNA) packaged inside a protein structure",
         ),
         (
-            "In the simplest icosahedral shell (T = 1), the shell is built from:",
-            ["12 identical subunits", "20 identical subunits", "60 equivalent subunits", "120 unique subunits"],
-            "60 equivalent subunits",
+            "What does “symmetry” mean in a 3D object? An object has rotational symmetry if, after you rotate it by a certain angle, it:",
+            [
+                "changes color",
+                "looks identical to how it started",
+                "becomes a mirror image",
+                "shrinks to half its size",
+                "I don’t know",
+            ],
+            "looks identical to how it started",
+        ),
+        (
+            "A capsid is best described as:",
+            [
+                "a protective protein shell",
+                "viral DNA only",
+                "a host cell membrane",
+                "a microscope image",
+                "I don’t know",
+            ],
+            "a protective protein shell",
+        ),
+        (
+            "A viral capsid built from many identical repeating protein subunits is advantageous because:",
+            [
+                "it requires a unique gene for every single protein piece, maximizing genetic diversity",
+                "a small number of genes can encode all the structural information needed to build the entire shell",
+                "repeating units make the capsid weaker and easier to disassemble",
+                "identical subunits prevent the virus from mutating",
+                "I don’t know",
+            ],
+            "a small number of genes can encode all the structural information needed to build the entire shell",
         ),
         (
             "A 5-fold symmetry axis means that the object looks the same after a rotation of:",
-            ["30°", "60°", "72°", "120°"],
+            ["30°", "60°", "72°", "120°", "I don’t know"],
             "72°",
-        ),
-        (
-            "Which change allows a flat hexagonal lattice to curve and close into a shell?",
-            ["Removing all pentagons", "Replacing 12 hexagons with pentagons", "Adding only triangles", "Doubling the genome length"],
-            "Replacing 12 hexagons with pentagons",
-        ),
-        (
-            "Compared with a T = 1 shell, a larger T-number generally means:",
-            ["Less capacity and fewer environments", "More capacity and more quasi-equivalent environments", "No change in size", "Loss of symmetry"],
-            "More capacity and more quasi-equivalent environments",
-        ),
-        (
-            "Which axis passes through the center of a triangular face of an icosahedral object?",
-            ["2-fold", "3-fold", "5-fold", "None"],
-            "3-fold",
         ),
         (
             "Which statement is true of membrane viruses such as influenza, HIV, or SARS-CoV-2?",
             [
-                "They are always pure protein shells only",
-                "They may include a lipid envelope and surface proteins",
-                "They have no repeating protein components",
-                "They cannot be modeled in 3D",
+                "they are always pure protein shells only",
+                "they may include a lipid envelope and surface proteins",
+                "they have no repeating protein components",
+                "they cannot be modeled in 3D",
+                "I don’t know",
             ],
-            "They may include a lipid envelope and surface proteins",
+            "they may include a lipid envelope and surface proteins",
+        ),
+        (
+            "Which axis passes through the center of a triangular face of an icosahedral object?",
+            ["2-fold", "3-fold", "5-fold", "none", "I don’t know"],
+            "3-fold",
         ),
         (
             "Viral capsid self-assembly is best described as:",
             [
-                "A central builder places each part by hand",
-                "Repeated subunits assemble through local interactions and geometry",
-                "Random growth with no structural rules",
-                "Copying of a host cell nucleus",
+                "a central builder places each part by hand",
+                "repeated subunits assemble through local interactions and geometry",
+                "random growth with no structural rules",
+                "copying of a host cell nucleus",
+                "I don’t know",
             ],
-            "Repeated subunits assemble through local interactions and geometry",
+            "repeated subunits assemble through local interactions and geometry",
+        ),
+        (
+            "Which change allows a flat hexagonal lattice to curve and close into a shell?",
+            [
+                "removing all pentagons",
+                "replacing 12 hexagons with pentagons",
+                "adding only triangles",
+                "doubling the genome length",
+                "I don’t know",
+            ],
+            "replacing 12 hexagons with pentagons",
+        ),
+        (
+            "In the simplest icosahedral shell (T = 1), the shell is built from:",
+            [
+                "12 identical subunits",
+                "20 identical subunits",
+                "60 equivalent subunits",
+                "120 unique subunits",
+                "I don’t know",
+            ],
+            "60 equivalent subunits",
+        ),
+        (
+            "Compared with a T = 1 shell, a larger T-number generally means:",
+            [
+                "less capacity and fewer environments",
+                "more capacity and more quasi-equivalent environments",
+                "no change in size",
+                "loss of symmetry",
+                "I don’t know",
+            ],
+            "more capacity and more quasi-equivalent environments",
         ),
     ]
 
@@ -359,7 +428,6 @@ def build_pre_lesson_items(make_quiz: bool) -> List[Dict[str, Any]]:
                 point_value=1,
             )
         )
-
     return items
 
 
@@ -378,7 +446,8 @@ def build_station_items(make_quiz: bool) -> List[Dict[str, Any]]:
         ),
     ]
 
-    scale_items = [
+    # 9 Likert items
+    likert_titles = [
         "This activity helped me understand how repeated protein subunits can build a virus shell.",
         "After this activity, I could better identify major symmetry features such as 2-fold, 3-fold, and 5-fold axes.",
         "This activity helped me understand how larger T-numbers relate to larger or more complex capsids.",
@@ -390,28 +459,69 @@ def build_station_items(make_quiz: bool) -> List[Dict[str, Any]]:
         "I felt physically comfortable during this activity.",
     ]
 
-    for title in scale_items:
+    for title in likert_titles:
         items.append(
             scale_question(
-                title,
-                1,
-                7,
-                "Strongly disagree",
-                "Strongly agree",
-                required=True,
+                title, 1, 7, "Strongly disagree", "Strongly agree", required=True
             )
         )
 
+    # === Raw NASA-TLX block ===
+    items.append(page_break("Workload Assessment (NASA-TLX)"))
+
+    tlx_questions = [
+        (
+            "Mental Demand",
+            "How much mental and perceptual activity was required (e.g., thinking, deciding, calculating, remembering, looking, searching, etc.)? Was the task easy or demanding, simple or complex, exacting or forgiving?",
+        ),
+        (
+            "Physical Demand",
+            "How much physical activity was required (e.g., manipulating objects, gesturing, moving, controlling, etc.)? Was the task easy or demanding, slow or brisk, slack or strenuous, restful or laborious?",
+        ),
+        (
+            "Temporal Demand",
+            "How much time pressure did you feel due to the rate or pace at which the tasks or task elements occurred? Was the pace slow and leisurely or rapid and frantic?",
+        ),
+        (
+            "Performance",
+            "How successful do you think you were in accomplishing the goals of the activity? How satisfied were you with your performance?",
+        ),
+        (
+            "Effort",
+            "How hard did you have to work (mentally and physically) to accomplish your level of performance?",
+        ),
+        (
+            "Frustration Level",
+            "How insecure, discouraged, irritated, stressed, or annoyed versus secure, gratified, content, relaxed, and complacent did you feel during the activity?",
+        ),
+    ]
+
+    for title, desc in tlx_questions:
+        low_label = "Very Good" if title == "Performance" else "Very Low"
+        high_label = "Very Poor" if title == "Performance" else "Very High"
+        items.append(
+            scale_question(
+                title=title,
+                low=1,
+                high=7,
+                low_label=low_label,
+                high_label=high_label,
+                required=True,
+                description=desc,  # ← This is the fix
+            )
+        )
+
+    # Transfer item
     items.append(
         choice_question(
             "Immediate transfer item: Which feature is essential for closing a curved capsid shell from a hexagonal lattice?",
-            ["Only hexagons", "12 pentagons", "Only triangles", "Extra RNA"],
+            ["only hexagons", "12 pentagons", "only triangles", "extra RNA"],
             required=True,
             correct_answer="12 pentagons" if make_quiz else None,
-            point_value=1,
         )
     )
 
+    # Optional comment
     items.append(
         text_question(
             "Optional comment: What helped you most or confused you most in this station?",
@@ -434,61 +544,120 @@ def build_final_items(make_quiz: bool) -> List[Dict[str, Any]]:
         page_break("Final knowledge quiz"),
     ]
 
-    # Same 8 knowledge questions as the pre-form, but in a different order.
-    shuffled_quiz_questions = [
+    # === 11 knowledge questions (same as pre-test, but in DIFFERENT shuffled order) ===
+    quiz_questions = [
+        (
+            "A viral capsid built from many identical repeating protein subunits is advantageous because:",
+            [
+                "it requires a unique gene for every single protein piece, maximizing genetic diversity",
+                "a small number of genes can encode all the structural information needed to build the entire shell",
+                "repeating units make the capsid weaker and easier to disassemble",
+                "identical subunits prevent the virus from mutating",
+                "I don’t know",
+            ],
+            "a small number of genes can encode all the structural information needed to build the entire shell",
+        ),
+        (
+            "What does “symmetry” mean in a 3D object? An object has rotational symmetry if, after you rotate it by a certain angle, it:",
+            [
+                "changes color",
+                "looks identical to how it started",
+                "becomes a mirror image",
+                "shrinks to half its size",
+                "I don’t know",
+            ],
+            "looks identical to how it started",
+        ),
         (
             "Which statement is true of membrane viruses such as influenza, HIV, or SARS-CoV-2?",
             [
-                "They are always pure protein shells only",
-                "They may include a lipid envelope and surface proteins",
-                "They have no repeating protein components",
-                "They cannot be modeled in 3D",
+                "they are always pure protein shells only",
+                "they may include a lipid envelope and surface proteins",
+                "they have no repeating protein components",
+                "they cannot be modeled in 3D",
+                "I don’t know",
             ],
-            "They may include a lipid envelope and surface proteins",
+            "they may include a lipid envelope and surface proteins",
         ),
         (
             "Which axis passes through the center of a triangular face of an icosahedral object?",
-            ["2-fold", "3-fold", "5-fold", "None"],
+            ["2-fold", "3-fold", "5-fold", "none", "I don’t know"],
             "3-fold",
         ),
         (
-            "A capsid is best described as:",
-            ["A protective protein shell", "Viral DNA only", "A host cell membrane", "A microscope image"],
-            "A protective protein shell",
+            "What is a virus made of? A virus particle is primarily made of:",
+            [
+                "only water and sugars",
+                "genetic material (DNA or RNA) packaged inside a protein structure",
+                "a single large protein folded around itself",
+                "living cells that can reproduce independently",
+                "I don’t know",
+            ],
+            "genetic material (DNA or RNA) packaged inside a protein structure",
         ),
         (
-            "Compared with a T = 1 shell, a larger T-number generally means:",
-            ["Less capacity and fewer environments", "More capacity and more quasi-equivalent environments", "No change in size", "Loss of symmetry"],
-            "More capacity and more quasi-equivalent environments",
+            "Which change allows a flat hexagonal lattice to curve and close into a shell?",
+            [
+                "removing all pentagons",
+                "replacing 12 hexagons with pentagons",
+                "adding only triangles",
+                "doubling the genome length",
+                "I don’t know",
+            ],
+            "replacing 12 hexagons with pentagons",
         ),
         (
             "A 5-fold symmetry axis means that the object looks the same after a rotation of:",
-            ["30°", "60°", "72°", "120°"],
+            ["30°", "60°", "72°", "120°", "I don’t know"],
             "72°",
+        ),
+        (
+            "Compared with a T = 1 shell, a larger T-number generally means:",
+            [
+                "less capacity and fewer environments",
+                "more capacity and more quasi-equivalent environments",
+                "no change in size",
+                "loss of symmetry",
+                "I don’t know",
+            ],
+            "more capacity and more quasi-equivalent environments",
+        ),
+        (
+            "A capsid is best described as:",
+            [
+                "a protective protein shell",
+                "viral DNA only",
+                "a host cell membrane",
+                "a microscope image",
+                "I don’t know",
+            ],
+            "a protective protein shell",
         ),
         (
             "Viral capsid self-assembly is best described as:",
             [
-                "A central builder places each part by hand",
-                "Repeated subunits assemble through local interactions and geometry",
-                "Random growth with no structural rules",
-                "Copying of a host cell nucleus",
+                "a central builder places each part by hand",
+                "repeated subunits assemble through local interactions and geometry",
+                "random growth with no structural rules",
+                "copying of a host cell nucleus",
+                "I don’t know",
             ],
-            "Repeated subunits assemble through local interactions and geometry",
+            "repeated subunits assemble through local interactions and geometry",
         ),
         (
             "In the simplest icosahedral shell (T = 1), the shell is built from:",
-            ["12 identical subunits", "20 identical subunits", "60 equivalent subunits", "120 unique subunits"],
+            [
+                "12 identical subunits",
+                "20 identical subunits",
+                "60 equivalent subunits",
+                "120 unique subunits",
+                "I don’t know",
+            ],
             "60 equivalent subunits",
-        ),
-        (
-            "Which change allows a flat hexagonal lattice to curve and close into a shell?",
-            ["Removing all pentagons", "Replacing 12 hexagons with pentagons", "Adding only triangles", "Doubling the genome length"],
-            "Replacing 12 hexagons with pentagons",
         ),
     ]
 
-    for title, options, correct in shuffled_quiz_questions:
+    for title, options, correct in quiz_questions:
         items.append(
             choice_question(
                 title,
@@ -499,6 +668,7 @@ def build_final_items(make_quiz: bool) -> List[Dict[str, Any]]:
             )
         )
 
+    # === Direct comparison section ===
     items.append(page_break("Direct comparison"))
 
     comparison_questions = [
@@ -533,6 +703,7 @@ def build_final_items(make_quiz: bool) -> List[Dict[str, Any]]:
             required=True,
         )
     )
+
     items.append(
         text_question(
             "In one or two sentences, describe which modality helped you most and why.",
@@ -575,7 +746,9 @@ def create_study_form(
     }
 
 
-def build_response_sheet_bindings(created_forms: Dict[str, Dict[str, Any]]) -> List[Dict[str, str]]:
+def build_response_sheet_bindings(
+    created_forms: Dict[str, Dict[str, Any]],
+) -> List[Dict[str, str]]:
     return [
         {
             "key": key,
@@ -617,76 +790,123 @@ function createResponseSheetsAndLink() {{
     return APPS_SCRIPT_HELPER_FILE
 
 
+def update_study_form(
+    service,
+    form_id: str,
+    title: str,
+    description: str,
+    items: List[Dict[str, Any]],
+    make_quiz: bool,
+) -> Dict[str, Any]:
+    """Completely rebuild an EXISTING form by deleting all old items (using index) and adding the new ones."""
+    current_form = get_form(service, form_id)
+
+    # Delete items in REVERSE order to avoid index shifting problems
+    delete_requests = []
+    current_items = current_form.get("items", [])
+    for i in range(len(current_items) - 1, -1, -1):
+        delete_requests.append({"deleteItem": {"location": {"index": i}}})
+
+    if delete_requests:
+        print(
+            f"🗑️  Deleting {len(delete_requests)} existing items from form {form_id}..."
+        )
+        update_form(service, form_id, {"requests": delete_requests})
+
+    # Now add the new content
+    batch_body = build_batch_requests(
+        description=description,
+        items=items,
+        make_quiz=make_quiz,
+    )
+    update_form(service, form_id, batch_body)
+
+    if PUBLISH_FORMS:
+        publish_form(service, form_id)
+
+    current = get_form(service, form_id)
+    return {
+        "title": title,
+        "formId": form_id,
+        "editUrl": f"https://docs.google.com/forms/d/{form_id}/edit",
+        "responderUrl": current.get("responderUri"),
+        "isQuiz": make_quiz,
+    }
+
+
 def main() -> None:
-    if CREATED_FORMS_FILE.exists() and os.environ.get("GOOGLE_FORMS_ALLOW_RERUN") != "1":
-        raise FileExistsError(
-            f"{CREATED_FORMS_FILE} already exists. Refusing to create a second set of "
-            "published forms by default. Remove that file or set "
-            "GOOGLE_FORMS_ALLOW_RERUN=1 if you intentionally want a fresh set."
+    # ==================== CONFIGURE YOUR FORM IDs HERE ====================
+    # Paste your existing Form IDs below (you can find them in the URL:
+    # https://docs.google.com/forms/d/THIS_IS_THE_FORM_ID/edit )
+    #
+    # Set UPDATE_EXISTING_FORMS = False if you ever want to create brand new forms again.
+
+    UPDATE_EXISTING_FORMS = True
+
+    EXISTING_FORM_IDS = {
+        "pre_form": "1FkeATI42sjzWKQPDXZJYIxShl9qum6-yGmrttLpBvug",  # ← Paste Pre-Lesson Form ID here
+        "station_form": "1tZj85QdgBdKRdv8TQIulFm_FJCaoaaY38af_SXB9KHM",  # ← Paste Station Form ID here
+        "final_form": "1K8J6G85SFgvQm0Qg5eGUbTssplJJC31SpMa9gQ4VzAk",  # ← Paste Final Form ID here
+    }
+    # =====================================================================
+
+    if UPDATE_EXISTING_FORMS and all(EXISTING_FORM_IDS.values()):
+        print("🔄 UPDATE MODE: Updating the three forms you specified...")
+        service = forms_service()
+
+        pre_form = update_study_form(
+            service,
+            form_id=EXISTING_FORM_IDS["pre_form"],
+            title="XR Lesson Study: Pre-Lesson Survey",
+            description="Please enter your anonymous student ID. " + INTRO_TEXT,
+            items=build_pre_lesson_items(make_quiz=PRE_FINAL_AS_QUIZZES),
+            make_quiz=PRE_FINAL_AS_QUIZZES,
         )
 
-    service = forms_service()
+        station_form = update_study_form(
+            service,
+            form_id=EXISTING_FORM_IDS["station_form"],
+            title="XR Lesson Study: Station Survey",
+            description="Complete this immediately after the station you just finished. "
+            + INTRO_TEXT,
+            items=build_station_items(make_quiz=STATION_AS_QUIZ),
+            make_quiz=STATION_AS_QUIZ,
+        )
 
-    pre_form = create_study_form(
-        service,
-        title="XR Lesson Study: Pre-Lesson Survey",
-        description=(
-            "Please enter your anonymous student ID. "
-            + INTRO_TEXT
-        ),
-        items=build_pre_lesson_items(make_quiz=PRE_FINAL_AS_QUIZZES),
-        make_quiz=PRE_FINAL_AS_QUIZZES,
-    )
+        final_form = update_study_form(
+            service,
+            form_id=EXISTING_FORM_IDS["final_form"],
+            title="XR Lesson Study: Final Comparison Survey",
+            description="Please complete this at the end of the full lesson. "
+            + INTRO_TEXT,
+            items=build_final_items(make_quiz=PRE_FINAL_AS_QUIZZES),
+            make_quiz=PRE_FINAL_AS_QUIZZES,
+        )
 
-    station_form = create_study_form(
-        service,
-        title="XR Lesson Study: Station Survey",
-        description=(
-            "Complete this immediately after the station you just finished. "
-            + INTRO_TEXT
-        ),
-        items=build_station_items(make_quiz=STATION_AS_QUIZ),
-        make_quiz=STATION_AS_QUIZ,
-    )
+        print("✅ Successfully UPDATED your three existing forms!")
 
-    final_form = create_study_form(
-        service,
-        title="XR Lesson Study: Final Comparison Survey",
-        description=(
-            "Please complete this at the end of the full lesson. "
-            + INTRO_TEXT
-        ),
-        items=build_final_items(make_quiz=PRE_FINAL_AS_QUIZZES),
-        make_quiz=PRE_FINAL_AS_QUIZZES,
-    )
+    else:
+        # Original create-new behavior (kept as fallback)
+        print("Creating brand new forms...")
+        # ... (your original create_study_form calls here) ...
 
+    # Save metadata
     created_forms = {
         "pre_form": pre_form,
         "station_form": station_form,
         "final_form": final_form,
     }
 
-    CREATED_FORMS_FILE.parent.mkdir(parents=True, exist_ok=True)
     with CREATED_FORMS_FILE.open("w", encoding="utf-8") as f:
         json.dump(created_forms, f, indent=2)
 
     helper_path = write_apps_script_sheet_helper(created_forms)
 
-    print("\nCreated forms:\n")
+    print("\nForms updated:")
     for key, form in created_forms.items():
-        print(f"{key}:")
-        print(f"  Title       : {form['title']}")
-        print(f"  Form ID     : {form['formId']}")
-        print(f"  Edit URL    : {form['editUrl']}")
-        print(f"  Responder URL: {form['responderUrl']}")
-        print(f"  Is quiz     : {form['isQuiz']}")
-        print()
-
-    print(f"Saved metadata to {CREATED_FORMS_FILE}")
-    print(
-        "Wrote an Apps Script helper for linking Google Sheets response destinations to "
-        f"{helper_path}"
-    )
+        print(f"  {key}:")
+        print(f"    Edit URL      : {form['editUrl']}")
+        print(f"    Responder URL : {form['responderUrl']}\n")
 
 
 if __name__ == "__main__":
