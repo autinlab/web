@@ -5,6 +5,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ResearchSection from './components/ResearchSection';
 import SoftwareSection from './components/SoftwareSection';
+import PlaygroundSection from './components/PlaygroundSection';
 import TeamSection from './components/TeamSection';
 import PublicationsSection from './components/PublicationsSection';
 import Footer from './components/Footer';
@@ -31,6 +32,7 @@ const App: React.FC = () => {
         <Hero />
         <ResearchSection onOpenModels={() => setIsModelsOpen(true)} />
         <SoftwareSection />
+        <PlaygroundSection />
         <TeamSection onRecruitClick={() => setIsInternPlannerOpen(true)} />
         <PublicationsSection />
       </main>

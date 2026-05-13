@@ -73,3 +73,15 @@ export interface IntegrativeModel {
   viewerUrl: string;
   imageUrl?: string;
 }
+
+export interface PlaygroundItem {
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  embedUrl?: string;
+  imageUrl?: string;
+  tech?: string;
+  features: string[];
+  githubUrl?: string;
+}

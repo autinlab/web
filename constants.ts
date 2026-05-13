@@ -1,9 +1,10 @@
 
-import { TeamMember, NavItem, Publication, ResearchArea, Software, SoftwareType, Affiliation, IntegrativeModel } from './types';
+import { TeamMember, NavItem, Publication, ResearchArea, Software, SoftwareType, Affiliation, IntegrativeModel, PlaygroundItem } from './types';
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Research', href: '#research' },
   { label: 'Software', href: '#software' },
+  { label: 'Playground', href: '#playground' },
   { label: 'History', href: '#history' },
   { label: 'Team', href: '#team' },
   { label: 'Publications', href: '#publications' },
@@ -216,6 +217,59 @@ export const PUBLICATIONS: Publication[] = [
     year: 2019,
     publisher: 'Elsevier',
     link: 'https://doi.org/10.1016/j.str.2019.08.011'
+  }
+];
+
+export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
+  {
+    id: 'cellpaint2d',
+    name: 'cellPAINT 2D (Dev)',
+    description: 'Browser build of the cellPAINT 2D painting tool, running directly in the page. Paint with proteins, lipids, and DNA to compose molecular landscapes.',
+    url: 'playground/cellPAINT2D/index.html',
+    embedUrl: 'playground/cellPAINT2D/index.html',
+    imageUrl: 'https://ccsb.scripps.edu/cellpaint/wp-content/uploads/sites/30/2021/04/Frontiers_CellPAINT-800x617.jpg',
+    tech: 'Unity WebGL',
+    features: ['Brush-based modeling', '2D scenes', 'In-browser']
+  },
+  {
+    id: 'fullerenes',
+    name: 'Fullerenes Explorer',
+    description: 'Interactive exploration of fullerene cages and carbon nanostructures. Built as a lightweight in-browser app for quick exploration.',
+    url: 'playground/fullerenes/index.html',
+    embedUrl: 'playground/fullerenes/index.html',
+    imageUrl: 'assets/fullerenes.jpg',
+    tech: 'WebGL',
+    features: ['Fullerene cages', 'Interactive 3D', 'In-browser']
+  },
+  {
+    id: 'virus-on-the-rock',
+    name: 'Virus on the Rock',
+    description: 'Mol*-based scene placing a virion in a stylized environment with nebula skybox and cell backdrop. Experimental staging for science-art compositions.',
+    url: 'playground/virus-on-the-rock/index.html',
+    embedUrl: 'playground/virus-on-the-rock/index.html',
+    imageUrl: 'assets/virus-on-the-rock.png',
+    tech: 'Mol*',
+    features: ['Skybox staging', 'Scientific scene', 'Mol* plugin']
+  },
+  {
+    id: 'molstar-dev-viewer',
+    name: 'Mol* Viewer (Dev Build)',
+    description: 'Local development build of the full Mol* Viewer, served from the playground for staging and testing new features outside the public Mol* release.',
+    url: 'playground/molstar-dev/viewer/index.html',
+    embedUrl: 'playground/molstar-dev/viewer/index.html',
+    imageUrl: 'assets/molstar-logo.png',
+    tech: 'Mol*',
+    features: ['Full viewer', 'Dev build', 'Themable']
+  },
+  {
+    id: 'molstar-dev-me',
+    name: 'Mesoscale Explorer (Dev Build)',
+    description: 'Local dev build of the Mol* Mesoscale Explorer. Browse and tweak large-scale cellular models with the latest in-progress ME features.',
+    url: 'playground/molstar-dev/mesoscale-explorer/index.html',
+    embedUrl: 'playground/molstar-dev/mesoscale-explorer/index.html',
+    imageUrl: 'https://molstar.org/me/img/me.png',
+    tech: 'Mol* ME',
+    features: ['Mesoscale', 'Dev build', 'Large-scale models']
   }
 ];
 
