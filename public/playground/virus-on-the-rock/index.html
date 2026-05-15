@@ -13,36 +13,5 @@
             <div id="ui"></div>
         </div>
         <script type="text/javascript" src="./molstar.js"></script>
-    
-<script id="__MOLSTAR_DEV_LIVE_RELOAD__" type="text/javascript">
-(() => {
-    const tokenUrl = window.location.origin + '/build/.dev-reload.txt';
-    let currentToken = null;
-
-    async function checkForReload() {
-        try {
-            const response = await fetch(tokenUrl + '?t=' + Date.now(), { cache: 'no-store' });
-            if (!response.ok) return;
-
-            const nextToken = (await response.text()).trim();
-            if (!nextToken) return;
-
-            if (currentToken === null) {
-                currentToken = nextToken;
-                return;
-            }
-
-            if (nextToken !== currentToken) {
-                window.location.reload();
-            }
-        } catch {
-            // Ignore transient fetch failures while the dev server restarts.
-        }
-    }
-
-    window.setInterval(checkForReload, 1000);
-    checkForReload();
-})();
-</script>
     </body>
 </html>
