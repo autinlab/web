@@ -1,1 +1,0 @@
-import{c as e,j as o,R as n}from"./client-BvfFo3Ul.js";import{I as r}from"./InternPlannerModal-Dsu7mNxw.js";const t=document.getElementById("root");if(!t)throw new Error("Could not find root element to mount LabIntern");const s=e.createRoot(t);s.render(o.jsx(n.StrictMode,{children:o.jsx(r,{isOpen:!0,onClose:()=>{window.location.href="./"}})}));
