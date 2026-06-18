@@ -31,11 +31,13 @@ export interface TeamMember {
   role: string;
   bio: string;
   imageUrl: string;
+  tier?: 'pi' | 'postdoc' | 'student' | 'intern';
   links?: {
     scholar?: string;
     github?: string;
     linkedin?: string;
     email?: string;
+    website?: string;
   };
 }
 
@@ -84,4 +86,5 @@ export interface PlaygroundItem {
   tech?: string;
   features: string[];
   githubUrl?: string;
+  customModal?: 'printing-gallery';
 }

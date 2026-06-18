@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { PLAYGROUND_ITEMS } from '../constants';
 import { PlaygroundItem } from '../types';
+import PrintingGalleryModal from './PrintingGalleryModal';
 
 const PlaygroundModal: React.FC<{ item: PlaygroundItem; onClose: () => void }> = ({ item, onClose }) => {
   useEffect(() => {
@@ -56,8 +57,13 @@ const PlaygroundModal: React.FC<{ item: PlaygroundItem; onClose: () => void }> =
   );
 };
 
-const PlaygroundCard: React.FC<{ item: PlaygroundItem; onPreview: (item: PlaygroundItem) => void }> = ({ item, onPreview }) => {
-  const hasEmbed = !!item.embedUrl;
+const PlaygroundCard: React.FC<{
+  item: PlaygroundItem;
+  onPreview: (item: PlaygroundItem) => void;
+  onOpenGallery?: () => void;
+}> = ({ item, onPreview, onOpenGallery }) => {
+  const hasGallery = !!onOpenGallery;
+  const hasEmbed = !!item.embedUrl && !hasGallery;
 
   return (
     <div className="group flex flex-col bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 hover:border-science-teal/50 transition-all shadow-lg hover:shadow-2xl hover:shadow-science-teal/10 h-full">
@@ -103,6 +109,19 @@ const PlaygroundCard: React.FC<{ item: PlaygroundItem; onPreview: (item: Playgro
             </button>
           </div>
         )}
+        {hasGallery && (
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/60 backdrop-blur-[2px]">
+            <button
+              onClick={onOpenGallery}
+              className="bg-science-teal hover:bg-science-teal/90 text-slate-900 font-bold py-2 px-6 rounded-full transform hover:scale-105 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(45,212,191,0.3)]"
+            >
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+              View Gallery
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="p-6 flex-grow flex flex-col">
@@ -121,6 +140,15 @@ const PlaygroundCard: React.FC<{ item: PlaygroundItem; onPreview: (item: Playgro
         </div>
 
         <div className="mt-auto pt-4 border-t border-slate-700/50 flex gap-3">
+          {hasGallery ? (
+            <button
+              onClick={onOpenGallery}
+              className="flex-grow inline-flex justify-center items-center gap-2 bg-slate-700 hover:bg-science-teal hover:text-slate-900 text-white py-3 rounded-xl transition-colors font-medium"
+            >
+              View Gallery
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" /></svg>
+            </button>
+          ) : (
           <a
             href={item.url}
             target="_blank"
@@ -130,6 +158,7 @@ const PlaygroundCard: React.FC<{ item: PlaygroundItem; onPreview: (item: Playgro
             Open Experiment
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
           </a>
+          )}
 
           {item.githubUrl && (
             <a
@@ -152,6 +181,7 @@ const PlaygroundCard: React.FC<{ item: PlaygroundItem; onPreview: (item: Playgro
 
 const PlaygroundSection: React.FC = () => {
   const [activeItem, setActiveItem] = useState<PlaygroundItem | null>(null);
+  const [showPrintingGallery, setShowPrintingGallery] = useState(false);
 
   return (
     <section id="playground" className="py-20">
@@ -165,13 +195,22 @@ const PlaygroundSection: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {PLAYGROUND_ITEMS.map((item) => (
-            <PlaygroundCard key={item.id} item={item} onPreview={setActiveItem} />
+            <PlaygroundCard
+              key={item.id}
+              item={item}
+              onPreview={setActiveItem}
+              onOpenGallery={item.customModal === 'printing-gallery' ? () => setShowPrintingGallery(true) : undefined}
+            />
           ))}
         </div>
       </div>
 
       {activeItem && (
         <PlaygroundModal item={activeItem} onClose={() => setActiveItem(null)} />
+      )}
+
+      {showPrintingGallery && (
+        <PrintingGalleryModal onClose={() => setShowPrintingGallery(false)} />
       )}
     </section>
   );

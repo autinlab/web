@@ -132,7 +132,8 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: 'Ludovic Autin, PhD',
     role: 'Institute Investigator',
     bio: 'Principal Investigator specializing in integrative structural modeling and visualization. The mind behind Mesoscope, creating bridges between biological data and 3D graphics.',
-    imageUrl: 'https://ccsb.scripps.edu/wp-content/uploads/2025/03/LudovicAutin-200x271.png', 
+    imageUrl: 'https://ccsb.scripps.edu/wp-content/uploads/2025/03/LudovicAutin-200x271.png',
+    tier: 'pi',
     links: {
       scholar: 'https://scholar.google.com/citations?user=LQzd0s4AAAAJ&hl=en&oi=ao',
       github: 'https://github.com/autinlab'
@@ -144,8 +145,28 @@ export const TEAM_MEMBERS: TeamMember[] = [
     role: 'Postdoctoral Researcher',
     bio: 'Expert in AI, high-performance computing, and software engineering.',
     imageUrl: 'assets/qtallon.jpg',
+    tier: 'postdoc',
     links: {
       github: 'https://github.com/quental96'
+    }
+  },
+  {
+    id: 'julie',
+    name: 'Julie Poon',
+    role: 'High School Summer Intern',
+    bio: 'Summer intern exploring molecular visualization and computational biology.',
+    imageUrl: 'assets/JuliePoon.jpeg',
+    tier: 'intern',
+  },
+  {
+    id: 'chloe',
+    name: 'Chloe Bayle',
+    role: 'SURF Program Intern',
+    bio: 'Undergraduate researcher participating in the Scripps Research SURF program, contributing to mesoscale modeling and visualization.',
+    imageUrl: 'assets/ChloeBayle.jpeg',
+    tier: 'intern',
+    links: {
+      website: 'https://education.scripps.edu/undergraduate/summer-research/surf-program/'
     }
   }
 ];
@@ -270,6 +291,16 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     imageUrl: 'https://molstar.org/me/img/me.png',
     tech: 'Mol* ME',
     features: ['Mesoscale', 'Dev build', 'Large-scale models']
+  },
+  {
+    id: '3dprinting',
+    name: '3D Printing',
+    description: 'A gallery of physical molecular models printed in the lab — from icosahedral virus assemblies and cryo-ET tomograms to the KaspaKlud educational kit.',
+    url: '#',
+    imageUrl: 'assets/3dprinting/bambulab.jpg',
+    tech: 'Bambu P2S',
+    features: ['Caspar-Klug kit', 'Tomograms', 'Capsid structures', 'Full-color classics'],
+    customModal: 'printing-gallery',
   }
 ];
 
