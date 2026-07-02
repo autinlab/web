@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpheresSquared — sphere placement on surfaces
+    <style>
+      :root { color-scheme: dark; }
+      html, body { margin: 0; height: 100%; overflow: hidden; background: #111; font-family: system-ui, sans-serif; }
+      #app { position: fixed; inset: 0; }
+      #app > canvas { display: block; }
+      #nowebgpu {
+        position: fixed; inset: 0; display: none; place-content: center;
+        color: #eee; text-align: center; padding: 2rem; line-height: 1.5;
+      }
+      #nowebgpu.show { display: grid; }
+      #uv {
+        position: fixed; right: 12px; bottom: 12px; width: 280px; height: 280px;
+        background: #0008; border: 1px solid #333; border-radius: 6px; display: none;
+      }
+      #uv.show { display: block; }
+    </style>
+    <script>
+      // Runs BEFORE the module script, so it catches import/eval errors too.
+      (function () {
+        var box = document.createElement("div");
+        box.id = "diag";
+        box.style.cssText =
+          "position:fixed;left:12px;bottom:12px;right:12px;max-height:45vh;overflow:auto;" +
+          "z-index:99999;font:12px/1.45 ui-monospace,monospace;color:#cfe;background:#0b0b12ee;" +
+          "border:1px solid #345;border-radius:6px;padding:8px 10px;white-space:pre-wrap";
+        var lines = [];
+        window.__diag = function (m, bad) {
+          lines.push((bad ? "⚠ " : "· ") + m);
+          box.textContent = lines.join("\n");
+          box.style.borderColor = bad ? "#a33" : "#345";
+          if (bad) box.style.background = "#2a0d0dee";
+        };
+        window.addEventListener("DOMContentLoaded", function () { document.body.appendChild(box); });
+        window.addEventListener("error", function (e) {
+          window.__diag("ERROR: " + e.message + "  @ " + (e.filename || "") + ":" + (e.lineno || ""), true);
+        });
+        window.addEventListener("unhandledrejection", function (e) {
+          var r = e.reason || {};
+          window.__diag("PROMISE REJECT: " + (r.message || r) + "\n" + (r.stack || ""), true);
+        });
+        window.__diag("inline diagnostics ready");
+      })();
+    </script>
+    <script type="module" crossorigin src="./assets/index-sck6wgj6.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <canvas id="uv" width="280" height="280"></canvas>
+    <div id="nowebgpu">
+      <div>
+        <h2>WebGPU not available</h2>
+        <p>This app needs a WebGPU-capable browser (Chrome/Edge stable, or Safari/Firefox with WebGPU enabled).</p>
+      </div>
+    </div>
+  </body>
+</html>
