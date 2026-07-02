@@ -265,7 +265,7 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
   {
     id: 'spheres-squared',
     name: 'SpheresSquared',
-    description: 'An experiment in placing spheres, and groups of spheres, onto a given surface. Interactive WebGPU sandbox for exploring sphere packing and distribution on meshes.',
+    description: 'An experiment in placing spheres, and groups of spheres, onto a given surface. Interactive WebGPU sandbox for exploring sphere packing and distribution across meshes.',
     url: 'playground/SpheresSquared/index.html',
     embedUrl: 'playground/SpheresSquared/index.html',
     imageUrl: 'assets/spheres-squared.png',
