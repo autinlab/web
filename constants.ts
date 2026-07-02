@@ -263,6 +263,16 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     features: ['Fullerene cages', 'Interactive 3D', 'In-browser']
   },
   {
+    id: 'spheres-squared',
+    name: 'SpheresSquared',
+    description: 'An experiment in placing spheres, and groups of spheres, onto a given surface. Interactive WebGPU sandbox for exploring sphere packing and distribution on meshes.',
+    url: 'playground/SpheresSquared/index.html',
+    embedUrl: 'playground/SpheresSquared/index.html',
+    imageUrl: 'assets/spheres-squared.png',
+    tech: 'WebGPU',
+    features: ['Sphere placement', 'Surface packing', 'Interactive 3D']
+  },
+  {
     id: 'virus-on-the-rock',
     name: 'Virus on the Rock',
     description: 'Mol*-based scene placing a virion in a stylized environment with nebula skybox and cell backdrop. Experimental staging for science-art compositions.',
