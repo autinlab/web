@@ -168,6 +168,17 @@ export const TEAM_MEMBERS: TeamMember[] = [
     links: {
       website: 'https://education.scripps.edu/undergraduate/summer-research/surf-program/'
     }
+  },
+  {
+    id: 'justin',
+    name: 'Justin Nguyen',
+    role: 'REACH Program Intern',
+    bio: 'Summer intern participating in the Scripps Research REACH program, contributing to mesoscale modeling and visualization.',
+    imageUrl: 'assets/JustinNguyen.jpeg',
+    tier: 'intern',
+    links: {
+      website: 'https://education.scripps.edu/undergraduate/summer-research/reach/'
+    }
   }
 ];
 
@@ -301,6 +312,16 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     imageUrl: 'https://molstar.org/me/img/me.png',
     tech: 'Mol* ME',
     features: ['Mesoscale', 'Dev build', 'Large-scale models']
+  },
+  {
+    id: 'mesoscope-modern',
+    name: 'Mesoscope (Modern)',
+    description: 'Modernized rebuild of Mesoscope, the interactive tool for assembling cellPACK recipes and staging large-scale mesoscale molecular models in the browser.',
+    url: 'playground/mesoscope_modern/index.html',
+    embedUrl: 'playground/mesoscope_modern/index.html',
+    imageUrl: 'assets/mesoscope_modern.png',
+    tech: 'Web App',
+    features: ['Recipe builder', 'Mesoscale', 'Modern rebuild']
   },
   {
     id: '3dprinting',
