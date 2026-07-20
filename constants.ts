@@ -174,7 +174,7 @@ export const TEAM_MEMBERS: TeamMember[] = [
     name: 'Justin Nguyen',
     role: 'REACH Program Intern',
     bio: 'Summer intern participating in the Scripps Research REACH program, contributing to mesoscale modeling and visualization.',
-    imageUrl: 'assets/JustinNguyen.jpeg',
+    imageUrl: 'assets/justin.png',
     tier: 'intern',
     links: {
       website: 'https://education.scripps.edu/undergraduate/summer-research/reach/'
