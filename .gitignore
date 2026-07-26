@@ -13,6 +13,9 @@ dist-ssr
 *.local
 !data/*.ts
 
+# Mol* viewer build source maps — debug-only, not fetched by the deployed viewer
+public/playground/molstar-dev/viewer/*.map
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
