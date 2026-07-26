@@ -72,6 +72,14 @@ export const PRINTER_SECTIONS: PrinterSection[] = [
         imageUrl: 'assets/3dprinting/capsid_core.jpg',
         group: 'Tomograms & Structures',
       },
+      {
+        id: 'hiv-capsid-puzzle',
+        name: 'HIV Capsid Tomogram Puzzle',
+        description: 'A jigsaw puzzle cut from a cryo-ET tomogram slice through a field of HIV capsid cores. Black and white filament render the tomogram density as printed relief, and the pieces tile into an engraved backing disc.',
+        imageUrl: 'assets/3dprinting/puzzle_hiv_capsid.jpg',
+        credit: 'Quentin Tallon',
+        group: 'Tomograms & Structures',
+      },
       // ── Lithophanes ────────────────────────────────────────────────
       {
         id: 'goodsell-lithophane',
