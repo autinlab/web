@@ -75,10 +75,10 @@ export const PRINTER_SECTIONS: PrinterSection[] = [
       // ── Lithophanes ────────────────────────────────────────────────
       {
         id: 'goodsell-lithophane',
-        name: 'CMYK Lithophane — Goodsell Virus Cross-Section',
-        description: 'A David Goodsell watercolor of a virus cross-section reproduced as a backlit lithophane. Cyan, magenta, yellow and white filament printed at varying thickness turn transmitted light into full color — the painting only resolves once the panel is lit from behind.',
+        name: 'CMYK Lithophane — Goodsell HIV Cross-Section',
+        description: 'A backlit lithophane of David Goodsell\'s HIV cross-section, the painting used as the CROI conference logo. Cyan, magenta, yellow and white filament printed at varying thickness turn transmitted light into full color — the Env spikes, capsid shell and coiled RNA genome only resolve once the panel is lit from behind.',
         imageUrl: 'assets/3dprinting/lithophane.jpg',
-        credit: 'Painting: David S. Goodsell',
+        credit: 'Painting: David S. Goodsell (CROI logo)',
         links: [
           { label: 'Printing instructions', url: 'https://wiki.bambulab.com/en/knowledge-sharing/CMYK-color-lithophane-printing-instructions' },
           { label: 'Lithophane generator', url: 'https://makerworld.com/en/makerlab/makeMyLithophane?from=wiki' },
