@@ -4,6 +4,7 @@ export interface PrintedModel {
   description: string;
   imageUrl?: string; // relative to public/
   credit?: string;
+  links?: { label: string; url: string }[];
   group: string;
 }
 
@@ -70,6 +71,19 @@ export const PRINTER_SECTIONS: PrinterSection[] = [
         description: 'Individual CA hexamer and pentamer subunits that tile into the fullerene-cone HIV capsid lattice.',
         imageUrl: 'assets/3dprinting/capsid_core.jpg',
         group: 'Tomograms & Structures',
+      },
+      // ── Lithophanes ────────────────────────────────────────────────
+      {
+        id: 'goodsell-lithophane',
+        name: 'CMYK Lithophane — Goodsell Virus Cross-Section',
+        description: 'A David Goodsell watercolor of a virus cross-section reproduced as a backlit lithophane. Cyan, magenta, yellow and white filament printed at varying thickness turn transmitted light into full color — the painting only resolves once the panel is lit from behind.',
+        imageUrl: 'assets/3dprinting/litophane.jpg',
+        credit: 'Painting: David S. Goodsell',
+        links: [
+          { label: 'Printing instructions', url: 'https://wiki.bambulab.com/en/knowledge-sharing/CMYK-color-lithophane-printing-instructions' },
+          { label: 'Lithophane generator', url: 'https://makerworld.com/en/makerlab/makeMyLithophane?from=wiki' },
+        ],
+        group: 'Lithophanes',
       },
     ],
   },

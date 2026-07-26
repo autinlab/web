@@ -134,6 +134,22 @@ const ModelCard: React.FC<{ model: PrintedModel; onClick: () => void }> = ({ mod
         {model.credit && (
           <p className="mt-2 text-science-teal text-xs">&#9733; {model.credit}</p>
         )}
+        {model.links && (
+          <div className="mt-2 flex flex-col gap-1">
+            {model.links.map(link => (
+              <a
+                key={link.url}
+                href={link.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="text-slate-400 hover:text-science-teal text-xs underline decoration-slate-600 hover:decoration-science-teal transition-colors"
+              >
+                {link.label} &#8599;
+              </a>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

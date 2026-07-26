@@ -330,7 +330,7 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     url: '#',
     imageUrl: 'assets/3dprinting/bambulab.jpg',
     tech: 'Bambu P2S',
-    features: ['Caspar-Klug kit', 'Tomograms', 'Capsid structures', 'Full-color classics'],
+    features: ['Caspar-Klug kit', 'Tomograms', 'Capsid structures', 'Lithophanes', 'Full-color classics'],
     customModal: 'printing-gallery',
   }
 ];
