@@ -77,7 +77,7 @@ export const PRINTER_SECTIONS: PrinterSection[] = [
         id: 'goodsell-lithophane',
         name: 'CMYK Lithophane — Goodsell Virus Cross-Section',
         description: 'A David Goodsell watercolor of a virus cross-section reproduced as a backlit lithophane. Cyan, magenta, yellow and white filament printed at varying thickness turn transmitted light into full color — the painting only resolves once the panel is lit from behind.',
-        imageUrl: 'assets/3dprinting/litophane.jpg',
+        imageUrl: 'assets/3dprinting/lithophane.jpg',
         credit: 'Painting: David S. Goodsell',
         links: [
           { label: 'Printing instructions', url: 'https://wiki.bambulab.com/en/knowledge-sharing/CMYK-color-lithophane-printing-instructions' },
