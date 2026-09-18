@@ -1,0 +1,447 @@
+
+import { TeamMember, NavItem, Publication, ResearchArea, Software, SoftwareType, Affiliation, IntegrativeModel, PlaygroundItem } from './types';
+
+export const NAV_ITEMS: NavItem[] = [
+  { label: 'Research', href: '#research' },
+  { label: 'Software', href: '#software' },
+  { label: 'Playground', href: '#playground' },
+  { label: 'History', href: '#history' },
+  { label: 'Team', href: '#team' },
+  { label: 'Publications', href: '#publications' },
+];
+
+export const RESEARCH_AREAS: ResearchArea[] = [
+  {
+    id: '1',
+    title: 'Integrative Modeling',
+    icon: '🧬',
+    description: 'Combining data from various experimental sources to build comprehensive structural models of macromolecular assemblies.',
+  },
+  {
+    id: '2',
+    title: 'GPU Computing',
+    icon: '⚡',
+    description: 'Leveraging the power of modern Graphics Processing Units to accelerate simulation and visualization of cellular environments.',
+  },
+  {
+    id: '3',
+    title: 'Molecular Graphics',
+    icon: '🎨',
+    description: 'Developing novel rendering techniques to illustrate the complex and crowded nature of the biological mesoscale.',
+  },
+];
+
+export const AFFILIATIONS: Affiliation[] = [
+  {
+    id: 'scripps',
+    name: 'Scripps Research',
+    url: 'https://www.scripps.edu/',
+    role: 'Home Institution',
+    logo: 'assets/logo_scripps.png' 
+  },
+  {
+    id: 'nih',
+    name: 'NIH',
+    url: 'https://www.nih.gov/',
+    role: 'Funding Agency',
+    logo: 'assets/logo_nih.png'
+  },
+  {
+    id: 'bhive',
+    name: 'BHIVE Center',
+    url: 'https://www.hivecenter.net', 
+    role: 'Collaborative Center'
+  }
+];
+
+export const SOFTWARE_TOOLS: Software[] = [
+  {
+    id: 'mesoscope',
+    name: 'Mesoscope',
+    description: 'A web-based explorer for mesoscale biological models. Dive into HIV, Influenza, and blood plasma models directly in your browser.',
+    type: SoftwareType.WEB_APP,
+    url: 'https://mesoscope.scripps.edu/beta/',
+    embedUrl: 'https://mesoscope.scripps.edu/beta/', 
+    imageUrl: 'https://cdn.ncbi.nlm.nih.gov/pmc/blobs/f947/10624244/ac666dbcf8c2/nihms-1717637-f0001.jpg',
+    features: ['WebGL visualization', 'Interactive annotations', 'Whole-cell models']
+  },
+  {
+    id: 'cellpackgpu',
+    name: 'CellPackGPU',
+    description: 'High-performance algorithm for packing molecular structures into defined volumes using GPU acceleration. Essential for creating dense, realistic cytoplasmic models.',
+    type: SoftwareType.LIBRARY,
+    url: 'https://github.com/autinlab/cellpackgpu',
+    imageUrl: 'assets/cellpackgpu.jpg',
+    features: ['CUDA acceleration', 'Mesoscopic scale', 'Python API']
+  },
+  {
+    id: 'mesoscale-explorer',
+    name: 'Mesoscale Explorer',
+    description: 'A unified tool for exploring and visualizing mesoscale biological models, built on the high-performance Mol* framework.',
+    type: SoftwareType.WEB_APP,
+    url: 'https://molstar.org/me/',
+    embedUrl: 'https://molstar.org/me/viewer/?example=cellpack-hiv-tour&hide-controls=1', 
+    imageUrl: 'https://molstar.org/me/img/me.png', 
+    features: ['Mol* Core', 'Mesoscale', 'Interactive', 'High Performance']
+  },
+  {
+    id: 'illustrate',
+    name: 'Illustrate',
+    description: 'Web application for non-photorealistic rendering of biomolecules. Turn complex PDB structures into clear, publication-ready diagrams with custom shaders and outlines.',
+    type: SoftwareType.WEB_APP,
+    url: 'https://mesoscope.scripps.edu/beta/illustrate.html',
+    embedUrl: 'https://mesoscope.scripps.edu/beta/illustrate.html',
+    imageUrl: 'assets/illustrate.jpg',
+    features: ['NPR Rendering', 'Outline generation', 'Ambient occlusion', 'Custom shaders'],
+    githubUrl: 'https://github.com/ccsb-scripps/Illustrate'
+  },
+  {
+    id: 'cellpaint',
+    name: 'CellPaint',
+    description: 'A digital painting tool for creating molecular landscapes. Paint with proteins, lipids, and DNA to create scientifically accurate illustrations of cellular environments directly in your browser.',
+    type: SoftwareType.WEB_APP,
+    url: 'https://mesoscope.scripps.edu/beta/cellPAINT_dev/',
+    embedUrl: 'https://mesoscope.scripps.edu/beta/cellPAINT_dev/',
+    imageUrl: 'assets/cellpaint.jpg', 
+    features: ['Brush-based modeling', 'Real-time rendering', 'PDB integration', 'Interactive Painting']
+  },
+  {
+    id: 'epmv',
+    name: 'ePMV',
+    description: 'embedded Python Molecular Viewer. The bridge between state-of-the-art scientific simulation and professional 3D animation software like Blender, Maya, and Cinema 4D.',
+    type: SoftwareType.LIBRARY,
+    url: 'https://epmv.scripps.edu',
+    imageUrl: 'https://cdn.ncbi.nlm.nih.gov/pmc/blobs/1163/3101797/f283cf010f86/nihms283232f6.jpg',
+    features: ['Blender/Maya/C4D', 'High-end Rendering', 'Molecular Graphics', 'Python API'],
+    buttonLabel: 'View Site'
+  },
+  {
+    id: 'virus-lesson',
+    name: 'The Virus Lesson',
+    description: 'Interactive educational modules explaining viral structures, lifecycles, and vaccine mechanisms.',
+    type: SoftwareType.EDUCATIONAL,
+    url: 'https://www.meta.com/en-gb/experiences/the-virus-lesson/5389309677805355/',
+    imageUrl: 'assets/IMG_6933.jpg',
+    features: ['Gamified learning', '3D exploration', 'Curriculum aligned']
+  }
+];
+
+export const TEAM_MEMBERS: TeamMember[] = [
+  {
+    id: 'ludo',
+    name: 'Ludovic Autin, PhD',
+    role: 'Institute Investigator',
+    bio: 'Principal Investigator specializing in integrative structural modeling and visualization. The mind behind Mesoscope, creating bridges between biological data and 3D graphics.',
+    imageUrl: 'assets/LudovicAutin.png',
+    tier: 'pi',
+    links: {
+      scholar: 'https://scholar.google.com/citations?user=LQzd0s4AAAAJ&hl=en&oi=ao',
+      github: 'https://github.com/autinlab'
+    }
+  },
+  {
+    id: 'quentin',
+    name: 'Quentin Tallon, PhD',
+    role: 'Postdoctoral Researcher',
+    bio: 'Expert in AI, high-performance computing, and software engineering.',
+    imageUrl: 'assets/qtallon.jpg',
+    tier: 'postdoc',
+    links: {
+      github: 'https://github.com/quental96'
+    }
+  },
+  {
+    id: 'julie',
+    name: 'Julie Poon',
+    role: 'High School Summer Intern',
+    bio: 'Summer intern exploring molecular visualization and computational biology.',
+    imageUrl: 'assets/JuliePoon.jpeg',
+    tier: 'alumni',
+    tenure: 'Summer 2026',
+  },
+  {
+    id: 'chloe',
+    name: 'Chloe Bayle',
+    role: 'SURF Program Intern',
+    bio: 'Undergraduate researcher participating in the Scripps Research SURF program, contributing to mesoscale modeling and visualization.',
+    imageUrl: 'assets/ChloeBayle.jpeg',
+    tier: 'alumni',
+    tenure: 'Summer 2026',
+    links: {
+      website: 'https://education.scripps.edu/undergraduate/summer-research/surf-program/'
+    }
+  },
+  {
+    id: 'justin',
+    name: 'Justin Nguyen',
+    role: 'REACH Program Intern',
+    bio: 'Summer intern participating in the Scripps Research REACH program, contributing to mesoscale modeling and visualization.',
+    imageUrl: 'assets/justin.png',
+    tier: 'alumni',
+    tenure: 'Summer 2026',
+    links: {
+      website: 'https://education.scripps.edu/undergraduate/summer-research/reach/'
+    }
+  }
+];
+
+export const PUBLICATIONS: Publication[] = [
+  {
+    id: 'mesoscale-explorer-2024',
+    title: 'Mesoscale explorer: Visual exploration of large‐scale molecular models',
+    authors: ['Rose, Alexander', 'Sehnal, David', 'Goodsell, David S', 'Autin, Ludovic'],
+    journal: 'Protein Science',
+    volume: '33',
+    issue: '10',
+    pages: 'e5177',
+    year: 2024,
+    publisher: 'John Wiley & Sons, Inc. Hoboken, USA',
+    link: 'https://doi.org/10.1002/pro.5177'
+  },
+  {
+    id: 'organelle-2022',
+    title: 'Integrative structural modelling and visualisation of a cellular organelle',
+    authors: ['Autin, Ludovic', 'Barbaro, Brett A', 'Jewett, Andrew I', 'Ekman, Axel', 'Verma, Shruti', 'Olson, Arthur J', 'Goodsell, David S'],
+    journal: 'QRB discovery',
+    volume: '3',
+    pages: 'e11',
+    year: 2022,
+    publisher: 'Cambridge University Press',
+    link: 'https://doi.org/10.1017/qrd.2022.10'
+  },
+  {
+    id: 'mycoplasma-2022',
+    title: 'Building structural models of a whole mycoplasma cell',
+    authors: ['Maritan, Martina', 'Autin, Ludovic', 'Karr, Jonathan', 'Covert, Markus W', 'Olson, Arthur J', 'Goodsell, David S'],
+    journal: 'Journal of molecular biology',
+    volume: '434',
+    issue: '2',
+    pages: '167351',
+    year: 2022,
+    publisher: 'Academic Press',
+    link: 'https://doi.org/10.1016/j.jmb.2021.167351'
+  },
+  {
+    id: 'cellpaint-2021',
+    title: 'CellPAINT: Turnkey illustration of molecular cell biology',
+    authors: ['Gardner, Adam', 'Autin, Ludovic', 'Fuentes, Daniel', 'Maritan, Martina', 'Barad, Benjamin A', 'Medina, Michaela', 'Olson, Arthur J', 'Grotjahn, Danielle A', 'Goodsell, David S'],
+    journal: 'Frontiers in bioinformatics',
+    volume: '1',
+    pages: '660936',
+    year: 2021,
+    publisher: 'Frontiers Media SA',
+    link: 'https://doi.org/10.3389/fbinf.2021.660936'
+  },
+  {
+    id: 'mesoscope-2020',
+    title: 'Mesoscope: A web-based tool for mesoscale data integration and curation',
+    authors: ['Autin, Ludovic', 'Maritan, Martina', 'Barbaro, Brett A', 'Gardner, Adam', 'Olson, Arthur J', 'Sanner, Michel', 'Goodsell, David S'],
+    journal: 'MolVa: Workshop on Molecular Graphics and Visual Analysis of Molecular Data 2020',
+    pages: '23',
+    year: 2020,
+    link: 'https://doi.org/10.2312/molva.20201098'
+  },
+  {
+    id: 'illustrate-2019',
+    title: 'Illustrate: software for biomolecular illustration',
+    authors: ['Goodsell, David S', 'Autin, Ludovic', 'Olson, Arthur J'],
+    journal: 'Structure',
+    volume: '27',
+    issue: '11',
+    pages: '1716-1720. e1',
+    year: 2019,
+    publisher: 'Elsevier',
+    link: 'https://doi.org/10.1016/j.str.2019.08.011'
+  }
+];
+
+export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
+  {
+    id: 'cellpaint2d',
+    name: 'cellPAINT 2D (Dev)',
+    description: 'Browser build of the cellPAINT 2D painting tool, running directly in the page. Paint with proteins, lipids, and DNA to compose molecular landscapes.',
+    url: 'playground/cellPAINT2D/index.html',
+    embedUrl: 'playground/cellPAINT2D/index.html',
+    tutorialUrl: 'playground/cellPAINT2D/Tutorial/index.html',
+    imageUrl: 'assets/cellpaint.jpg',
+    tech: 'Unity WebGL',
+    features: ['Brush-based modeling', '2D scenes', 'In-browser', 'Guided tutorial']
+  },
+  {
+    id: 'fullerenes',
+    name: 'Fullerenes Explorer',
+    description: 'Interactive exploration of fullerene cages and carbon nanostructures. Built as a lightweight in-browser app for quick exploration.',
+    url: 'playground/fullerenes/index.html',
+    embedUrl: 'playground/fullerenes/index.html',
+    imageUrl: 'assets/fullerenes.jpg',
+    tech: 'WebGL',
+    features: ['Fullerene cages', 'Interactive 3D', 'In-browser']
+  },
+  {
+    id: 'spheres-squared',
+    name: 'SpheresSquared',
+    description: 'An experiment in placing spheres, and groups of spheres, onto a given surface. Interactive WebGPU sandbox for exploring sphere packing and distribution across meshes.',
+    url: 'playground/SpheresSquared/index.html',
+    embedUrl: 'playground/SpheresSquared/index.html',
+    imageUrl: 'assets/spheres-squared.png',
+    tech: 'WebGPU',
+    features: ['Sphere placement', 'Surface packing', 'Interactive 3D']
+  },
+  {
+    id: 'virus-on-the-rock',
+    name: 'Virus on the Rock',
+    description: 'Mol*-based scene placing a virion in a stylized environment with nebula skybox and cell backdrop. Experimental staging for science-art compositions.',
+    url: 'playground/virus-on-the-rock/index.html',
+    embedUrl: 'playground/virus-on-the-rock/index.html',
+    imageUrl: 'assets/virus-on-the-rock.png',
+    tech: 'Mol*',
+    features: ['Skybox staging', 'Scientific scene', 'Mol* plugin']
+  },
+  {
+    id: 'molstar-dev-viewer',
+    name: 'Mol* Viewer (Dev Build)',
+    description: 'Local development build of the full Mol* Viewer, served from the playground for staging and testing new features outside the public Mol* release.',
+    url: 'playground/molstar-dev/viewer/index.html',
+    embedUrl: 'playground/molstar-dev/viewer/index.html',
+    imageUrl: 'assets/molstar-logo.png',
+    tech: 'Mol*',
+    features: ['Full viewer', 'Dev build', 'Themable']
+  },
+  {
+    id: 'molstar-dev-me',
+    name: 'Mesoscale Explorer (Dev Build)',
+    description: 'Local dev build of the Mol* Mesoscale Explorer. Browse and tweak large-scale cellular models with the latest in-progress ME features.',
+    url: 'playground/molstar-dev/mesoscale-explorer/index.html',
+    embedUrl: 'playground/molstar-dev/mesoscale-explorer/index.html',
+    imageUrl: 'https://molstar.org/me/img/me.png',
+    tech: 'Mol* ME',
+    features: ['Mesoscale', 'Dev build', 'Large-scale models']
+  },
+  {
+    id: 'mvs-stories',
+    name: 'Molecular Stories',
+    description: 'Guided, scene-by-scene tours of molecular structures authored by the lab with MolViewStories — from the Andes virus envelope to superoxide dismutase and the bacterial flagellar motor.',
+    url: '#',
+    imageUrl: 'assets/stories/andv.jpg',
+    tech: 'MolViewStories',
+    features: ['Guided tours', 'Narrated scenes', 'Mol* stories'],
+    customModal: 'story-gallery',
+  },
+  {
+    id: 'mvs-builder',
+    name: 'MolViewStory Builder',
+    description: 'In-house MolViewStory builder and editor, exposed as an MCP endpoint so an agent can author and edit story scenes alongside you. Hosted on the lab server — only reachable from the Scripps network.',
+    url: 'https://mesoscope.scripps.edu/mvs/builder/',
+    embedUrl: 'https://mesoscope.scripps.edu/mvs/builder/',
+    imageUrl: 'assets/molstar-logo.png',
+    tech: 'MCP',
+    features: ['Story editor', 'MCP endpoint', 'Scripps network only'],
+    notice: 'Hosted on the Scripps network — if this panel stays blank, you are either off-network (VPN required) or the server does not allow embedding. Use "Open in New Tab" instead.',
+  },
+  {
+    id: 'mesoscope-modern',
+    name: 'Mesoscope (Modern)',
+    description: 'Modernized rebuild of Mesoscope, the interactive tool for assembling cellPACK recipes and staging large-scale mesoscale molecular models in the browser.',
+    url: 'playground/mesoscope_modern/index.html',
+    embedUrl: 'playground/mesoscope_modern/index.html',
+    imageUrl: 'assets/mesoscope_modern.png',
+    tech: 'Web App',
+    features: ['Recipe builder', 'Mesoscale', 'Modern rebuild']
+  },
+  {
+    id: 'fluoddity',
+    name: 'Fluoddity',
+    description: 'Interactive particle-fluid sandbox: paint walls and trails, tune particle behaviors, and mutate them into variants. Simulation states can be shared as links.',
+    url: 'https://autinlab.github.io/Fluoddity-Web/',
+    embedUrl: 'https://autinlab.github.io/Fluoddity-Web/',
+    imageUrl: 'assets/fluoddity.jpg',
+    tech: 'WebGL',
+    features: ['Particle simulation', 'Paintable walls & trails', 'Behavior mutation', 'Shareable states'],
+    credit: { label: '@OA_paperclips', url: 'https://x.com/OA_paperclips' },
+  },
+  {
+    id: '3dprinting',
+    name: '3D Printing',
+    description: 'A gallery of physical molecular models printed in the lab — from icosahedral virus assemblies and cryo-ET tomograms to the KaspaKlud educational kit.',
+    url: '#',
+    imageUrl: 'assets/3dprinting/bambulab.jpg',
+    tech: 'Bambu P2S',
+    features: ['Caspar-Klug kit', 'Tomograms', 'Capsid structures', 'Lithophanes', 'Full-color classics'],
+    customModal: 'printing-gallery',
+  }
+];
+
+export const INTEGRATIVE_MODELS: IntegrativeModel[] = [
+    {
+        id: 'hiv-2010',
+        name: 'HIV-1 in Blood Serum',
+        description: 'First generation integrative model of HIV-1 in blood serum environment.',
+        year: '2010',
+        viewerUrl: 'https://molstar.org/me/viewer/?example=cellpack-hiv1&hide-controls=1',
+        imageUrl: 'https://molstar.org/me/img/cellpack-hiv1.png'
+    },
+    {
+        id: 'hiv-2025',
+        name: 'HIV-1 Capsid',
+        description: 'Next-generation all-atom model of the HIV-1 capsid assembly.',
+        year: '2025',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'exosome',
+        name: 'Blood Plasma Exosome',
+        description: 'Structural model of an average blood plasma exosome.',
+        viewerUrl: 'https://molstar.org/me/viewer/?example=cellpack-exosome&hide-controls=1',
+        imageUrl: 'https://molstar.org/me/img/cellpack-exosome.png'
+    },
+    {
+        id: 'isg-mature',
+        name: 'Mature ISG',
+        description: 'Insulin Secretory Granule in its mature state.',
+        viewerUrl: 'https://molstar.org/me/viewer/?example=cellpack-isg_mature&hide-controls=1',
+        imageUrl: 'https://molstar.org/me/img/cellpack-isg_mature.png'
+    },
+    {
+        id: 'isg-immature',
+        name: 'Immature ISG',
+        description: 'Insulin Secretory Granule in its immature state during formation.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'mycoplasma',
+        name: 'Mycoplasma genitalium',
+        description: 'Whole-cell structural model of Mycoplasma genitalium.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'influenza',
+        name: 'Influenza A',
+        description: 'Structural organization of the Influenza A virion.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'nipah',
+        name: 'Nipah Virus',
+        description: 'Integrative model of the Nipah virus structure.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'sars-cov-2',
+        name: 'SARS-CoV-2',
+        description: 'Structural model of the SARS-CoV-2 virion.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'dyad',
+        name: 'Muscle Dyad',
+        description: 'Molecular architecture of the cardiac muscle dyad.',
+        viewerUrl: 'https://molstar.org/me/?hide-controls=1'
+    },
+    {
+        id: 'machinery-life',
+        name: 'Machinery of Life',
+        description: 'Visualizing the central dogma and cellular machinery.',
+        viewerUrl: 'https://molstar.org/me/viewer/?example=machineryoflife&hide-controls=1',
+        imageUrl: 'https://molstar.org/me/img/cellpack-machinery.png'
+    }
+];
