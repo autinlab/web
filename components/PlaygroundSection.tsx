@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { PLAYGROUND_ITEMS } from '../constants';
 import { PlaygroundItem } from '../types';
+import { formatCount, usePlaygroundStats } from '../lib/playgroundStats';
 import PrintingGalleryModal from './PrintingGalleryModal';
 import StoryGalleryModal from './StoryGalleryModal';
 
@@ -64,17 +65,99 @@ const PlaygroundModal: React.FC<{ item: PlaygroundItem; onClose: () => void }> =
   );
 };
 
+const EyeIcon: React.FC = () => (
+  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+    <circle cx="12" cy="12" r="3" />
+  </svg>
+);
+
+const ViewBadge: React.FC<{ count: string }> = ({ count }) => (
+  <span
+    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-white/90 font-medium tabular-nums"
+    style={{ background: 'rgba(20,20,22,.34)', backdropFilter: 'blur(10px) saturate(1.4)', WebkitBackdropFilter: 'blur(10px) saturate(1.4)', fontSize: '11.5px' }}
+    title={`${count} views`}
+  >
+    <EyeIcon />
+    {count}
+  </span>
+);
+
+const canPlayLoops = () =>
+  !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+  !(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+
+// Muted loop over the poster: sources are attached the first time the card scrolls into view,
+// it plays only while visible (or hovered) and the tab is shown, and fades in once frames are ready.
+const LoopVideo: React.FC<{ loop: NonNullable<PlaygroundItem['loop']>; hovered: boolean }> = ({ loop, hovered }) => {
+  const ref = useRef<HTMLVideoElement>(null);
+  const [inView, setInView] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [tabVisible, setTabVisible] = useState(!document.hidden);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      setInView(entry.isIntersecting);
+      if (entry.isIntersecting) setLoaded(true);
+    }, { threshold: 0.35 });
+    observer.observe(el);
+    const onVisibility = () => setTabVisible(!document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
+    return () => {
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !loaded) return;
+    if ((inView || hovered) && tabVisible) {
+      el.muted = true;
+      el.play().catch(() => {});
+    } else {
+      el.pause();
+    }
+  }, [inView, hovered, tabVisible, loaded]);
+
+  return (
+    <video
+      ref={ref}
+      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${ready ? 'opacity-100' : 'opacity-0'}`}
+      muted
+      loop
+      playsInline
+      preload="none"
+      aria-hidden="true"
+      onPlaying={() => setReady(true)}
+    >
+      {loaded && loop.webm && <source src={loop.webm} type="video/webm" />}
+      {loaded && <source src={loop.mp4} type="video/mp4" />}
+    </video>
+  );
+};
+
 const PlaygroundCard: React.FC<{
   item: PlaygroundItem;
+  views: string | null;
   onPreview: (item: PlaygroundItem) => void;
   onOpenGallery?: () => void;
-}> = ({ item, onPreview, onOpenGallery }) => {
+}> = ({ item, views, onPreview, onOpenGallery }) => {
   const hasGallery = !!onOpenGallery;
   const hasEmbed = !!item.embedUrl && !hasGallery;
+  const [hovered, setHovered] = useState(false);
+  const [showLoop] = useState(() => !!item.loop && canPlayLoops());
 
   return (
     <div className="group flex flex-col bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 hover:border-science-teal/50 transition-all shadow-lg hover:shadow-2xl hover:shadow-science-teal/10 h-full">
-      <div className="relative w-full aspect-video bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
+      <div
+        className="relative w-full aspect-video bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         {item.imageUrl ? (
           <img
             src={item.imageUrl}
@@ -92,13 +175,20 @@ const PlaygroundCard: React.FC<{
             </span>
           </div>
         )}
+        {showLoop && item.loop && <LoopVideo loop={item.loop} hovered={hovered} />}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent opacity-60 pointer-events-none"></div>
 
         {item.tech && (
-          <div className="absolute top-4 right-4 pointer-events-none">
+          <div className="absolute top-4 left-4 pointer-events-none">
             <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md bg-science-teal/20 text-science-teal border border-science-teal/30">
               {item.tech}
             </span>
+          </div>
+        )}
+
+        {views && (
+          <div className="absolute top-4 right-4 pointer-events-none">
+            <ViewBadge count={views} />
           </div>
         )}
 
@@ -107,6 +197,8 @@ const PlaygroundCard: React.FC<{
             <div className="flex flex-col items-center gap-3">
               <button
                 onClick={() => onPreview(item)}
+                data-umami-event="launch-preview"
+                data-umami-event-id={item.id}
                 className="bg-science-teal hover:bg-science-teal/90 text-slate-900 font-bold py-2 px-6 rounded-full transform hover:scale-105 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(45,212,191,0.3)]"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,6 +228,8 @@ const PlaygroundCard: React.FC<{
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/60 backdrop-blur-[2px]">
             <button
               onClick={onOpenGallery}
+              data-umami-event="open-gallery"
+              data-umami-event-id={item.id}
               className="bg-science-teal hover:bg-science-teal/90 text-slate-900 font-bold py-2 px-6 rounded-full transform hover:scale-105 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(45,212,191,0.3)]"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -180,6 +274,8 @@ const PlaygroundCard: React.FC<{
           {hasGallery ? (
             <button
               onClick={onOpenGallery}
+              data-umami-event="open-gallery"
+              data-umami-event-id={item.id}
               className="flex-grow inline-flex justify-center items-center gap-2 bg-slate-700 hover:bg-science-teal hover:text-slate-900 text-white py-3 rounded-xl transition-colors font-medium"
             >
               View Gallery
@@ -190,6 +286,8 @@ const PlaygroundCard: React.FC<{
             href={item.url}
             target="_blank"
             rel="noreferrer"
+            data-umami-event="open-experiment"
+            data-umami-event-id={item.id}
             className="flex-grow inline-flex justify-center items-center gap-2 bg-slate-700 hover:bg-science-teal hover:text-slate-900 text-white py-3 rounded-xl transition-colors font-medium"
           >
             Open Experiment
@@ -220,15 +318,37 @@ const PlaygroundSection: React.FC = () => {
   const [activeItem, setActiveItem] = useState<PlaygroundItem | null>(null);
   const [showPrintingGallery, setShowPrintingGallery] = useState(false);
   const [showStoryGallery, setShowStoryGallery] = useState(false);
+  const stats = usePlaygroundStats();
+  const activeLabel = formatCount(stats?.active);
+  const totalLabel = formatCount(stats?.total);
 
   return (
     <section id="playground" className="py-20">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-slate-800 pb-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-12 border-b border-slate-800 pb-6">
           <div>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-2">Playground</h2>
             <p className="text-slate-400">Experimental in-browser demos and works-in-progress. Launch a preview or open in a new tab.</p>
           </div>
+          {(activeLabel || totalLabel) && (
+            <div className="flex items-center gap-4 text-sm text-slate-400 tabular-nums whitespace-nowrap">
+              {activeLabel && (
+                <span className="inline-flex items-center gap-2">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping motion-reduce:animate-none"></span>
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                  </span>
+                  <span><span className="text-white font-medium">{activeLabel}</span> viewing</span>
+                </span>
+              )}
+              {totalLabel && (
+                <span className="inline-flex items-center gap-1.5">
+                  <EyeIcon />
+                  <span><span className="text-white font-medium">{totalLabel}</span> views</span>
+                </span>
+              )}
+            </div>
+          )}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
@@ -236,6 +356,7 @@ const PlaygroundSection: React.FC = () => {
             <PlaygroundCard
               key={item.id}
               item={item}
+              views={formatCount(stats?.views[item.id])}
               onPreview={setActiveItem}
               onOpenGallery={
                 item.customModal === 'printing-gallery' ? () => setShowPrintingGallery(true)

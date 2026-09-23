@@ -255,6 +255,9 @@ export const PUBLICATIONS: Publication[] = [
   }
 ];
 
+// Umami stats feed: all-time opens per PlaygroundItem.id plus live visitors (see .claude/umami-handoff.md).
+export const PLAYGROUND_STATS_URL = 'https://mesoscope.scripps.edu/umami-stats/views.json';
+
 export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
   {
     id: 'cellpaint2d',

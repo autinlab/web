@@ -91,4 +91,6 @@ export interface PlaygroundItem {
   notice?: string;
   credit?: { label: string; url: string };
   customModal?: 'printing-gallery' | 'story-gallery';
+  // Short muted loop shown over the poster (stored under public/assets/playground/<id>/)
+  loop?: { mp4: string; webm?: string };
 }
