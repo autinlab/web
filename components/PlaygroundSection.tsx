@@ -180,7 +180,7 @@ const PlaygroundCard: React.FC<{
 
         {item.tech && (
           <div className="absolute top-4 left-4 pointer-events-none">
-            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md bg-science-teal/20 text-science-teal border border-science-teal/30">
+            <span className="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md bg-slate-900/70 text-science-teal border border-science-teal/40">
               {item.tech}
             </span>
           </div>
