@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { LAB_STORIES, LabStory } from '../data/stories';
+import LoopVideo, { canPlayLoops } from './LoopVideo';
 
 interface StoryGalleryModalProps {
   onClose: () => void;
@@ -11,6 +12,8 @@ interface StoryGalleryModalProps {
 const StoryCard: React.FC<{ story: LabStory }> = ({ story }) => {
   const [imgFailed, setImgFailed] = useState(false);
   const hasImage = !!story.imageUrl && !imgFailed;
+  const [hovered, setHovered] = useState(false);
+  const [showLoop] = useState(() => !!story.loop && canPlayLoops());
 
   return (
     <a
@@ -19,7 +22,11 @@ const StoryCard: React.FC<{ story: LabStory }> = ({ story }) => {
       rel="noopener noreferrer"
       className="group flex flex-col bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-science-teal/50 hover:shadow-lg hover:shadow-science-teal/10 transition-all"
     >
-      <div className="relative aspect-video bg-slate-900 overflow-hidden">
+      <div
+        className="relative aspect-video bg-slate-900 overflow-hidden"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         {hasImage ? (
           <img
             src={story.imageUrl}
@@ -34,6 +41,7 @@ const StoryCard: React.FC<{ story: LabStory }> = ({ story }) => {
             </svg>
           </div>
         )}
+        {showLoop && story.loop && <LoopVideo loop={story.loop} hovered={hovered} />}
 
         {/* Play affordance */}
         <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/30 transition-colors">

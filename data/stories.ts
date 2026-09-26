@@ -5,9 +5,13 @@
 //                `url` is either a remote player on molstar.org, or a story
 //                hosted under public/playground/ on this site.
 //                `imageUrl` is relative to public/.
+//                `loop` is an optional muted MP4 played over the poster
+//                (files under public/assets/stories/loops/).
 //                `unlisted: true` hides the card from the gallery while keeping
 //                the story reachable by direct link.
 // ─────────────────────────────────────────────────────────────────────────────
+
+import { VideoLoop } from '../types';
 
 export interface LabStory {
   id: string;
@@ -15,6 +19,7 @@ export interface LabStory {
   description: string;
   url: string;
   imageUrl?: string; // relative to public/
+  loop?: VideoLoop;
   credit?: string;
   scenes?: number;
   unlisted?: boolean;
@@ -43,6 +48,7 @@ export const LAB_STORIES: LabStory[] = [
     description: 'Andes virus from envelope to genome — the glycoprotein lattice, nucleoprotein assembly, and the ribonucleoprotein complex inside, built from cellPACK models with narration.',
     url: 'https://molstar.org/stories-viewer/v1?story-id=774abcd3&data-format=mvsx',
     imageUrl: 'assets/stories/andv.jpg',
+    loop: { mp4: 'assets/stories/loops/andv.mp4' },
     credit: 'Chloe Bayle',
     scenes: 4,
   },
@@ -52,6 +58,7 @@ export const LAB_STORIES: LabStory[] = [
     description: 'A long-form tour of Cu/Zn superoxide dismutase: how the beta barrel fold traps its metal ions, and what the symmetry axis and sequence tell us about the enzyme.',
     url: exampleUrl('terms-of-entrapment'),
     imageUrl: 'assets/stories/terms-of-entrapment.jpg',
+    loop: { mp4: 'assets/stories/loops/terms-of-entrapment.mp4' },
     scenes: 16,
   },
   {
@@ -60,6 +67,7 @@ export const LAB_STORIES: LabStory[] = [
     description: 'An idealized exosome model explored from the outside in — surface proteins, interior cargo, and the whole vesicle rendered in space-filling representation.',
     url: exampleUrl('exosome'),
     imageUrl: 'assets/stories/exosome.jpg',
+    loop: { mp4: 'assets/stories/loops/exosome.mp4' },
     scenes: 5,
   },
   {
@@ -68,6 +76,7 @@ export const LAB_STORIES: LabStory[] = [
     description: 'The bacterial flagellar motor and the conformational switch that reverses its direction of rotation.',
     url: exampleUrl('motm-300'),
     imageUrl: 'assets/stories/motm-300.jpg',
+    loop: { mp4: 'assets/stories/loops/flagellar-motor.mp4' },
     scenes: 4,
   },
   {
@@ -76,6 +85,7 @@ export const LAB_STORIES: LabStory[] = [
     description: 'The first protein structure ever solved, told as a Molecule of the Month story — oxygen binding at the heme, and why whales carry so much of it.',
     url: exampleUrl('motm-01'),
     imageUrl: 'assets/stories/motm-01.jpg',
+    loop: { mp4: 'assets/stories/loops/myoglobin.mp4' },
     scenes: 5,
   },
 ];
