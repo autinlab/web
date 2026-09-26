@@ -12,6 +12,11 @@ export enum SoftwareType {
   EDUCATIONAL = 'Educational'
 }
 
+export interface VideoLoop {
+  mp4: string;
+  webm?: string;
+}
+
 export interface Software {
   id: string;
   name: string;
@@ -23,6 +28,8 @@ export interface Software {
   features: string[];
   githubUrl?: string; // Optional GitHub repository link
   buttonLabel?: string; // Optional custom label for the primary button
+  // Short muted loop shown over the poster (stored under public/assets/software/<id>/)
+  loop?: VideoLoop;
 }
 
 export interface TeamMember {
@@ -92,5 +99,5 @@ export interface PlaygroundItem {
   credit?: { label: string; url: string };
   customModal?: 'printing-gallery' | 'story-gallery';
   // Short muted loop shown over the poster (stored under public/assets/playground/<id>/)
-  loop?: { mp4: string; webm?: string };
+  loop?: VideoLoop;
 }

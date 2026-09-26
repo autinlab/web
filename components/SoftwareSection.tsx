@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { SOFTWARE_TOOLS } from '../constants';
 import { SoftwareType, Software } from '../types';
 import ReactDOM from 'react-dom';
+import LoopVideo, { canPlayLoops } from './LoopVideo';
 
 // Software Modal Component
 const SoftwareModal: React.FC<{ tool: Software; onClose: () => void }> = ({ tool, onClose }) => {
@@ -63,10 +64,16 @@ const SoftwareModal: React.FC<{ tool: Software; onClose: () => void }> = ({ tool
 
 const SoftwareCard: React.FC<{ tool: Software; onPreview: (tool: Software) => void }> = ({ tool, onPreview }) => {
   const hasEmbed = !!tool.embedUrl;
+  const [hovered, setHovered] = useState(false);
+  const [showLoop] = useState(() => !!tool.loop && canPlayLoops());
 
   return (
     <div className="group flex flex-col bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 hover:border-science-purple/50 transition-all shadow-lg hover:shadow-2xl hover:shadow-science-purple/10 h-full">
-      <div className="relative w-full aspect-video bg-slate-900 overflow-hidden">
+      <div
+        className="relative w-full aspect-video bg-slate-900 overflow-hidden"
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+      >
         <img
           src={tool.imageUrl}
           alt={tool.name}
@@ -77,23 +84,26 @@ const SoftwareCard: React.FC<{ tool: Software; onPreview: (tool: Software) => vo
             target.parentElement?.classList.add('bg-gradient-to-br', 'from-slate-800', 'to-slate-900');
           }}
         />
+        {showLoop && tool.loop && <LoopVideo loop={tool.loop} hovered={hovered} />}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent opacity-60 pointer-events-none"></div>
         
         {/* Type Badge */}
         <div className="absolute top-4 right-4 pointer-events-none">
-            <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md ${
-              tool.type === SoftwareType.WEB_APP ? 'bg-science-teal/20 text-science-teal border border-science-teal/30' :
-              tool.type === SoftwareType.LIBRARY ? 'bg-science-purple/20 text-science-purple border border-science-purple/30' :
-              'bg-blue-500/20 text-blue-400 border border-blue-500/30'
+            <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md bg-slate-900/70 ${
+              tool.type === SoftwareType.WEB_APP ? 'text-science-teal border border-science-teal/40' :
+              tool.type === SoftwareType.LIBRARY ? 'text-science-purple border border-science-purple/40' :
+              'text-blue-400 border border-blue-500/40'
           }`}>
               {tool.type}
           </span>
         </div>
+      </div>
 
-        {/* Overlay for Web Apps */}
-        {hasEmbed && (
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/60 backdrop-blur-[2px]">
-                <button 
+      {/* Launch Preview for Web Apps, below the image so the vignette stays visible */}
+      {/* Row is always rendered so card titles stay aligned across the grid */}
+      <div className="flex justify-center px-6 pt-5 h-[3.75rem] opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300">
+            {hasEmbed && (
+                <button
                     onClick={() => onPreview(tool)}
                     className="bg-science-teal hover:bg-science-teal/90 text-slate-900 font-bold py-2 px-6 rounded-full transform hover:scale-105 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(45,212,191,0.3)]"
                 >
@@ -103,8 +113,7 @@ const SoftwareCard: React.FC<{ tool: Software; onPreview: (tool: Software) => vo
                     </svg>
                     Launch Preview
                 </button>
-            </div>
-        )}
+            )}
       </div>
 
       <div className="p-6 flex-grow flex flex-col">

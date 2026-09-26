@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { PLAYGROUND_ITEMS } from '../constants';
 import { PlaygroundItem } from '../types';
 import { formatCount, usePlaygroundStats } from '../lib/playgroundStats';
 import PrintingGalleryModal from './PrintingGalleryModal';
 import StoryGalleryModal from './StoryGalleryModal';
+import LoopVideo, { canPlayLoops } from './LoopVideo';
 
 const PlaygroundModal: React.FC<{ item: PlaygroundItem; onClose: () => void }> = ({ item, onClose }) => {
   useEffect(() => {
@@ -83,63 +84,6 @@ const ViewBadge: React.FC<{ count: string }> = ({ count }) => (
   </span>
 );
 
-const canPlayLoops = () =>
-  !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-  !(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
-
-// Muted loop over the poster: sources are attached the first time the card scrolls into view,
-// it plays only while visible (or hovered) and the tab is shown, and fades in once frames are ready.
-const LoopVideo: React.FC<{ loop: NonNullable<PlaygroundItem['loop']>; hovered: boolean }> = ({ loop, hovered }) => {
-  const ref = useRef<HTMLVideoElement>(null);
-  const [inView, setInView] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [ready, setReady] = useState(false);
-  const [tabVisible, setTabVisible] = useState(!document.hidden);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(([entry]) => {
-      setInView(entry.isIntersecting);
-      if (entry.isIntersecting) setLoaded(true);
-    }, { threshold: 0.35 });
-    observer.observe(el);
-    const onVisibility = () => setTabVisible(!document.hidden);
-    document.addEventListener('visibilitychange', onVisibility);
-    return () => {
-      observer.disconnect();
-      document.removeEventListener('visibilitychange', onVisibility);
-    };
-  }, []);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || !loaded) return;
-    if ((inView || hovered) && tabVisible) {
-      el.muted = true;
-      el.play().catch(() => {});
-    } else {
-      el.pause();
-    }
-  }, [inView, hovered, tabVisible, loaded]);
-
-  return (
-    <video
-      ref={ref}
-      className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${ready ? 'opacity-100' : 'opacity-0'}`}
-      muted
-      loop
-      playsInline
-      preload="none"
-      aria-hidden="true"
-      onPlaying={() => setReady(true)}
-    >
-      {loaded && loop.webm && <source src={loop.webm} type="video/webm" />}
-      {loaded && <source src={loop.mp4} type="video/mp4" />}
-    </video>
-  );
-};
-
 const PlaygroundCard: React.FC<{
   item: PlaygroundItem;
   views: string | null;
@@ -192,9 +136,12 @@ const PlaygroundCard: React.FC<{
           </div>
         )}
 
+      </div>
+
+      {/* Hover actions sit below the image so the vignette loop stays visible; row always rendered to keep titles aligned */}
+      <div className="flex flex-wrap justify-center gap-2 px-4 pt-5 min-h-[3.75rem] opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity duration-300">
         {hasEmbed && (
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/60 backdrop-blur-[2px]">
-            <div className="flex flex-col items-center gap-3">
+          <>
               <button
                 onClick={() => onPreview(item)}
                 data-umami-event="launch-preview"
@@ -221,11 +168,9 @@ const PlaygroundCard: React.FC<{
                   Open Tutorial
                 </a>
               )}
-            </div>
-          </div>
+          </>
         )}
         {hasGallery && (
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-slate-900/60 backdrop-blur-[2px]">
             <button
               onClick={onOpenGallery}
               data-umami-event="open-gallery"
@@ -237,7 +182,6 @@ const PlaygroundCard: React.FC<{
               </svg>
               View Gallery
             </button>
-          </div>
         )}
       </div>
 

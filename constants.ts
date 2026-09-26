@@ -63,16 +63,18 @@ export const SOFTWARE_TOOLS: Software[] = [
     url: 'https://mesoscope.scripps.edu/beta/',
     embedUrl: 'https://mesoscope.scripps.edu/beta/', 
     imageUrl: 'https://cdn.ncbi.nlm.nih.gov/pmc/blobs/f947/10624244/ac666dbcf8c2/nihms-1717637-f0001.jpg',
+    loop: { mp4: 'assets/software/mesoscope/loop.mp4' },
     features: ['WebGL visualization', 'Interactive annotations', 'Whole-cell models']
   },
   {
     id: 'cellpackgpu',
     name: 'CellPackGPU',
-    description: 'High-performance algorithm for packing molecular structures into defined volumes using GPU acceleration. Essential for creating dense, realistic cytoplasmic models.',
+    description: 'High-performance algorithm for packing molecular structures into defined volumes using GPU compute shaders in Unity. Essential for creating dense, realistic cytoplasmic models.',
     type: SoftwareType.LIBRARY,
     url: 'https://github.com/autinlab/cellpackgpu',
     imageUrl: 'assets/cellpackgpu.jpg',
-    features: ['CUDA acceleration', 'Mesoscopic scale', 'Python API']
+    loop: { mp4: 'assets/software/cellpackgpu/loop.mp4' },
+    features: ['Unity', 'Compute shaders', 'C#', 'Mesoscopic scale']
   },
   {
     id: 'mesoscale-explorer',
@@ -82,6 +84,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     url: 'https://molstar.org/me/',
     embedUrl: 'https://molstar.org/me/viewer/?example=cellpack-hiv-tour&hide-controls=1', 
     imageUrl: 'https://molstar.org/me/img/me.png', 
+    loop: { mp4: 'assets/software/mesoscale-explorer/loop.mp4' },
     features: ['Mol* Core', 'Mesoscale', 'Interactive', 'High Performance']
   },
   {
@@ -92,6 +95,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     url: 'https://mesoscope.scripps.edu/beta/illustrate.html',
     embedUrl: 'https://mesoscope.scripps.edu/beta/illustrate.html',
     imageUrl: 'assets/illustrate.jpg',
+    loop: { mp4: 'assets/software/illustrate/loop.mp4' },
     features: ['NPR Rendering', 'Outline generation', 'Ambient occlusion', 'Custom shaders'],
     githubUrl: 'https://github.com/ccsb-scripps/Illustrate'
   },
@@ -103,6 +107,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     url: 'https://mesoscope.scripps.edu/beta/cellPAINT_dev/',
     embedUrl: 'https://mesoscope.scripps.edu/beta/cellPAINT_dev/',
     imageUrl: 'assets/cellpaint.jpg', 
+    loop: { mp4: 'assets/software/cellpaint/loop.mp4' },
     features: ['Brush-based modeling', 'Real-time rendering', 'PDB integration', 'Interactive Painting']
   },
   {
@@ -112,6 +117,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     type: SoftwareType.LIBRARY,
     url: 'https://epmv.scripps.edu',
     imageUrl: 'https://cdn.ncbi.nlm.nih.gov/pmc/blobs/1163/3101797/f283cf010f86/nihms283232f6.jpg',
+    loop: { mp4: 'assets/software/epmv/loop.mp4' },
     features: ['Blender/Maya/C4D', 'High-end Rendering', 'Molecular Graphics', 'Python API'],
     buttonLabel: 'View Site'
   },
@@ -122,6 +128,7 @@ export const SOFTWARE_TOOLS: Software[] = [
     type: SoftwareType.EDUCATIONAL,
     url: 'https://www.meta.com/en-gb/experiences/the-virus-lesson/5389309677805355/',
     imageUrl: 'assets/IMG_6933.jpg',
+    loop: { mp4: 'assets/software/virus-lesson/loop.mp4' },
     features: ['Gamified learning', '3D exploration', 'Curriculum aligned']
   }
 ];
@@ -267,6 +274,7 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     embedUrl: 'playground/cellPAINT2D/index.html',
     tutorialUrl: 'playground/cellPAINT2D/Tutorial/index.html',
     imageUrl: 'assets/cellpaint.jpg',
+    loop: { mp4: 'assets/software/cellpaint/loop.mp4' },
     tech: 'Unity WebGL',
     features: ['Brush-based modeling', '2D scenes', 'In-browser', 'Guided tutorial']
   },
@@ -277,6 +285,7 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     url: 'playground/fullerenes/index.html',
     embedUrl: 'playground/fullerenes/index.html',
     imageUrl: 'assets/fullerenes.jpg',
+    loop: { mp4: 'assets/playground/fullerenes/loop.mp4' },
     tech: 'WebGL',
     features: ['Fullerene cages', 'Interactive 3D', 'In-browser']
   },
@@ -287,6 +296,7 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     url: 'playground/SpheresSquared/index.html',
     embedUrl: 'playground/SpheresSquared/index.html',
     imageUrl: 'assets/spheres-squared.png',
+    loop: { mp4: 'assets/playground/spheres-squared/loop.mp4' },
     tech: 'WebGPU',
     features: ['Sphere placement', 'Surface packing', 'Interactive 3D']
   },
@@ -297,6 +307,7 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     url: 'playground/virus-on-the-rock/index.html',
     embedUrl: 'playground/virus-on-the-rock/index.html',
     imageUrl: 'assets/virus-on-the-rock.png',
+    loop: { mp4: 'assets/playground/virus-on-the-rock/loop.mp4' },
     tech: 'Mol*',
     features: ['Skybox staging', 'Scientific scene', 'Mol* plugin']
   },
@@ -326,6 +337,7 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     description: 'Guided, scene-by-scene tours of molecular structures authored by the lab with MolViewStories — from the Andes virus envelope to superoxide dismutase and the bacterial flagellar motor.',
     url: '#',
     imageUrl: 'assets/stories/andv.jpg',
+    loop: { mp4: 'assets/playground/mvs-stories/loop.mp4' },
     tech: 'MolViewStories',
     features: ['Guided tours', 'Narrated scenes', 'Mol* stories'],
     customModal: 'story-gallery',
@@ -358,6 +370,7 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     url: 'https://autinlab.github.io/Fluoddity-Web/',
     embedUrl: 'https://autinlab.github.io/Fluoddity-Web/',
     imageUrl: 'assets/fluoddity.jpg',
+    loop: { mp4: 'assets/playground/fluoddity/loop.mp4' },
     tech: 'WebGL',
     features: ['Particle simulation', 'Paintable walls & trails', 'Behavior mutation', 'Shareable states'],
     credit: { label: '@OA_paperclips', url: 'https://x.com/OA_paperclips' },
