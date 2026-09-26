@@ -1,0 +1,13 @@
+# autinlab.org: search engines and AI assistants are welcome to crawl and cite this site.
+# Training/control tokens: GPTBot, ClaudeBot, CCBot, Google-Extended, Applebot-Extended
+# Retrieval fetchers: Googlebot, Bingbot, OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot
+# All are allowed through the single * group below. Adding a named group would make
+# that bot ignore these rules, so repeat the Disallow lines in any group you add.
+
+User-agent: *
+Allow: /
+# Dev builds duplicating Mol* and locally hosted MolViewStories
+Disallow: /playground/molstar-dev/
+Disallow: /playground/stories/
+
+Sitemap: https://autinlab.org/sitemap.xml
