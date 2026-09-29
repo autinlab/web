@@ -366,13 +366,13 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
   {
     id: 'fluoddity',
     name: 'Fluoddity',
-    description: 'Interactive particle-fluid sandbox: paint walls and trails, tune particle behaviors, and mutate them into variants. Simulation states can be shared as links.',
+    description: 'Interactive particle-fluid sandbox: paint walls and trails, tune particle behaviors, and mutate them into variants. We added the option to load an image that drives the particles. Simulation states can be shared as links.',
     url: 'https://autinlab.github.io/Fluoddity-Web/',
     embedUrl: 'https://autinlab.github.io/Fluoddity-Web/',
     imageUrl: 'assets/fluoddity.jpg',
     loop: { mp4: 'assets/playground/fluoddity/loop.mp4' },
     tech: 'WebGL',
-    features: ['Particle simulation', 'Paintable walls & trails', 'Behavior mutation', 'Shareable states'],
+    features: ['Particle simulation', 'Paintable walls & trails', 'Behavior mutation', 'Image-driven particles', 'Shareable states'],
     credit: { label: '@OA_paperclips', url: 'https://x.com/OA_paperclips' },
   },
   {
