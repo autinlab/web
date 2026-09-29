@@ -2,14 +2,20 @@ import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { LAB_STORIES, LabStory } from '../data/stories';
 import LoopVideo, { canPlayLoops } from './LoopVideo';
+import ViewBadge from './ViewBadge';
+import { formatCount } from '../lib/playgroundStats';
 
 interface StoryGalleryModalProps {
+  views: Record<string, number>;
   onClose: () => void;
 }
 
+// Umami event id for a story card; prefixed so it never collides with a PlaygroundItem id in views.json.
+const statId = (story: LabStory) => `story-${story.id}`;
+
 // ── Story card ────────────────────────────────────────────────────────────────
 
-const StoryCard: React.FC<{ story: LabStory }> = ({ story }) => {
+const StoryCard: React.FC<{ story: LabStory; views: string | null }> = ({ story, views }) => {
   const [imgFailed, setImgFailed] = useState(false);
   const hasImage = !!story.imageUrl && !imgFailed;
   const [hovered, setHovered] = useState(false);
@@ -20,6 +26,8 @@ const StoryCard: React.FC<{ story: LabStory }> = ({ story }) => {
       href={story.url}
       target="_blank"
       rel="noopener noreferrer"
+      data-umami-event="open-experiment"
+      data-umami-event-id={statId(story)}
       className="group flex flex-col bg-slate-800 rounded-xl overflow-hidden border border-slate-700 hover:border-science-teal/50 hover:shadow-lg hover:shadow-science-teal/10 transition-all"
     >
       <div
@@ -52,6 +60,12 @@ const StoryCard: React.FC<{ story: LabStory }> = ({ story }) => {
           </span>
         </div>
 
+        {views && (
+          <span className="absolute top-2 left-2 pointer-events-none">
+            <ViewBadge count={views} />
+          </span>
+        )}
+
         {story.scenes !== undefined && (
           <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-slate-900/80 text-slate-300 text-xs font-medium backdrop-blur-sm">
             {story.scenes} scenes
@@ -73,7 +87,7 @@ const StoryCard: React.FC<{ story: LabStory }> = ({ story }) => {
 
 // ── Main modal ────────────────────────────────────────────────────────────────
 
-const StoryGalleryModal: React.FC<StoryGalleryModalProps> = ({ onClose }) => {
+const StoryGalleryModal: React.FC<StoryGalleryModalProps> = ({ views, onClose }) => {
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
@@ -121,7 +135,7 @@ const StoryGalleryModal: React.FC<StoryGalleryModalProps> = ({ onClose }) => {
         {/* Grid */}
         <div className="flex-grow overflow-y-auto p-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {LAB_STORIES.filter(s => !s.unlisted).map(s => <StoryCard key={s.id} story={s} />)}
+            {LAB_STORIES.filter(s => !s.unlisted).map(s => <StoryCard key={s.id} story={s} views={formatCount(views[statId(s)])} />)}
           </div>
         </div>
       </div>

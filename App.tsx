@@ -13,12 +13,15 @@ import ContactModal from './components/ContactModal';
 import HistoryModal from './components/HistoryModal';
 import ModelsModal from './components/ModelsModal';
 import InternPlannerModal from './components/InternPlannerModal';
+import { usePlaygroundStats } from './lib/playgroundStats';
 
 const App: React.FC = () => {
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isModelsOpen, setIsModelsOpen] = useState(false);
   const [isInternPlannerOpen, setIsInternPlannerOpen] = useState(false);
+  const stats = usePlaygroundStats();
+  const views = stats?.views ?? {};
 
   return (
     <div className="font-sans text-slate-200 antialiased min-h-screen flex flex-col">
@@ -31,8 +34,8 @@ const App: React.FC = () => {
       <main className="flex-grow">
         <Hero />
         <ResearchSection onOpenModels={() => setIsModelsOpen(true)} />
-        <SoftwareSection />
-        <PlaygroundSection />
+        <SoftwareSection views={views} />
+        <PlaygroundSection stats={stats} />
         <TeamSection onRecruitClick={() => setIsInternPlannerOpen(true)} />
         <PublicationsSection />
       </main>
@@ -51,6 +54,7 @@ const App: React.FC = () => {
 
       <ModelsModal
         isOpen={isModelsOpen}
+        views={views}
         onClose={() => setIsModelsOpen(false)}
       />
 

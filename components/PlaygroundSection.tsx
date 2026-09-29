@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { PLAYGROUND_ITEMS } from '../constants';
 import { PlaygroundItem } from '../types';
-import { formatCount, usePlaygroundStats } from '../lib/playgroundStats';
+import { formatCount, PlaygroundStats } from '../lib/playgroundStats';
 import PrintingGalleryModal from './PrintingGalleryModal';
 import StoryGalleryModal from './StoryGalleryModal';
 import LoopVideo, { canPlayLoops } from './LoopVideo';
+import ViewBadge, { EyeIcon } from './ViewBadge';
 
 const PlaygroundModal: React.FC<{ item: PlaygroundItem; onClose: () => void }> = ({ item, onClose }) => {
   useEffect(() => {
@@ -66,23 +67,6 @@ const PlaygroundModal: React.FC<{ item: PlaygroundItem; onClose: () => void }> =
   );
 };
 
-const EyeIcon: React.FC = () => (
-  <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-    <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
-    <circle cx="12" cy="12" r="3" />
-  </svg>
-);
-
-const ViewBadge: React.FC<{ count: string }> = ({ count }) => (
-  <span
-    className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-white/90 font-medium tabular-nums"
-    style={{ background: 'rgba(20,20,22,.34)', backdropFilter: 'blur(10px) saturate(1.4)', WebkitBackdropFilter: 'blur(10px) saturate(1.4)', fontSize: '11.5px' }}
-    title={`${count} views`}
-  >
-    <EyeIcon />
-    {count}
-  </span>
-);
 
 const PlaygroundCard: React.FC<{
   item: PlaygroundItem;
@@ -258,11 +242,10 @@ const PlaygroundCard: React.FC<{
   );
 };
 
-const PlaygroundSection: React.FC = () => {
+const PlaygroundSection: React.FC<{ stats: PlaygroundStats | null }> = ({ stats }) => {
   const [activeItem, setActiveItem] = useState<PlaygroundItem | null>(null);
   const [showPrintingGallery, setShowPrintingGallery] = useState(false);
   const [showStoryGallery, setShowStoryGallery] = useState(false);
-  const stats = usePlaygroundStats();
   const activeLabel = formatCount(stats?.active);
   const totalLabel = formatCount(stats?.total);
 
@@ -321,7 +304,7 @@ const PlaygroundSection: React.FC = () => {
       )}
 
       {showStoryGallery && (
-        <StoryGalleryModal onClose={() => setShowStoryGallery(false)} />
+        <StoryGalleryModal views={stats?.views ?? {}} onClose={() => setShowStoryGallery(false)} />
       )}
     </section>
   );

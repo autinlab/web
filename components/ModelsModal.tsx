@@ -2,13 +2,16 @@
 import React, { useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { INTEGRATIVE_MODELS } from '../constants';
+import ViewBadge from './ViewBadge';
+import { formatCount } from '../lib/playgroundStats';
 
 interface ModelsModalProps {
   isOpen: boolean;
+  views: Record<string, number>;
   onClose: () => void;
 }
 
-const ModelsModal: React.FC<ModelsModalProps> = ({ isOpen, onClose }) => {
+const ModelsModal: React.FC<ModelsModalProps> = ({ isOpen, views, onClose }) => {
   const [activeModelId, setActiveModelId] = useState<string | null>(null);
 
   // Prevent body scrolling when modal is open
@@ -52,7 +55,11 @@ const ModelsModal: React.FC<ModelsModalProps> = ({ isOpen, onClose }) => {
         {/* Content Scroll Area */}
         <div className="overflow-y-auto p-6 md:p-8 bg-slate-950">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {INTEGRATIVE_MODELS.map((model) => (
+                {INTEGRATIVE_MODELS.map((model) => {
+                    // Umami event id, prefixed so it never collides with other ids in views.json.
+                    const statId = `model-${model.id}`;
+                    const viewCount = formatCount(views[statId]);
+                    return (
                     <div 
                         key={model.id} 
                         className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden hover:border-science-teal/50 transition-all shadow-lg flex flex-col h-[400px]"
@@ -95,10 +102,18 @@ const ModelsModal: React.FC<ModelsModalProps> = ({ isOpen, onClose }) => {
                                         </div>
                                      )}
                                      
+                                     {viewCount && (
+                                        <div className="absolute top-3 right-3 z-30 pointer-events-none">
+                                            <ViewBadge count={viewCount} />
+                                        </div>
+                                     )}
+
                                      {/* Overlay Button */}
                                      <div className="absolute inset-0 flex items-center justify-center bg-slate-900/60 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity z-20">
                                         <button 
                                             onClick={() => setActiveModelId(model.id)}
+                                            data-umami-event="launch-preview"
+                                            data-umami-event-id={statId}
                                             className="bg-science-teal text-slate-900 px-6 py-2 rounded-full font-bold text-sm hover:bg-white transition-colors flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 duration-300 shadow-[0_0_15px_rgba(45,212,191,0.5)]"
                                         >
                                             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -126,7 +141,8 @@ const ModelsModal: React.FC<ModelsModalProps> = ({ isOpen, onClose }) => {
                             </p>
                         </div>
                     </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
       </div>

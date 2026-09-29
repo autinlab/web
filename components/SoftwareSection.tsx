@@ -4,6 +4,11 @@ import { SOFTWARE_TOOLS } from '../constants';
 import { SoftwareType, Software } from '../types';
 import ReactDOM from 'react-dom';
 import LoopVideo, { canPlayLoops } from './LoopVideo';
+import ViewBadge from './ViewBadge';
+import { formatCount } from '../lib/playgroundStats';
+
+// Umami event id for a software card; prefixed so it never collides with other ids in views.json.
+const statId = (tool: Software) => `software-${tool.id}`;
 
 // Software Modal Component
 const SoftwareModal: React.FC<{ tool: Software; onClose: () => void }> = ({ tool, onClose }) => {
@@ -62,7 +67,7 @@ const SoftwareModal: React.FC<{ tool: Software; onClose: () => void }> = ({ tool
     );
 };
 
-const SoftwareCard: React.FC<{ tool: Software; onPreview: (tool: Software) => void }> = ({ tool, onPreview }) => {
+const SoftwareCard: React.FC<{ tool: Software; views: string | null; onPreview: (tool: Software) => void }> = ({ tool, views, onPreview }) => {
   const hasEmbed = !!tool.embedUrl;
   const [hovered, setHovered] = useState(false);
   const [showLoop] = useState(() => !!tool.loop && canPlayLoops());
@@ -87,6 +92,12 @@ const SoftwareCard: React.FC<{ tool: Software; onPreview: (tool: Software) => vo
         {showLoop && tool.loop && <LoopVideo loop={tool.loop} hovered={hovered} />}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 to-transparent opacity-60 pointer-events-none"></div>
         
+        {views && (
+          <div className="absolute top-4 left-4 pointer-events-none">
+            <ViewBadge count={views} />
+          </div>
+        )}
+
         {/* Type Badge */}
         <div className="absolute top-4 right-4 pointer-events-none">
             <span className={`px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider backdrop-blur-md bg-slate-900/70 ${
@@ -105,6 +116,8 @@ const SoftwareCard: React.FC<{ tool: Software; onPreview: (tool: Software) => vo
             {hasEmbed && (
                 <button
                     onClick={() => onPreview(tool)}
+                    data-umami-event="launch-preview"
+                    data-umami-event-id={statId(tool)}
                     className="bg-science-teal hover:bg-science-teal/90 text-slate-900 font-bold py-2 px-6 rounded-full transform hover:scale-105 transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(45,212,191,0.3)]"
                 >
                     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,6 +149,8 @@ const SoftwareCard: React.FC<{ tool: Software; onPreview: (tool: Software) => vo
             href={tool.url}
             target="_blank" 
             rel="noreferrer"
+            data-umami-event="open-experiment"
+            data-umami-event-id={statId(tool)}
             className="flex-grow inline-flex justify-center items-center gap-2 bg-slate-700 hover:bg-science-purple text-white py-3 rounded-xl transition-colors font-medium"
             >
             {tool.buttonLabel ? tool.buttonLabel : (tool.type === SoftwareType.LIBRARY ? 'View Repository' : 'Open Tool')}
@@ -161,7 +176,7 @@ const SoftwareCard: React.FC<{ tool: Software; onPreview: (tool: Software) => vo
   );
 };
 
-const SoftwareSection: React.FC = () => {
+const SoftwareSection: React.FC<{ views: Record<string, number> }> = ({ views }) => {
   const [activeTool, setActiveTool] = useState<Software | null>(null);
 
   return (
@@ -180,7 +195,7 @@ const SoftwareSection: React.FC = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {SOFTWARE_TOOLS.map((tool) => (
-            <SoftwareCard key={tool.id} tool={tool} onPreview={setActiveTool} />
+            <SoftwareCard key={tool.id} tool={tool} views={formatCount(views[statId(tool)])} onPreview={setActiveTool} />
           ))}
         </div>
       </div>
