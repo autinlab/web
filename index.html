@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ludo's Molecular Graphics Lab | Scripps Research</title>
+    <meta name="description" content="Ludo's Molecular Graphics Lab at Scripps Research builds tools to model, simulate and paint the molecular world, from cellPACK to Mesoscope." />
+    <link rel="canonical" href="https://autinlab.org/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Ludo's Molecular Graphics Lab" />
+    <meta property="og:title" content="Ludo's Molecular Graphics Lab | Scripps Research" />
+    <meta property="og:description" content="Ludo's Molecular Graphics Lab at Scripps Research builds tools to model, simulate and paint the molecular world, from cellPACK to Mesoscope." />
+    <meta property="og:url" content="https://autinlab.org/" />
+    <meta property="og:image" content="https://autinlab.org/assets/cellpackgpu.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ludo's Molecular Graphics Lab | Scripps Research" />
+    <meta name="twitter:description" content="Ludo's Molecular Graphics Lab at Scripps Research builds tools to model, simulate and paint the molecular world, from cellPACK to Mesoscope." />
+    <meta name="twitter:image" content="https://autinlab.org/assets/cellpackgpu.jpg" />
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "ResearchOrganization",
+      "@id": "https://autinlab.org/#lab",
+      "name": "Ludo's Molecular Graphics Lab",
+      "alternateName": ["Ludo's MGL", "Ludo's Lab"],
+      "url": "https://autinlab.org/",
+      "logo": "https://autinlab.org/assets/Logo1.gif",
+      "description": "Research group at Scripps Research building tools to model, simulate and paint the molecular world, from cellPACK to Mesoscope: integrative modeling, GPU computing and molecular graphics for the biological mesoscale.",
+      "email": "autin@scripps.edu",
+      "address": { "@type": "PostalAddress", "addressLocality": "La Jolla", "addressRegion": "CA", "addressCountry": "US" },
+      "parentOrganization": { "@type": "Organization", "name": "Scripps Research", "url": "https://www.scripps.edu/" },
+      "funder": { "@type": "Organization", "name": "NIH", "url": "https://www.nih.gov/" },
+      "employee": { "@id": "https://autinlab.org/#ludovic-autin" },
+      "knowsAbout": ["Integrative modeling", "Mesoscale modeling", "Molecular graphics", "GPU computing", "Structural biology"]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://autinlab.org/#ludovic-autin",
+      "name": "Ludovic Autin",
+      "honorificSuffix": "PhD",
+      "jobTitle": "Institute Investigator",
+      "worksFor": { "@id": "https://autinlab.org/#lab" },
+      "sameAs": [
+        "https://www.scripps.edu/faculty/autin/",
+        "https://orcid.org/0000-0002-2197-191X",
+        "https://scholar.google.com/citations?user=LQzd0s4AAAAJ",
+        "https://github.com/autinlab"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://autinlab.org/#website",
+      "url": "https://autinlab.org/",
+      "name": "Ludo's Molecular Graphics Lab",
+      "publisher": { "@id": "https://autinlab.org/#lab" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://autinlab.org/cellpack.html#software",
+      "name": "cellPACK",
+      "url": "https://autinlab.org/cellpack.html",
+      "sameAs": "https://github.com/mesoscope/cellpack",
+      "applicationCategory": "Scientific modeling software",
+      "description": "A virtual mesoscope to model and visualize structural systems biology: cellPACK packs molecular structures into cellular compartments following curated recipes.",
+      "citation": { "@type": "ScholarlyArticle", "name": "cellPACK: a virtual mesoscope to model and visualize structural systems biology", "sameAs": "https://doi.org/10.1038/nmeth.3204" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://autinlab.org/mesoscope.html#software",
+      "name": "Mesoscope",
+      "url": "https://mesoscope.scripps.edu/beta/",
+      "applicationCategory": "Scientific visualization software",
+      "operatingSystem": "Web browser",
+      "description": "A web-based explorer for mesoscale biological models such as HIV, Influenza and blood plasma, and a tool for mesoscale data integration and curation.",
+      "creator": { "@id": "https://autinlab.org/#ludovic-autin" },
+      "citation": { "@type": "ScholarlyArticle", "name": "Mesoscope: A web-based tool for mesoscale data integration and curation", "sameAs": "https://doi.org/10.2312/molva.20201098" }
+    }
+  ]
+}
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://mesoscope.scripps.edu/umami/script.js" data-website-id="f38ba217-277e-4327-bda1-dfcf0a08365e" data-domains="autinlab.org"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Space Grotesk', 'sans-serif'],
+            },
+            colors: {
+              science: {
+                dark: '#0f172a', // slate-900
+                teal: '#2dd4bf',
+                purple: '#a855f7',
+                glass: 'rgba(15, 23, 42, 0.7)',
+              }
+            },
+            animation: {
+              'float': 'float 6s ease-in-out infinite',
+              'float-delayed': 'float 6s ease-in-out 3s infinite',
+            },
+            keyframes: {
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-20px)' },
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #0f172a;
+        color: #e2e8f0;
+        overflow-x: hidden;
+      }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0f172a;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #334155;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #2dd4bf;
+      }
+    </style>
+
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0"
+  }
+}
+</script>
+  <script type="module" crossorigin src="./assets/main-BpN17hFq.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/client-Bw3kyQJN.js">
+  <link rel="modulepreload" crossorigin href="./assets/InternPlannerModal-D3KV3jQx.js">
+</head>
+  <body>
+    <noscript>
+      <div style="max-width:720px;margin:2rem auto;padding:0 1rem;font-family:sans-serif;line-height:1.6">
+        <h1>Ludo's Molecular Graphics Lab at Scripps Research</h1>
+        <p>Ludo's Molecular Graphics Lab (Ludo's MGL), led by Ludovic Autin, PhD, Institute Investigator, is a research group at Scripps Research in La Jolla, California. We build tools to model, simulate and paint the molecular world, from cellPACK to Mesoscope. Our work combines integrative modeling (building structural models of macromolecular assemblies from several experimental sources), GPU computing to simulate and visualize cellular environments, and molecular graphics to illustrate the crowded biological mesoscale.</p>
+        <p>Our tools include <a href="https://autinlab.org/cellpack.html" style="color:#2dd4bf">cellPACK</a>, a virtual mesoscope that packs molecular structures into cellular compartments; <a href="https://autinlab.org/mesoscope.html" style="color:#2dd4bf">Mesoscope</a>, a web-based explorer for mesoscale biological models; CellPackGPU, GPU-accelerated packing used to build whole-cell models of Mycoplasma genitalium; Illustrate, non-photorealistic rendering of biomolecules; CellPaint, a digital painting tool for molecular landscapes; and ePMV, the embedded Python Molecular Viewer for Blender, Maya and Cinema 4D. We also contribute to Mesoscale Explorer, built on Mol*.</p>
+        <p>The lab continues the legacy of the Molecular Graphics Laboratory (MGL) founded by Art Olson and continued by David Goodsell at Scripps Research. Our integrative models include HIV-1, the blood plasma exosome, insulin secretory granules, Mycoplasma genitalium, Influenza A and SARS-CoV-2.</p>
+        <p><a href="https://autinlab.org/cellpack.html" style="color:#2dd4bf">cellPACK</a> · <a href="https://autinlab.org/mesoscope.html" style="color:#2dd4bf">Mesoscope</a> · <a href="https://autinlab.org/labintern.html" style="color:#2dd4bf">Internships</a> · <a href="https://github.com/autinlab" style="color:#2dd4bf">GitHub</a> · <a href="mailto:autin@scripps.edu" style="color:#2dd4bf">autin@scripps.edu</a></p>
+      </div>
+    </noscript>
+    <div id="root"></div>
+  </body>
+</html>

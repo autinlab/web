@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cellPACK | Ludo's Molecular Graphics Lab, Scripps Research</title>
+    <meta name="description" content="cellPACK is a virtual mesoscope that packs molecular structures into cellular compartments to model and visualize structural systems biology." />
+    <link rel="canonical" href="https://autinlab.org/cellpack.html" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="cellPACK | Ludo's Molecular Graphics Lab" />
+    <meta property="og:description" content="cellPACK is a virtual mesoscope that packs molecular structures into cellular compartments to model and visualize structural systems biology." />
+    <meta property="og:url" content="https://autinlab.org/cellpack.html" />
+    <meta property="og:image" content="https://autinlab.org/assets/cellpackgpu.jpg" />
+    <script defer src="https://mesoscope.scripps.edu/umami/script.js" data-website-id="f38ba217-277e-4327-bda1-dfcf0a08365e" data-domains="autinlab.org"></script>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://autinlab.org/cellpack.html#software",
+      "name": "cellPACK",
+      "url": "https://autinlab.org/cellpack.html",
+      "sameAs": "https://github.com/mesoscope/cellpack",
+      "applicationCategory": "Scientific modeling software",
+      "description": "A virtual mesoscope to model and visualize structural systems biology: cellPACK packs molecular structures into cellular compartments following curated recipes.",
+      "contributor": [
+        { "@id": "https://autinlab.org/#lab" },
+        { "@type": "Person", "name": "Graham Johnson" },
+        { "@type": "Organization", "name": "Allen Institute for Cell Science" }
+      ],
+      "citation": { "@type": "ScholarlyArticle", "name": "cellPACK: a virtual mesoscope to model and visualize structural systems biology", "sameAs": "https://doi.org/10.1038/nmeth.3204" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://autinlab.org/cellpack.html#cellpackgpu",
+      "name": "CellPackGPU",
+      "applicationCategory": "Scientific modeling software",
+      "description": "GPU-accelerated packing of molecular structures into defined volumes, used to build whole-cell models of Mycoplasma genitalium.",
+      "contributor": { "@id": "https://autinlab.org/#lab" },
+      "citation": { "@type": "ScholarlyArticle", "name": "Instant construction and visualization of crowded biological environments", "sameAs": "https://doi.org/10.1109/TVCG.2017.2744258" }
+    }
+  ]
+}
+    </script>
+    <style>
+      body { background: #0f172a; color: #e2e8f0; font-family: Inter, system-ui, sans-serif; line-height: 1.6; margin: 0; }
+      main { max-width: 720px; margin: 0 auto; padding: 3rem 1.25rem; }
+      h1, h2 { color: #fff; line-height: 1.2; }
+      a { color: #2dd4bf; }
+      li { margin-bottom: 0.5rem; }
+      .muted { color: #94a3b8; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p><a href="https://autinlab.org/">&larr; Ludo's Molecular Graphics Lab</a></p>
+      <h1>cellPACK</h1>
+      <p><strong>cellPACK is a virtual mesoscope to model and visualize structural systems biology: it packs molecular structures into cellular compartments, following curated biological recipes, to build 3D models of viruses, organelles and whole cells.</strong></p>
+      <p>cellPACK was introduced by Johnson et al. in Nature Methods (2015), co-authored by Ludovic Autin, PhD. <a href="https://autinlab.org/">Ludo's Molecular Graphics Lab</a> at Scripps Research works on cellPACK with Graham Johnson and the Allen Institute for Cell Science. Models built with cellPACK, including HIV-1 in blood serum, the blood plasma exosome and insulin secretory granules, can be explored in <a href="https://autinlab.org/mesoscope.html">Mesoscope</a> and <a href="https://molstar.org/me/">Mesoscale Explorer</a>.</p>
+      <ul>
+        <li>Source code: <a href="https://github.com/mesoscope/cellpack">github.com/mesoscope/cellpack</a></li>
+        <li>Lab website: <a href="https://autinlab.org/">https://autinlab.org</a></li>
+      </ul>
+
+      <h2>CellPackGPU</h2>
+      <p>CellPackGPU is a GPU-accelerated version of the packing method that builds dense, realistic cytoplasmic models almost instantly. It was introduced in "Instant construction and visualization of crowded biological environments" and used to build the whole-cell structural models of <em>Mycoplasma genitalium</em>. The source is not yet public.</p>
+
+      <h2>How to cite</h2>
+      <ul>
+        <li>cellPACK: Johnson GT, Autin L, Al-Alusi M, Goodsell DS, Sanner MF, Olson AJ. cellPACK: a virtual mesoscope to model and visualize structural systems biology. <em>Nat Methods</em> 12(1):85-91, 2015. <a href="https://doi.org/10.1038/nmeth.3204">doi:10.1038/nmeth.3204</a></li>
+        <li>CellPackGPU: Klein T, Autin L, Kozlikova B, Goodsell DS, Olson A, Groller ME, Viola I. Instant construction and visualization of crowded biological environments. <em>IEEE Trans Vis Comput Graph</em> 24(1):862-872, 2018. <a href="https://doi.org/10.1109/TVCG.2017.2744258">doi:10.1109/TVCG.2017.2744258</a></li>
+        <li>Mycoplasma models: Maritan M, Autin L, Karr J, Covert MW, Olson AJ, Goodsell DS. Building structural models of a whole mycoplasma cell. <em>J Mol Biol</em> 434(2):167351, 2022. <a href="https://doi.org/10.1016/j.jmb.2021.167351">doi:10.1016/j.jmb.2021.167351</a></li>
+      </ul>
+      <p class="muted">Ludo's Molecular Graphics Lab · Scripps Research · La Jolla, CA · <a href="mailto:autin@scripps.edu">autin@scripps.edu</a></p>
+    </main>
+  </body>
+</html>
