@@ -381,6 +381,7 @@ export const PLAYGROUND_ITEMS: PlaygroundItem[] = [
     description: 'A gallery of physical molecular models printed in the lab — from icosahedral virus assemblies and cryo-ET tomograms to the KaspaKlud educational kit.',
     url: '#',
     imageUrl: 'assets/3dprinting/bambulab.jpg',
+    loop: { mp4: 'assets/playground/3dprinting/loop.mp4' },
     tech: 'Bambu P2S',
     features: ['Caspar-Klug kit', 'Tomograms', 'Capsid structures', 'Lithophanes', 'Full-color classics'],
     customModal: 'printing-gallery',
