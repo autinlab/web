@@ -38,6 +38,8 @@
       <nav class="toc">
         <strong>On this page</strong>
         <ol>
+          <li><a href="#quest-setup">Meta Quest developer setup</a></li>
+          <li><a href="#templates">Start from a template project (Quest XR &amp; Photon Fusion)</a></li>
           <li><a href="#unity-mcp">Unity Claude MCP</a></li>
           <li><a href="#blender-mcp">Blender Claude MCP</a></li>
           <li><a href="#printing">3D printing (Bambu Lab &amp; Snapmaker)</a></li>
@@ -45,8 +47,96 @@
         </ol>
       </nav>
 
+      <!-- ─────────────────────────────── Meta Quest setup ─────────────────────────────── -->
+      <h2 id="quest-setup">1. Meta Quest developer setup</h2>
+      <p><strong>Get your computer and headset ready to build Unity apps for Meta Quest.</strong></p>
+      <p>Do this once per computer and once per headset. At the end you build a test app and see it running in the headset, so you know everything works before starting real work. Plan about an hour the first time (most of it is downloads).</p>
+
+      <h3>What you need</h3>
+      <ul>
+        <li>A Windows 10/11 (64-bit) PC or a Mac.</li>
+        <li>A Meta Quest 2, 3, 3S or Pro, and a phone with the <strong>Meta Horizon</strong> app, signed in with the account that owns the headset.</li>
+        <li>A <strong>data</strong> USB-C cable (some charging-only cables don't carry data; if the headset is never detected, try another cable).</li>
+      </ul>
+
+      <h3>Step 1 — Accounts</h3>
+      <ol>
+        <li>Create a Meta developer account at <a href="https://developers.meta.com/horizon/sign-up/">developers.meta.com/horizon/sign-up</a> and complete the account verification it asks for.</li>
+        <li>Create a Unity ID at <a href="https://id.unity.com/">id.unity.com</a> if you don't have one.</li>
+      </ol>
+
+      <h3>Step 2 — Install Unity with Android support</h3>
+      <ol>
+        <li>Install <a href="https://unity.com/download">Unity Hub</a>.</li>
+        <li>In Unity Hub, go to <strong>Installs → Install Editor</strong> and pick a Unity 6 version, <strong>6000.0.66f2 or newer</strong> (the Photon VR Training sample below needs Unity 6.3).</li>
+        <li>On the modules page, tick <strong>Android Build Support</strong> and, under it, <strong>OpenJDK</strong> and <strong>Android SDK &amp; NDK Tools</strong>. All three are needed: the Quest runs Android.</li>
+      </ol>
+      <p class="note">Already have Unity installed without Android? In Unity Hub, click the gear next to that version → <strong>Add modules</strong>, and tick the same three.</p>
+
+      <h3>Step 3 — Install the Meta tools</h3>
+      <ol>
+        <li><strong>Meta Quest Developer Hub (MQDH)</strong>: download and install it from <a href="https://developers.meta.com/horizon/documentation/unity/ts-mqdh-getting-started/">MQDH Getting Started</a>, then sign in with your developer account. It shows your headset, installs apps and creates projects.</li>
+        <li><strong>Windows only — USB driver</strong>: download the <a href="https://developers.meta.com/horizon/downloads/package/oculus-adb-drivers/">Oculus ADB driver</a>, unzip it, open the <code>usb_driver</code> folder, right-click <code>android_winusb.inf</code> and choose <strong>Install</strong>. (Not needed on Mac.)</li>
+        <li><strong>Optional, Windows only — Meta Horizon Link</strong> (the Quest Link PC app) lets you press Play in Unity and see the scene in the headset without building. Handy for quick tests, but always check with a real build too.</li>
+      </ol>
+
+      <h3>Step 4 — Turn on Developer Mode on the headset</h3>
+      <ol>
+        <li>In the <strong>Meta Horizon</strong> app on your phone: tap the headset icon in the toolbar, tap your headset, then <strong>Headset Settings → Developer Mode</strong>, and switch it on. (It only appears once your developer account is set up — Step 1.)</li>
+        <li>Restart the headset if it asks.</li>
+        <li>Plug the headset into your computer with the USB-C cable and put it on.</li>
+        <li>When the headset asks <strong>Allow USB debugging?</strong>, tick <em>Always allow from this computer</em> and choose <strong>Allow</strong>.</li>
+        <li>If the prompt doesn't appear: open <strong>Quick Settings → Settings (gear) → Developer</strong>, switch on <strong>MTP Notification</strong>, then unplug and plug the cable back in.</li>
+      </ol>
+      <p><strong>Check:</strong> in MQDH, open <strong>Device Manager</strong>: your headset should show a green <strong>Active</strong> status. (In a terminal, <code>adb devices</code> should list it as <code>device</code>, not <code>unauthorized</code>.)</p>
+
+      <h3>Step 5 — Build and run a test app</h3>
+      <p>This proves that the whole chain works.</p>
+      <ol>
+        <li>In MQDH, open <strong>XR Projects → Create project</strong>. Give it a name, choose your Unity version and a folder, set <strong>XR Plugin</strong> to <strong>OpenXR</strong> and <strong>SDKs</strong> to <strong>All</strong>. The project opens in Unity. (You can also start from one of the templates in the next section.)</li>
+        <li>In Unity, open <strong>Window → Meta → Tools → Project Setup Tool</strong>. In both the <strong>Android</strong> and <strong>Standalone</strong> tabs, click <strong>Fix All</strong>, then <strong>Apply All</strong>, and accept if Unity asks to change the graphics API or restart.</li>
+        <li>Check <strong>Edit → Project Settings → XR Plug-in Management → OpenXR</strong>: <strong>Meta XR</strong> should be ticked, on the Android tab.</li>
+        <li>Open <strong>File → Build Profiles</strong>. Under <strong>Platforms</strong>, select <strong>Meta Quest</strong> (on Unity older than 6.1: <strong>Android</strong>) and click <strong>Switch Platform</strong> (or <strong>Enable Platform</strong>). The first switch can take a while.</li>
+        <li>Click <strong>Open Scene List → Add Open Scenes</strong> so your scene is included.</li>
+        <li>With the headset plugged in and awake, pick it in the <strong>Run Device</strong> drop-down. (If it isn't listed, click <strong>Refresh</strong>; if still missing, go back to Step 4.)</li>
+        <li>Click <strong>Build And Run</strong> and choose a folder for the <code>.apk</code> (for example a <code>Builds</code> folder next to <code>Assets</code>).</li>
+        <li>Put on the headset: the app starts by itself when the build finishes. 🎉</li>
+      </ol>
+      <p>To open it again later: in the headset's <strong>Library</strong>, use the filter and choose <strong>Unknown sources</strong>. You can also start, stop and uninstall it from MQDH.</p>
+
+      <h3>When something goes wrong</h3>
+      <table>
+        <tr><th scope="col">What you see</th><th scope="col">What to do</th></tr>
+        <tr><td>No <strong>Developer Mode</strong> option in the Meta Horizon app</td><td>The developer account isn't finished: complete sign-up and verification (Step 1), then reopen the app.</td></tr>
+        <tr><td>Headset not in MQDH or <strong>Run Device</strong></td><td>Use a data USB-C cable, wake the headset, accept <strong>Allow USB debugging</strong> inside the headset. On Windows, install the USB driver (Step 3).</td></tr>
+        <tr><td><code>adb devices</code> says <code>unauthorized</code></td><td>Put the headset on and accept the USB debugging prompt; tick <em>Always allow</em>.</td></tr>
+        <tr><td>Build fails mentioning Android SDK, NDK or JDK</td><td>The Android modules are missing: Unity Hub → Installs → gear → <strong>Add modules</strong> → Android Build Support with OpenJDK and Android SDK &amp; NDK Tools.</td></tr>
+        <tr><td>The app runs but shows a flat window, or nothing moves with your head</td><td>XR isn't enabled for Android: re-run the <strong>Project Setup Tool</strong> (Fix All / Apply All) and check <strong>Meta XR</strong> under XR Plug-in Management → OpenXR, Android tab.</td></tr>
+      </table>
+      <p class="muted">Official guides: <a href="https://developers.meta.com/horizon/documentation/unity/unity-software-setup/">software setup</a> · <a href="https://developers.meta.com/horizon/documentation/unity/unity-project-setup/">project setup</a> · <a href="https://developers.meta.com/horizon/documentation/unity/unity-build/">build and run</a>.</p>
+
+      <!-- ─────────────────────────────── Templates ─────────────────────────────── -->
+      <h2 id="templates">2. Start from a template project</h2>
+      <p>In the lab we always start from a project, never from a blank folder: either the empty Meta project from <strong>MQDH → XR Projects</strong> (Step 5 above), or one of the templates below. Pick the closest one, check that it builds to the headset first (same steps as Step 5), then change it. Keep it in Git from day one.</p>
+
+      <h3>Meta Quest (single user)</h3>
+      <ul>
+        <li><strong>Empty Meta XR project</strong>: <strong>MQDH → XR Projects → Create project</strong> (OpenXR, SDKs: All). The best starting point for a new idea.</li>
+        <li><a href="https://github.com/oculus-samples/Unity-StarterSamples">Meta Unity Starter Samples</a>: small scenes for the basics (controllers, hands, passthrough, UI…).</li>
+        <li><a href="https://github.com/oculus-samples">All Meta Quest samples on GitHub</a> (oculus-samples): bigger example apps, for example passthrough camera, mixed reality, multiplayer.</li>
+      </ul>
+
+      <h3>Multiplayer XR with Photon Fusion</h3>
+      <p>Photon Fusion keeps several headsets in the same shared scene. Every Fusion project needs a free <strong>App ID</strong> from the <a href="https://dashboard.photonengine.com/">Photon dashboard</a> (create one for <strong>Fusion</strong>, plus one for <strong>Voice</strong> if the sample uses voice chat), pasted into the project's Photon <strong>Realtime Settings</strong>. Read each sample's page before opening it: it lists the exact Unity version and setup.</p>
+      <ul>
+        <li><a href="https://doc.photonengine.com/fusion/current/industries-samples/fusion-vr-training">VR Training</a> (the drone teaching sample): a teacher and learners go through three drone activities — naming the parts, assembling a drone, flying it. Fusion 2, Unity 6.3, with voice. Good base for teaching and lesson apps.</li>
+        <li><a href="https://doc.photonengine.com/arvr/current/technical-samples/fusion-vr-shared">VR Shared</a>: the simplest multiplayer VR starting point — rig, teleport and grabbing objects. Fusion 2.</li>
+        <li><a href="https://doc.photonengine.com/fusion/current/game-samples/fusion-dragonhunters-vr">Dragonhunters VR</a> (<a href="https://assetstore.unity.com/packages/templates/tutorials/fusion-dragonhunters-vr-multiplayer-217108">Asset Store</a>): multiplayer bow-and-arrow game with voice. Note: still on <strong>Fusion 1</strong>; use it as a reference rather than a base for new projects.</li>
+        <li>More: <a href="https://doc.photonengine.com/arvr/current/headsets/quest-intro">Photon's Meta Quest guide</a>, the <a href="https://doc.photonengine.com/arvr/current/extended-reality-overview">Photon XR samples overview</a>, and <a href="https://www.photonengine.com/samples">all Photon samples</a>.</li>
+      </ul>
+
       <!-- ─────────────────────────────── Unity ─────────────────────────────── -->
-      <h2 id="unity-mcp">1. Unity Claude MCP</h2>
+      <h2 id="unity-mcp">3. Unity Claude MCP</h2>
       <p><strong>Let Claude work inside your Unity project.</strong></p>
       <p>This guide connects Claude Code (the AI assistant) to the Unity Editor, so Claude can look at your scene, change objects, read the Console and run things in Unity for you. It uses a free Unity package called <strong>AI Game Developer — MCP</strong> (MCP is just the name of the "plug" between an AI and a program). No coding is needed. Plan about 15 minutes the first time.</p>
 
@@ -132,7 +222,7 @@
       </ul>
 
       <!-- ─────────────────────────────── Blender ─────────────────────────────── -->
-      <h2 id="blender-mcp">2. Blender Claude MCP</h2>
+      <h2 id="blender-mcp">4. Blender Claude MCP</h2>
       <p><strong>Let Claude build and edit scenes in Blender.</strong></p>
       <p>This guide connects Claude Code to Blender with the free <strong>MCP for Blender</strong> add-on, so Claude can inspect your scene, create and change objects and materials, take viewport screenshots and run Blender Python for you. Plan about 10 minutes the first time.</p>
 
@@ -201,7 +291,7 @@
       </ul>
 
       <!-- ─────────────────────────────── 3D printing ─────────────────────────────── -->
-      <h2 id="printing">3. 3D printing (Bambu Lab &amp; Snapmaker)</h2>
+      <h2 id="printing">5. 3D printing (Bambu Lab &amp; Snapmaker)</h2>
       <p>The lab has two printers: a <strong>Bambu Lab P2S</strong> and a <strong>Snapmaker U1</strong>.</p>
       <p class="warn">Lab printing guidelines are being written. Until then, ask in the <strong>#3d-printing</strong> Slack channel before starting a print.</p>
 
@@ -227,7 +317,7 @@
       </ul>
 
       <!-- ─────────────────────────────── Links ─────────────────────────────── -->
-      <h2 id="links">4. Useful links</h2>
+      <h2 id="links">6. Useful links</h2>
       <h3>Claude Code</h3>
       <ul>
         <li><a href="https://code.claude.com/docs/en/mcp">Connecting Claude Code to tools with MCP</a></li>
