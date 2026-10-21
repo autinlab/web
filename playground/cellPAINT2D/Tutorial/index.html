@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cellPAINT 2D — Student Tutorial</title>
+<meta name="description" content="A step-by-step classroom tutorial for cellPAINT 2D: paint molecular landscapes at true scale in your browser.">
+<meta property="og:title" content="cellPAINT 2D — Student Tutorial">
+<meta property="og:description" content="Paint molecular landscapes at true scale, in your browser. A step-by-step tutorial for students.">
+<meta property="og:image" content="images/finished-scene.jpg">
+<meta property="og:type" content="article">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --bg:#ffffff; --bg-alt:#f5f7f9; --bg-sunken:#eef2f6;
+  --fg:#1e2b36; --fg-soft:#5a6b7a; --fg-faint:#8b9aa8;
+  --accent:#2e4a62; --accent-2:#3d6485; --accent-soft:#e4edf5;
+  --line:#dde5ec;
+  --note-bg:#fff8e6; --note-line:#e0b860; --note-fg:#6d4300;
+  --warn-bg:#fdecec; --warn-line:#d98b8b; --warn-fg:#7a2020;
+  --code-bg:#eef2f6;
+  --sidebar:290px; --maxw:820px;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --shadow:0 1px 2px rgba(20,40,60,.06),0 8px 24px rgba(20,40,60,.07);
+}
+html[data-theme="dark"]{
+  --bg:#12181e; --bg-alt:#182028; --bg-sunken:#0d1216;
+  --fg:#dfe7ee; --fg-soft:#a3b2c0; --fg-faint:#75858f;
+  --accent:#8fc0e8; --accent-2:#a9d2f2; --accent-soft:#1c2a36;
+  --line:#26313b;
+  --note-bg:#2a2317; --note-line:#8a6d2a; --note-fg:#e8cf94;
+  --warn-bg:#2c1a1a; --warn-line:#8a4a4a; --warn-fg:#f0b8b8;
+  --code-bg:#1c242c;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--bg); color:var(--fg);
+  font-family:var(--sans); font-size:17px; line-height:1.65;
+}
+
+/* ---------- skip link ---------- */
+.skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#fff;padding:.6rem 1rem;z-index:200}
+.skip:focus{left:.5rem;top:.5rem}
+
+/* ---------- header ---------- */
+header.top{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; gap:1rem;
+  padding:.65rem 1.25rem;
+  background:var(--bg); /* fallback for browsers without color-mix() */
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:saturate(1.4) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+header.top .brand{font-weight:700; letter-spacing:-.01em; font-size:1.02rem; color:var(--fg); text-decoration:none; white-space:nowrap}
+header.top .brand span{color:var(--fg-faint); font-weight:500}
+header.top .spacer{flex:1}
+.btn{
+  font:inherit; font-size:.85rem; font-weight:600;
+  border:1px solid var(--line); background:var(--bg-alt); color:var(--fg);
+  padding:.4rem .75rem; border-radius:7px; cursor:pointer; text-decoration:none;
+  white-space:nowrap; display:inline-flex; align-items:center; gap:.4rem;
+}
+.btn:hover{border-color:var(--accent-2); color:var(--accent)}
+.btn.primary{background:var(--accent); border-color:var(--accent); color:#fff}
+html[data-theme="dark"] .btn.primary{color:#0d1216}
+.btn.primary:hover{filter:brightness(1.08); color:#fff}
+html[data-theme="dark"] .btn.primary:hover{color:#0d1216}
+#menuBtn{display:none}
+
+/* ---------- layout ---------- */
+.wrap{display:grid; grid-template-columns:var(--sidebar) minmax(0,1fr); gap:0; align-items:start}
+nav.toc{
+  position:sticky; top:57px; height:calc(100vh - 57px);
+  overflow-y:auto; padding:1.5rem 1rem 3rem 1.25rem;
+  border-right:1px solid var(--line); background:var(--bg);
+  font-size:.88rem;
+}
+nav.toc h2{font-size:.7rem; text-transform:uppercase; letter-spacing:.09em; color:var(--fg-faint); margin:0 0 .6rem .5rem}
+nav.toc ol{list-style:none; margin:0; padding:0}
+nav.toc a{
+  display:block; padding:.32rem .55rem; border-radius:6px;
+  color:var(--fg-soft); text-decoration:none; border-left:2px solid transparent;
+}
+nav.toc a:hover{background:var(--bg-alt); color:var(--fg)}
+nav.toc a.active{color:var(--accent); background:var(--accent-soft); font-weight:650; border-left-color:var(--accent)}
+nav.toc .sub{padding-left:.9rem; font-size:.83rem}
+nav.toc .sub a{color:var(--fg-faint)}
+nav.toc .sub a.active{color:var(--accent)}
+
+main{padding:0 2rem 6rem; min-width:0}
+.inner{max-width:var(--maxw); margin:0 auto}
+
+/* ---------- hero ---------- */
+.hero{padding:3rem 0 2rem; border-bottom:1px solid var(--line); margin-bottom:2.5rem}
+.hero .kicker{font-size:.78rem; text-transform:uppercase; letter-spacing:.12em; color:var(--fg-faint); font-weight:700}
+.hero h1{
+  font-family:var(--serif); font-weight:600; letter-spacing:-.02em;
+  font-size:clamp(2.1rem,5vw,3.1rem); line-height:1.08; margin:.5rem 0 .5rem;
+}
+.hero .lede{font-size:1.15rem; color:var(--fg-soft); margin:0 0 1.5rem; max-width:56ch}
+.hero .cta{display:flex; gap:.6rem; flex-wrap:wrap; margin-bottom:2rem}
+.meta{font-size:.82rem; color:var(--fg-faint); margin-top:1.25rem; line-height:1.55}
+
+/* ---------- typography ---------- */
+h2{
+  font-family:var(--serif); font-weight:600; letter-spacing:-.015em;
+  font-size:1.85rem; line-height:1.2; margin:3.5rem 0 .75rem; color:var(--fg);
+  scroll-margin-top:80px; position:relative;
+}
+h3{font-size:1.22rem; font-weight:650; margin:2.25rem 0 .5rem; color:var(--accent-2); scroll-margin-top:80px}
+h4{font-size:1rem; font-weight:700; margin:1.5rem 0 .35rem; color:var(--fg)}
+p{margin:0 0 1rem}
+a{color:var(--accent); text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:2px}
+a:hover{text-decoration-thickness:2px}
+strong{font-weight:680}
+code,.kbd{font-family:var(--mono); font-size:.88em; background:var(--code-bg); padding:.12em .38em; border-radius:4px}
+.kbd{border:1px solid var(--line); box-shadow:0 1px 0 var(--line); font-size:.82em; padding:.1em .4em}
+.anchor{
+  position:absolute; left:-1.35rem; top:.1em; opacity:0; text-decoration:none;
+  color:var(--fg-faint); font-weight:400; font-size:.85em; font-family:var(--sans);
+}
+h2:hover .anchor{opacity:1}
+@media(max-width:1100px){.anchor{display:none}}
+
+ul,ol{margin:0 0 1rem; padding-left:1.35rem}
+li{margin-bottom:.35rem}
+ol.steps{list-style:none; counter-reset:st; padding-left:0}
+ol.steps>li{
+  counter-increment:st; position:relative; padding-left:2.3rem; margin-bottom:.85rem;
+}
+ol.steps>li::before{
+  content:counter(st); position:absolute; left:0; top:.08em;
+  width:1.6rem; height:1.6rem; border-radius:50%;
+  background:var(--accent); color:#fff;
+  font-size:.82rem; font-weight:700; font-family:var(--sans);
+  display:flex; align-items:center; justify-content:center;
+}
+html[data-theme="dark"] ol.steps>li::before{color:#0d1216}
+
+/* ---------- figures ---------- */
+figure{margin:1.75rem 0; text-align:center}
+figure img{
+  max-width:100%; height:auto; border-radius:10px;
+  border:1px solid var(--line); box-shadow:var(--shadow);
+  cursor:zoom-in; background:var(--bg-sunken);
+}
+figure.narrow img{max-width:340px}
+figure.medium img{max-width:520px}
+figcaption{
+  font-size:.85rem; color:var(--fg-soft); margin-top:.7rem;
+  max-width:60ch; margin-left:auto; margin-right:auto; text-align:center; line-height:1.5;
+}
+
+/* ---------- callouts ---------- */
+.note,.warn{
+  border-left:4px solid var(--note-line); background:var(--note-bg);
+  padding:.9rem 1.1rem; border-radius:0 8px 8px 0; margin:1.5rem 0; font-size:.95rem;
+}
+.warn{border-left-color:var(--warn-line); background:var(--warn-bg)}
+.note .t,.warn .t{
+  display:block; font-weight:700; margin-bottom:.35rem; color:var(--note-fg);
+  font-size:.9rem;
+}
+.warn .t{color:var(--warn-fg)}
+.note p:last-child,.warn p:last-child,.note ul:last-child,.warn ul:last-child{margin-bottom:0}
+.note ul,.warn ul{padding-left:1.1rem}
+
+/* ---------- tables ---------- */
+.tw{overflow-x:auto; margin:1.5rem 0; border:1px solid var(--line); border-radius:10px}
+table{width:100%; border-collapse:collapse; font-size:.9rem}
+thead th{
+  background:var(--accent); color:#fff; text-align:left;
+  padding:.6rem .8rem; font-weight:650; white-space:nowrap;
+}
+html[data-theme="dark"] thead th{color:#0d1216}
+tbody td{padding:.55rem .8rem; border-top:1px solid var(--line); vertical-align:top}
+tbody tr:nth-child(even){background:var(--bg-alt)}
+td.num{text-align:center; font-variant-numeric:tabular-nums; font-weight:700; color:var(--accent); width:2.5rem}
+td.nowrap{white-space:nowrap}
+
+/* ---------- lightbox ---------- */
+#lb{
+  position:fixed; inset:0; z-index:300; display:none;
+  background:rgba(8,14,20,.93); align-items:center; justify-content:center;
+  padding:2rem; cursor:zoom-out;
+}
+#lb.on{display:flex}
+#lb img{max-width:100%; max-height:100%; border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,.6)}
+#lb .close{
+  position:absolute; top:1rem; right:1.25rem; background:none; border:0;
+  color:#fff; font-size:2rem; line-height:1; cursor:pointer; opacity:.75;
+}
+#lb .close:hover{opacity:1}
+
+/* ---------- footer ---------- */
+footer{
+  border-top:1px solid var(--line); margin-top:4rem; padding:2rem 0 1rem;
+  font-size:.85rem; color:var(--fg-faint); line-height:1.6;
+}
+
+/* ---------- progress bar ---------- */
+#bar{position:fixed; top:0; left:0; height:2px; background:var(--accent-2); width:0; z-index:60; transition:width .1s linear}
+
+/* ---------- responsive ---------- */
+@media(max-width:900px){
+  body{font-size:16px}
+  #menuBtn{display:inline-flex}
+  .wrap{grid-template-columns:1fr}
+  nav.toc{
+    position:fixed; top:57px; left:0; bottom:0; width:min(85vw,320px);
+    transform:translateX(-102%); transition:transform .22s ease;
+    z-index:45; box-shadow:var(--shadow); height:auto;
+  }
+  nav.toc.open{transform:none}
+  main{padding:0 1.15rem 5rem}
+  .hero{padding:2rem 0 1.5rem}
+}
+
+/* ---------- print ---------- */
+@media print{
+  header.top,nav.toc,#bar,#lb,.hero .cta{display:none !important}
+  .wrap{display:block}
+  main{padding:0}
+  .inner{max-width:none}
+  body{font-size:10.5pt; color:#000; background:#fff}
+  h2{page-break-after:avoid; font-size:16pt; margin-top:1.6rem}
+  h3{page-break-after:avoid; font-size:12pt}
+  figure,table,.note,.warn,ol.steps>li{page-break-inside:avoid}
+  figure img{max-width:75% !important; box-shadow:none}
+  thead th{background:#2e4a62 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+  tbody tr:nth-child(even){background:#f2f5f8 !important; -webkit-print-color-adjust:exact; print-color-adjust:exact}
+  .note,.warn{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+  a{color:#000; text-decoration:none}
+  a[href^="http"]::after{content:" (" attr(href) ")"; font-size:8pt; color:#555}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<div id="bar"></div>
+
+<header class="top">
+  <button class="btn" id="menuBtn" aria-label="Toggle contents" aria-expanded="false">☰ Contents</button>
+  <a class="brand" href="#top">cellPAINT&#8202;2D <span>· Student Tutorial</span></a>
+  <div class="spacer"></div>
+  <a class="btn primary" href="https://autinlab.org/playground/cellPAINT2D/index.html" target="_blank" rel="noopener">Open cellPAINT ↗</a>
+  <button class="btn" id="themeBtn" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+</header>
+
+<div class="wrap">
+<nav class="toc" id="toc" aria-label="Table of contents">
+  <h2>On this page</h2>
+  <ol>
+    <li><a href="#what-it-is">1. What cellPAINT is</a></li>
+    <li><a href="#interface">2. A tour of the interface</a>
+      <ol class="sub">
+        <li><a href="#moving">Moving around the canvas</a></li>
+        <li><a href="#help">The Help overlay</a></li>
+      </ol>
+    </li>
+    <li><a href="#warmup">3. Warm-up: first ten minutes</a></li>
+    <li><a href="#coronavirus">4. Tutorial: paint a coronavirus</a>
+      <ol class="sub">
+        <li><a href="#cv-step1">1 — Find the palette</a></li>
+        <li><a href="#cv-step2">2 — Draw the membrane</a></li>
+        <li><a href="#cv-step3">3 — Add the spikes</a></li>
+        <li><a href="#cv-step4">4 — Fill the interior</a></li>
+        <li><a href="#cv-step5">5 — Add context</a></li>
+        <li><a href="#cv-step6">6 — Check against reality</a></li>
+      </ol>
+    </li>
+    <li><a href="#tools">5. The painting tools</a></li>
+    <li><a href="#own-molecule">6. Make your own molecule</a></li>
+    <li><a href="#experimental">7. Painting on real data</a></li>
+    <li><a href="#saving">8. Saving and recipes</a></li>
+    <li><a href="#hiv">9. Exercise: HIV from data</a></li>
+    <li><a href="#troubleshooting">10. Troubleshooting</a></li>
+    <li><a href="#next">11. Where to go next</a></li>
+  </ol>
+</nav>
+
+<main id="content">
+<div class="inner" id="top">
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="kicker">Browser edition · version 2.0.6</div>
+  <h1>Paint the inside of a cell, at true scale</h1>
+  <p class="lede">A step-by-step tutorial for cellPAINT&nbsp;2D. No prior cell-biology or software
+  experience needed, and nothing to install — it runs in your browser.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://autinlab.org/playground/cellPAINT2D/index.html" target="_blank" rel="noopener">Launch cellPAINT 2D ↗</a>
+    <a class="btn" href="#warmup">Start with the 10-minute warm-up</a>
+    <button class="btn" onclick="window.print()">Print / save as PDF</button>
+  </div>
+  <figure style="margin:0">
+    <img src="images/finished-scene.jpg" alt="A coronavirus particle surrounded by densely packed blood plasma proteins, painted in cellPAINT 2D" width="904" height="543">
+    <figcaption>A finished scene: a coronavirus in blood plasma. You will paint this one in section 4.</figcaption>
+  </figure>
+  <p class="meta">
+    Software by Adam Gardner and Ludovic Autin; scientific support by Martina Maritan.
+    Supported by US National Institutes of Health R01-GM120604 (Ludovic Autin, principal investigator).
+    Free for educational use.
+  </p>
+</div>
+
+<!-- ============ 1 ============ -->
+<h2 id="what-it-is"><a class="anchor" href="#what-it-is" aria-hidden="true">#</a>1. What cellPAINT is, and why it matters</h2>
+<p>A cell is not a bag of loose parts. It is astonishingly crowded: proteins, membranes and nucleic acids
+packed shoulder to shoulder, all of it jostling constantly. Textbook diagrams almost never show this,
+because drawing a few hundred molecules by hand at the correct size is punishing work.</p>
+<p>cellPAINT lets you paint that crowding directly. Every molecule you place is a real structure, derived
+from experimental data and rendered at true relative scale. Click a protein in the palette, drag across
+the canvas, and dozens of correctly sized copies appear — pushing each other out of the way as they go,
+because the program runs a simple physics simulation behind the scenes.</p>
+<p>The result is a picture you can reason about. If your virus looks too big next to the antibodies around
+it, that is a real scientific error, and cellPAINT will show it to you.</p>
+
+<h3>What you need</h3>
+<ul>
+  <li>A computer with a keyboard and a mouse. A scroll wheel and a working right-click make zooming and
+  panning much easier; a trackpad works but is slower.</li>
+  <li>Any modern web browser. cellPAINT 2D runs on the page — there is nothing to download or install.</li>
+  <li>About 60 to 90 minutes for the whole tutorial. The warm-up in section 3 takes roughly ten minutes on its own.</li>
+</ul>
+
+<div class="note">
+  <span class="t">Before you begin</span>
+  <ul>
+    <li>Open <a href="https://autinlab.org/playground/cellPAINT2D/index.html" target="_blank" rel="noopener">autinlab.org/playground/cellPAINT2D</a>
+    and wait for the CellPAINT splash screen to finish. On a slow connection the first load can take
+    30 to 60 seconds — the program is large. The interface appears when it is ready.</li>
+    <li>For a bigger canvas, click the expand icon at the bottom-right corner of the black program area to go full-screen.</li>
+    <li>The words “For educational use only” in the corner of the canvas are expected, not an error.</li>
+  </ul>
+</div>
+
+<!-- ============ 2 ============ -->
+<h2 id="interface"><a class="anchor" href="#interface" aria-hidden="true">#</a>2. A tour of the interface</h2>
+<p>Everything in cellPAINT lives in three places: a file menu across the top-left, a molecule palette down
+the left side, and a column of painting tools on the right. The large dark rectangle in the middle is your canvas.</p>
+
+<figure>
+  <img src="images/interface.jpg" alt="The cellPAINT 2D interface with 24 numbered callouts on each control" width="1400" height="840">
+  <figcaption>The cellPAINT 2D interface. The numbers correspond to the table below — click the image to enlarge it.</figcaption>
+</figure>
+
+<div class="tw">
+<table>
+  <thead><tr><th>#</th><th>Control</th><th>What it does</th></tr></thead>
+  <tbody>
+    <tr><td class="num">1</td><td class="nowrap">Restore / Load</td><td>Opens the LOAD FILE window: built-in recipes, or your own saved scenes.</td></tr>
+    <tr><td class="num">2</td><td class="nowrap">Save</td><td>Writes the current scene to a file (<code>.txt</code>, or <code>.zip</code> when custom ingredients are included).</td></tr>
+    <tr><td class="num">3</td><td class="nowrap">Snapshot</td><td>Saves a <code>.png</code> picture of the canvas. This is how you export finished artwork.</td></tr>
+    <tr><td class="num">4</td><td class="nowrap">Trash</td><td>Clears the canvas. There is no confirmation, so save first.</td></tr>
+    <tr><td class="num">5</td><td class="nowrap">Help</td><td>Overlays labels on every control, plus a Quick Start summary. Click again to hide.</td></tr>
+    <tr><td class="num">6</td><td class="nowrap">Palette arrows</td><td>Step to the previous or next molecule palette, for example Exterior → Coronavirus.</td></tr>
+    <tr><td class="num">7</td><td class="nowrap">Ingredient Info</td><td>Magnifying glass. Shows the selected molecule’s name, description and colour sliders.</td></tr>
+    <tr><td class="num">8</td><td class="nowrap">Create Ingredient</td><td>Plus sign. Build a new molecule from a PDB entry or from an image file.</td></tr>
+    <tr><td class="num">9</td><td class="nowrap">View toggle + search</td><td>Switch between icon grid and named list; the search box filters by name.</td></tr>
+    <tr><td class="num">10</td><td class="nowrap">Ingredient palette</td><td>Click a molecule to select it for painting. Right-click deletes a custom molecule or group.</td></tr>
+    <tr><td class="num">11</td><td class="nowrap">Settings</td><td>Background colour, physics options, background images, and options for the active tool.</td></tr>
+    <tr><td class="num">12</td><td class="nowrap">Pause / Play</td><td>Freezes or resumes the physics simulation.</td></tr>
+    <tr><td class="num">13</td><td class="nowrap">Undo</td><td>Steps back through your recent actions.</td></tr>
+    <tr><td class="num">14</td><td class="nowrap">Recentre camera</td><td>Returns the view to the origin. Click a second time to reset the rotation.</td></tr>
+    <tr><td class="num">15</td><td class="nowrap">Paintbrush</td><td>Adds molecules. This is the tool you will use most.</td></tr>
+    <tr><td class="num">16</td><td class="nowrap">Group</td><td>Select several molecules, press <span class="kbd">Enter</span>, and they become one reusable ingredient.</td></tr>
+    <tr><td class="num">17</td><td class="nowrap">Lock</td><td>Select several molecules, press <span class="kbd">Enter</span>, and they freeze so you can paint elsewhere.</td></tr>
+    <tr><td class="num">18</td><td class="nowrap">Nudge</td><td>Click and drag molecules around the canvas.</td></tr>
+    <tr><td class="num">19</td><td class="nowrap">Pin</td><td>Click a molecule to freeze that single copy in place.</td></tr>
+    <tr><td class="num">20</td><td class="nowrap">Pin-to</td><td>Click two molecules to link them together, as if they were binding partners.</td></tr>
+    <tr><td class="num">21</td><td class="nowrap">Measure</td><td>Click and drag to measure a distance in nanometres.</td></tr>
+    <tr><td class="num">22</td><td class="nowrap">Erase</td><td>Click to delete one molecule; <span class="kbd">Shift</span>-click to delete every copy of that type.</td></tr>
+    <tr><td class="num">23</td><td class="nowrap">Temperature</td><td>Drag up or down on the thermometer to make the scene jiggle more or less.</td></tr>
+    <tr><td class="num">24</td><td class="nowrap">Scale bar</td><td>Shows the real size of the current view. It updates as you zoom.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3 id="moving">Moving around the canvas</h3>
+<ul>
+  <li><strong>Scroll wheel</strong> — zoom in and out. Watch the scale bar change as you do.</li>
+  <li><strong>Right-click and drag</strong> — pan across the scene.</li>
+  <li><strong>Control 14</strong>, at the top-right of the canvas — snap back to the centre if you get lost.</li>
+  <li><strong>Left-click</strong> a molecule to highlight it. <strong><span class="kbd">Shift</span>-left-click</strong>
+  acts on every molecule of that type at once. This modifier works with most tools and is worth remembering.</li>
+</ul>
+
+<h3 id="help">The Help overlay is your cheat sheet</h3>
+<p>Whenever you cannot remember what a button does, click the question mark (control 5). Labels appear over
+every control, and the panel in the middle repeats the essential rules.</p>
+<figure>
+  <img src="images/help-overlay.jpg" alt="The cellPAINT Help overlay, labelling every control on screen" width="904" height="543">
+  <figcaption>The Help overlay. Click the question mark again, or the X in the panel, to dismiss it.</figcaption>
+</figure>
+
+<!-- ============ 3 ============ -->
+<h2 id="warmup"><a class="anchor" href="#warmup" aria-hidden="true">#</a>3. Warm-up: your first ten minutes</h2>
+<p>Work through these steps on a blank canvas. Nothing here can break anything — the Trash button gives you
+a clean slate whenever you want one.</p>
+<ol class="steps">
+  <li>The palette on the left opens on <strong>Exterior</strong>, a set of blood plasma proteins. Click
+  <strong>Albumin</strong>, the first molecule in the list.</li>
+  <li>Click once anywhere on the dark canvas. A single albumin molecule appears.</li>
+  <li>Now <strong>click and drag</strong>. Molecules stream out along the path of your cursor. This is how
+  you fill large areas quickly.</li>
+  <li>Zoom out with the scroll wheel until the scale bar reads a few hundred nanometres, then zoom back in.
+  Notice that the molecules do not change size — the view does.</li>
+  <li>Find the thermometer at the bottom of the right-hand toolbar and drag <strong>upward</strong> on it.
+  The temperature readout climbs from −273.15 °C towards room temperature, and your molecules begin to
+  jiggle and shove one another apart.</li>
+  <li>Drag the thermometer back down. The motion stops. Cold gives you a still picture; warm gives you a
+  living, self-arranging one.</li>
+  <li>Pick a different molecule — <strong>IgG</strong>, the Y-shaped antibody, is a good choice — and paint
+  some of those too. Compare their sizes.</li>
+  <li>Click the <strong>Trash</strong> icon to wipe the canvas clean. You are ready for the real thing.</li>
+</ol>
+<div class="note">
+  <span class="t">Two habits worth forming now</span>
+  <ul>
+    <li><strong>Undo</strong> (control 13) works, so experiment freely.</li>
+    <li><strong>Pause</strong> (control 12) freezes the simulation. Use it when you want to place something
+    precisely and the jiggling is getting in your way.</li>
+  </ul>
+</div>
+
+<!-- ============ 4 ============ -->
+<h2 id="coronavirus"><a class="anchor" href="#coronavirus" aria-hidden="true">#</a>4. Tutorial: paint a coronavirus</h2>
+<p>You are going to build a single virus particle from the inside out, then surround it with the blood plasma
+it would really be floating in. Allow about half an hour. The finished picture is the one at the top of this page.</p>
+
+<h3 id="cv-step1">Step 1 — Find the Coronavirus palette</h3>
+<ol class="steps">
+  <li>Click the <strong>right arrow</strong> beside the palette name (control 6) once. The title changes
+  from <em>Exterior</em> to <em>Coronavirus</em>.</li>
+  <li>Click the <strong>list-view icon</strong> (control 9, the three horizontal lines) to see names instead
+  of pictures. Names are easier to follow in a tutorial; switch back whenever you prefer the icons.</li>
+</ol>
+<figure class="narrow">
+  <img src="images/palette-coronavirus.png" alt="The Coronavirus palette in list view showing membrane, M, E, three spike forms and nucleocapsid" width="307" height="379">
+  <figcaption>The Coronavirus palette in list view: the membrane, the M and E proteins, three forms of the
+  spike, and the nucleocapsid.</figcaption>
+</figure>
+<p>Look closely at the small icons. Some of them sit on a faint grey strip. That strip is a piece of membrane,
+and it is the program telling you something important: these are membrane proteins, and they cannot be
+placed in open space.</p>
+
+<h3 id="cv-step2">Step 2 — Draw the membrane</h3>
+<p>Every enveloped virus starts with its envelope, so the membrane always comes first.</p>
+<ol class="steps">
+  <li>Click <strong>CoronavirusSept_membrane</strong> at the top of the palette.</li>
+  <li>Press and hold the left mouse button near the middle of the canvas, drag in a
+  <strong>clockwise circle</strong> about a third of the canvas wide, and release near where you started.
+  The membrane closes itself into a sealed compartment.</li>
+</ol>
+<figure>
+  <img src="images/membrane.jpg" alt="A closed circular membrane drawn on the cellPAINT canvas" width="904" height="543">
+  <figcaption>A closed membrane. The shaded interior tells you cellPAINT recognises this as a compartment
+  with an inside and an outside.</figcaption>
+</figure>
+<div class="note">
+  <span class="t">If the membrane will not close</span>
+  <ul>
+    <li>Direction matters: draw <strong>clockwise</strong>, not anticlockwise.</li>
+    <li>Use one smooth continuous stroke and finish close to where you started. A gap leaves an open sheet
+    rather than a compartment.</li>
+    <li>Undo (control 13) or Trash (control 4) and try again. It takes most people two or three attempts.</li>
+    <li>Aim slightly larger than you want, because the membrane tightens a little as it closes.</li>
+  </ul>
+</div>
+
+<h3 id="cv-step3">Step 3 — Stud the surface with spikes</h3>
+<p>The spike protein is what gives a coronavirus its name and its crown of projections. In a real particle
+the spike is the main target of the antibody response, so it belongs on the outside where antibodies can reach it.</p>
+<ol class="steps">
+  <li>Click <strong>Spike_open</strong> in the palette.</li>
+  <li>Click directly <strong>on the pale membrane band</strong> — not inside it, not outside it. A spike
+  snaps into place, correctly oriented, pointing outward.</li>
+  <li>Work your way around the circle, clicking every so often, until the particle has a convincing crown.</li>
+  <li>Now click <strong>M</strong> and add plenty of those to the membrane. M is far more abundant than the
+  spike in a real virion, so be generous. Then add a handful of <strong>E</strong>, which is much scarcer.</li>
+</ol>
+<figure>
+  <img src="images/spikes.jpg" alt="The membrane studded with spike, M and E proteins" width="904" height="543">
+  <figcaption>Spike, M and E proteins in the envelope. Getting the relative numbers right matters as much as
+  getting the shapes right.</figcaption>
+</figure>
+<div class="warn">
+  <span class="t">“Membrane protein can only be drawn on top of a membrane”</span>
+  <p>If you see this message, your click landed just off the membrane band. Dismiss it with OK, zoom in a
+  little, and aim more carefully at the pale stripe.</p>
+  <p>The dialog has a “Don’t show this message anymore” checkbox. Tick it only once you are confident —
+  while you are learning, the warning is useful.</p>
+</div>
+<p><strong>Try the other two spikes.</strong> Spike_Closed and Spike_postfusion are the same protein caught
+in different shapes. The spike changes conformation when it engages a host cell, and cellPAINT ships all
+three states so you can illustrate that story. Mixing a few closed spikes in among the open ones makes the
+picture more honest.</p>
+
+<h3 id="cv-step4">Step 4 — Fill the interior</h3>
+<p>Inside the envelope, the viral RNA genome is wrapped around nucleocapsid proteins into a dense,
+disordered tangle.</p>
+<ol class="steps">
+  <li>Click <strong>Nucleocapsid</strong>.</li>
+  <li>Click and drag in long loops inside the membrane until the interior is well filled. Do not try to be
+  tidy — real packing is not tidy.</li>
+  <li>If your strokes have left an obvious pattern, drag the <strong>thermometer</strong> upward and let the
+  physics run for a few seconds. The molecules shuffle and the artificial regularity dissolves.</li>
+</ol>
+<figure>
+  <img src="images/nucleocapsid.jpg" alt="The virion interior filled with nucleocapsid protein" width="904" height="543">
+  <figcaption>The interior filled with nucleocapsid. Raising the temperature lets the physics engine relax an
+  over-regular fill into something more lifelike.</figcaption>
+</figure>
+
+<h3 id="cv-step5">Step 5 — Put the virus in context</h3>
+<p>A virus particle in the bloodstream is not floating in a vacuum. It is surrounded by plasma proteins at
+astonishing concentrations, and showing that is the whole point of cellPAINT.</p>
+<ol class="steps">
+  <li>Click the <strong>left arrow</strong> beside the palette name to return to the <em>Exterior</em> palette.</li>
+  <li>Select <strong>Albumin</strong> and drag back and forth across the empty space around your virus until
+  it is thoroughly packed. Albumin is about half of all plasma protein, so it should dominate.</li>
+  <li>Add <strong>IgG</strong> — roughly a fifth as much — then scatter smaller numbers of <strong>HDL</strong>,
+  <strong>LDL</strong>, <strong>Serotransferrin</strong> and whatever else catches your eye.</li>
+  <li>Take a step back and look. The crowding outside the virus is the part most textbook figures get wrong.</li>
+</ol>
+<figure>
+  <img src="images/finished-scene.jpg" alt="The finished coronavirus scene surrounded by plasma proteins" width="904" height="543">
+  <figcaption>The finished scene. Compare the density outside the virion with the diagrams in a typical textbook.</figcaption>
+</figure>
+
+<h3 id="cv-step6">Step 6 — Check your work against reality</h3>
+<p>This is the step that turns a drawing into science. A real SARS-CoV-2 particle measures roughly 80 to
+120 nm across. Does yours?</p>
+<ol class="steps">
+  <li>Click the <strong>Measure</strong> tool (control 21).</li>
+  <li>Click and drag straight across your virus, from one side of the membrane to the other. The distance
+  appears in nanometres on the line.</li>
+  <li>Press <span class="kbd">Enter</span> — or click <em>Keep current measure</em> in the Settings panel —
+  to keep the measurement on screen. <em>Delete all measures</em> clears them.</li>
+</ol>
+<figure>
+  <img src="images/measure.jpg" alt="The Measure tool showing a 176 nm distance across the virion" width="904" height="543">
+  <figcaption>Measuring the virion: 176 nm across, noticeably larger than a real SARS-CoV-2 particle. Worth fixing.</figcaption>
+</figure>
+<div class="note">
+  <span class="t">Discussion questions</span>
+  <ul>
+    <li>If your virion came out too big, every protein in the picture is now the wrong size relative to it —
+    the spikes look stubby and the nucleocapsid looks sparse. Trash the scene, draw a smaller membrane, and
+    measure again.</li>
+    <li>How many spike proteins did you draw? Published estimates for a whole SARS-CoV-2 particle are on the
+    order of two dozen spike trimers. In a thin slice through the middle you would see only a handful. Most
+    published illustrations, including many on the news, show far too many.</li>
+  </ul>
+</div>
+
+<!-- ============ 5 ============ -->
+<h2 id="tools"><a class="anchor" href="#tools" aria-hidden="true">#</a>5. The painting tools in full</h2>
+<p>Each tool in the right-hand column has its own options, which appear in the Settings area of the left
+panel when that tool is active. Select a tool and glance down there to see what it offers.</p>
+<div class="tw">
+<table>
+  <thead><tr><th>Tool</th><th>How to use it</th><th>Options in Settings</th></tr></thead>
+  <tbody>
+    <tr><td class="nowrap"><strong>Paintbrush</strong></td><td>Click to place one molecule; click and drag to place many.</td>
+      <td>Number of molecules per click<br>Radius for molecules per click<br>Layer to draw on (Layer 1-2-3)<br>Draw Fiber Pinned</td></tr>
+    <tr><td class="nowrap"><strong>Group</strong></td><td>Click the molecules you want, then press <span class="kbd">Enter</span>. The group joins the current palette as a single reusable ingredient.</td>
+      <td>Name the group before creating it</td></tr>
+    <tr><td class="nowrap"><strong>Lock</strong></td><td>Click the molecules you want, then press <span class="kbd">Enter</span>. They freeze in place and stop responding to physics.</td><td>—</td></tr>
+    <tr><td class="nowrap"><strong>Nudge</strong></td><td>Drag molecules around. A plain drag pushes with a force; <span class="kbd">Ctrl</span>-drag moves directly; <span class="kbd">Shift</span>-drag moves every copy of that type.</td>
+      <td>Strength of the applied force</td></tr>
+    <tr><td class="nowrap"><strong>Pin</strong></td><td>Click one molecule to freeze that single copy.</td><td>—</td></tr>
+    <tr><td class="nowrap"><strong>Pin-to</strong></td><td>Click two molecules to link them, as if bound to one another.</td>
+      <td>Distance to apply<br>Strength<br>Collision on or off</td></tr>
+    <tr><td class="nowrap"><strong>Measure</strong></td><td>Drag between any two points to read the distance in nanometres.</td>
+      <td>Toggle measures visibility<br>Keep current measure<br>Delete all measures</td></tr>
+    <tr><td class="nowrap"><strong>Erase</strong></td><td>Click a molecule to delete it; <span class="kbd">Shift</span>-click to delete every copy of that type.</td><td>—</td></tr>
+    <tr><td class="nowrap"><strong>Temperature</strong></td><td>Drag up or down on the thermometer.</td><td>—</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Recolouring, and finding out what you have painted</h3>
+<p>Click the magnifying glass (control 7) to open the Ingredient Info panel. It shows the currently selected
+molecule: its picture, its full name, a short description of what it does in the cell, and three sliders —
+hue, saturation and value — for changing its colour.</p>
+<figure>
+  <img src="images/ingredient-info.jpg" alt="The Ingredient Info panel showing HDL with its name, description and colour sliders" width="904" height="543">
+  <figcaption>Ingredient Info for HDL. Colour is a communication choice: use it to group molecules by
+  function, or to make one species stand out.</figcaption>
+</figure>
+<p>Colour in a scientific illustration should carry meaning. Try giving all the membrane proteins one hue
+family and all the soluble proteins another, and see how much easier the picture becomes to read.</p>
+
+<h3>Grouping and locking: working on big scenes</h3>
+<p>Two tools exist purely to help you manage complexity.</p>
+<p><strong>Group</strong> turns a cluster you have arranged by hand — a ribosome with its RNA, say, or a
+receptor with its bound ligand — into a single new ingredient in the palette. From then on, one click paints
+the whole assembly. This is the biggest time-saver in the program.</p>
+<p><strong>Lock</strong> freezes part of a scene so the physics engine stops recalculating it. If cellPAINT
+starts to feel sluggish as your scene fills up, lock the parts you have finished. You can keep painting
+everywhere else.</p>
+
+<!-- ============ 6 ============ -->
+<h2 id="own-molecule"><a class="anchor" href="#own-molecule" aria-hidden="true">#</a>6. Make your own molecule</h2>
+<p>The built-in palettes cover a lot of ground, but sooner or later you will want a protein that is not
+there. If a structure of it exists in the Protein Data Bank, you can add it yourself in about a minute.</p>
+<figure class="narrow">
+  <img src="images/create-ingredient.png" alt="The Create Ingredient panel" width="342" height="715">
+  <figcaption>The Create Ingredient panel, opened with the plus sign (control 8).</figcaption>
+</figure>
+<p>Click the plus sign (control 8) to open <em>CREATE INGREDIENT</em>. From there it is four steps.</p>
+<ol class="steps">
+  <li><strong>Left-click in the PDB ID field and type an ID</strong> — try <code>1crn</code>, the small plant
+  protein crambin. (Look IDs up at <a href="https://www.rcsb.org" target="_blank" rel="noopener">rcsb.org</a>.)
+  The panel fetches the entry’s metadata as you go: the <strong>Name</strong> field fills in for you,
+  <strong>Pixel/Ang</strong> is set to a sensible scale, and the experimental method appears at the bottom
+  of the panel.</li>
+  <li>Click <strong>ILLUSTRATE</strong>. A spinner appears while the structure is rendered, then the
+  molecule’s picture shows in the window at the top of the panel.</li>
+  <li>Choose the ingredient <strong>Type</strong>: <em>Soluble</em> floats freely, <em>Surface</em> sits in a
+  membrane, <em>Fiber</em> draws as a filament. Getting this wrong is the most common mistake — a membrane
+  protein marked Soluble will drift away into open space.</li>
+  <li>Click <strong>CREATE INGREDIENT</strong>. Your molecule appears at the end of the current palette,
+  ready to paint like any other.</li>
+</ol>
+<figure class="medium">
+  <img src="images/create-ingredient-1crn.png" alt="The Create Ingredient fields after typing 1crn, with Name and Pixel/Ang auto-filled and X-ray diffraction shown at the bottom" width="420" height="459">
+  <figcaption>After typing <code>1crn</code>: the Name field and Pixel/Ang have filled themselves in from the
+  PDB entry, and the method — X-ray diffraction — is shown at the bottom of the panel.</figcaption>
+</figure>
+<div class="note">
+  <span class="t">If ILLUSTRATE keeps spinning</span>
+  <p>The picture is rendered by the mesoscope server, not in your browser, so it depends on that server being
+  responsive. Give it up to a minute, then click ILLUSTRATE again. A sad face means the request failed
+  outright — click again.</p>
+  <p>Everything else in the panel works regardless, so you can keep typing while you wait.</p>
+</div>
+
+<h3>The rest of the panel</h3>
+<ul>
+  <li><strong>BioUnit</strong> and <strong>Chain</strong> narrow down what gets drawn: which biological
+  assembly (1, 2, 3…; blank means the default) and which chains, comma-separated.
+  <strong>Use chain Author’s ID</strong> and <strong>Color by chain</strong> change how those chains are
+  identified and coloured.</li>
+  <li><strong>Rotation</strong> turns the molecule; <strong>Pixel/Ang</strong> sets its size. Pixel/Ang is
+  what keeps your new molecule to scale with everything else, so check it before you paint even though the
+  panel fills it in for you.</li>
+  <li><strong>BROWSE IMAGE</strong> builds an ingredient from your own <code>.png</code> or <code>.jpg</code>
+  instead of a structure — handy for a schematic shape that has no PDB entry.</li>
+  <li><strong>ADD COMPARTMENT</strong> and the <strong>COMP NAME</strong> field along the bottom create new
+  compartments and new palettes.</li>
+</ul>
+<div class="note">
+  <span class="t">Housekeeping</span>
+  <ul>
+    <li>Right-click an ingredient or a group in the palette to delete it. Only your own creations can be
+    removed this way; built-in molecules stay put.</li>
+    <li>For genuinely complex recipes — many compartments, many species, defined concentrations — build them
+    in <a href="https://mesoscope.scripps.edu/beta" target="_blank" rel="noopener">mesoscope</a> and load the
+    result into cellPAINT afterwards.</li>
+  </ul>
+</div>
+
+<!-- ============ 7 ============ -->
+<h2 id="experimental"><a class="anchor" href="#experimental" aria-hidden="true">#</a>7. Painting on top of experimental data</h2>
+<p>This is where cellPAINT stops being a drawing toy and becomes a research tool. Load an electron micrograph
+as a background image, scale it correctly, and paint molecules directly onto the features you can see. The
+result is an interpretation anchored to real data rather than to your imagination.</p>
+<figure>
+  <img src="images/physics-and-image.jpg" alt="The Physics Options list and the LOAD IMAGE panel open at the same time" width="904" height="543">
+  <figcaption>Left: Physics Options, from the gear beside “Settings”. Right: the LOAD IMAGE panel, from the
+  gear beside “Background Images”.</figcaption>
+</figure>
+
+<h3>Loading and scaling an image</h3>
+<ol class="steps">
+  <li>Click the small gear beside <em>Background Images</em> in the left panel to open <em>LOAD IMAGE</em>.</li>
+  <li>Click <strong>Load Image</strong> and choose a file (<code>.png</code>, <code>.jpeg</code>,
+  <code>.tiff</code> or <code>.bmp</code>).</li>
+  <li>Set <strong>Pixel / Angstrom</strong> so the image is at the same scale as cellPAINT’s molecules. Use
+  the published scale bar on your micrograph together with cellPAINT’s own scale bar (control 24) to check.
+  Nothing else in this workflow matters if the scale is wrong.</li>
+  <li>Adjust <strong>Image Opacity</strong> so you can see the image and your molecules at the same time, and
+  <strong>Rotation</strong> to line it up.</li>
+  <li>Tick <strong>Interactive Mode</strong> when you want to drag the image itself into position, and untick
+  it to go back to dragging molecules. Forgetting to untick it is a classic source of confusion.</li>
+  <li>Trace the structures you can see: draw the membrane along the membrane in the micrograph, and place
+  proteins where the density suggests they are.</li>
+  <li>Untick <strong>Toggle all image visibility</strong> to hide the micrograph and reveal your
+  interpretation on its own. <strong>Image On Top</strong> puts the image in front of the molecules instead of
+  behind. <strong>Layer</strong> controls the stacking order when several images are loaded.</li>
+</ol>
+
+<h3>Physics options</h3>
+<p>The gear beside “Settings” reveals the physics controls. They matter for two reasons: performance, and
+deliberate cheating.</p>
+<ul>
+  <li><strong>Toggle Physics</strong> — turns the simulation off entirely, so molecules can overlap freely.
+  Useful when you need a molecule somewhere the physics will not allow.</li>
+  <li><strong>Protein Collisions (Front / Middle / Back)</strong> — cellPAINT paints on three depth layers.
+  Switch collisions off on a layer and it will accept far more molecules.</li>
+  <li><strong>Fiber-Protein Collision</strong>, <strong>Fiber-Fiber Collision</strong>,
+  <strong>Membrane-Membrane collision</strong> — the same idea, for filaments and membranes.</li>
+  <li><strong>Toggle Gravity</strong> — makes everything settle downward. Not physically realistic at this
+  scale, but occasionally useful for composition.</li>
+</ul>
+<div class="note">
+  <span class="t">If cellPAINT slows down</span>
+  <p>Lock the parts of the scene you have finished, or switch off collisions on one or two layers. A crowded
+  scene with full physics is a lot of arithmetic for a browser. The Background Color sliders sit just above
+  these options if you want something other than the default near-black.</p>
+</div>
+
+<!-- ============ 8 ============ -->
+<h2 id="saving"><a class="anchor" href="#saving" aria-hidden="true">#</a>8. Saving, exporting, and ready-made recipes</h2>
+
+<h3>Keeping your work</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>Button</th><th>Result</th><th>When to use it</th></tr></thead>
+  <tbody>
+    <tr><td class="nowrap"><strong>Save</strong> (2)</td><td>A scene file: <code>.txt</code> normally, or <code>.zip</code> when the scene contains custom ingredients.</td><td>Whenever you want to come back and keep painting later.</td></tr>
+    <tr><td class="nowrap"><strong>Snapshot</strong> (3)</td><td>A <code>.png</code> image of the canvas.</td><td>For a poster, a report or a slide. This is your finished artwork.</td></tr>
+    <tr><td class="nowrap"><strong>Restore</strong> (1)</td><td>Reopens a saved scene, or loads a built-in recipe.</td><td>To resume work, or to start from a prepared set of molecules.</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="warn">
+  <span class="t">Save early, save often</span>
+  <p>The Trash button (4) clears the canvas immediately, with no confirmation and no way back except Undo.
+  Save before you experiment.</p>
+</div>
+
+<h3>The built-in recipes</h3>
+<p>Open Restore (control 1) and you will find a short list of prepared projects. Each one swaps the palettes
+for a different biological system. They give you the right molecules to work with rather than a finished
+picture, so expect a blank canvas and a new set of palettes.</p>
+<figure class="medium">
+  <img src="images/load-file.png" alt="The LOAD FILE window listing the built-in recipes" width="711" height="639">
+  <figcaption>The LOAD FILE window. Browse File opens your own saved scenes.</figcaption>
+</figure>
+<div class="tw">
+<table>
+  <thead><tr><th>Recipe</th><th>What it gives you</th></tr></thead>
+  <tbody>
+    <tr><td class="nowrap"><strong>Sars-cov-2</strong></td><td>The default. Palettes: Exterior (blood plasma), Coronavirus, mRNA Vaccine, Endoplasmic Reticulum, HumanCell.</td></tr>
+    <tr><td class="nowrap"><strong>BloodHIVTcell</strong></td><td>Palettes: Exterior, HIV, Cytosol — everything needed for the exercise in section 9.</td></tr>
+    <tr><td class="nowrap"><strong>Exosome</strong></td><td>Molecules for painting an exosome.</td></tr>
+    <tr><td class="nowrap"><strong>influenza</strong></td><td>Molecules for painting an influenza virion.</td></tr>
+    <tr><td class="nowrap"><strong>machinery of life</strong></td><td>A broad general-purpose set, after David Goodsell’s book of the same name.</td></tr>
+    <tr><td class="nowrap"><strong>cats</strong></td><td>A light-hearted set. Good for a first five minutes with younger students.</td></tr>
+    <tr><td class="nowrap"><strong>Browse File</strong></td><td>Load a scene or a recipe from your own computer.</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>Append recipe ingredient</strong> — tick this checkbox before loading and the new molecules are
+<em>added</em> to what you already have instead of replacing it. That is how you get, say, coronavirus and
+HIV molecules available in the same session.</p>
+
+<h3>The palettes at a glance</h3>
+<p>A palette is a group of molecules that belong together in one location or one biological system. Use the
+arrows (control 6) to move between them, and the search box (control 9) to filter by name when a palette is long.</p>
+<div class="tw">
+<table>
+  <thead><tr><th>Palette</th><th>Contains (selection)</th></tr></thead>
+  <tbody>
+    <tr><td class="nowrap"><strong>Exterior</strong></td><td>Albumin, Serotransferrin, HDL, LDL, Ceruloplasmin, IgG, IgA, IgM, Complement Factor C3 and other plasma proteins.</td></tr>
+    <tr><td class="nowrap"><strong>Coronavirus</strong></td><td>CoronavirusSept_membrane, M, E, Spike_open, Spike_Closed, Spike_postfusion, Nucleocapsid.</td></tr>
+    <tr><td class="nowrap"><strong>mRNA Vaccine</strong></td><td>Vaccine_membrane, cholesterol and ionizable lipids in inner, outer and soluble forms, LipidPEG_brush, LipidPEG_Mushroom.</td></tr>
+    <tr><td class="nowrap"><strong>Endoplasmic Reticulum</strong></td><td>ER_membrane, Spike_SingleUnit, Spike_Closed, Spike_open, Ribosome_Surface, Ribosome SRP, Protein.</td></tr>
+    <tr><td class="nowrap"><strong>HumanCell</strong></td><td>HumanCell_membrane, GPCR, Ion_Channel, G_Protein, Ras, ACE, RNA, Ribosome.</td></tr>
+    <tr><td class="nowrap"><strong>HIV</strong></td><td>HIV_membrane, Matrix, Envelope, HLA_II_HIV, VPU, NEF, VIF, P6, VPR and the rest of the virion (BloodHIVTcell recipe).</td></tr>
+    <tr><td class="nowrap"><strong>Cytosol</strong></td><td>Cytosol_membrane, CD4, CXCR4, HLA_II_TCell, Ion_Channel, G_Protein, Ras, PFK, Ribosome (BloodHIVTcell recipe).</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 9 ============ -->
+<h2 id="hiv"><a class="anchor" href="#hiv" aria-hidden="true">#</a>9. Extended exercise: a mature HIV virion from published data</h2>
+<p>The coronavirus tutorial taught you the controls. This exercise teaches the discipline: building a picture
+in which every number comes from the literature. It is the same exercise as in the original CellPAINT-HIV
+tutorial, updated for the browser version.</p>
+<ol class="steps">
+  <li>Open <strong>Restore</strong> (control 1) and load <strong>BloodHIVTcell</strong>. You now have three
+  palettes: Exterior, HIV and Cytosol.</li>
+  <li>If you have an electron micrograph of an HIV particle, load it as a background image (section 7) and
+  scale it. Otherwise draw freehand — but do check your final diameter with the <strong>Measure</strong>
+  tool. A mature HIV virion is about 120 to 150 nm across.</li>
+  <li>From the <strong>HIV</strong> palette, draw the <strong>membrane</strong> first, clockwise, then the
+  <strong>capsid</strong> as a cone inside it — also clockwise.</li>
+  <li>Add the membrane proteins, then the contents of the capsid, then the soluble proteins, using the copy
+  numbers below. These are what you would expect to see in a thin slice through the middle of the particle,
+  not in the whole virion.</li>
+  <li>Finally, switch to <strong>Exterior</strong> and fill the surrounding plasma using the concentrations
+  in the second table.</li>
+</ol>
+
+<h3>Expected copy numbers in a central slice</h3>
+<div class="tw">
+<table>
+  <thead><tr><th>Location</th><th>Molecule</th><th>Number</th></tr></thead>
+  <tbody>
+    <tr><td>Membrane</td><td>Envelope</td><td>1–3, more if clustered</td></tr>
+    <tr><td>Membrane</td><td>Matrix</td><td>32 trimers</td></tr>
+    <tr><td>Membrane</td><td>NEF</td><td>3–4</td></tr>
+    <tr><td>Membrane</td><td>Cellular proteins such as HLA</td><td>unknown</td></tr>
+    <tr><td>Membrane</td><td>VPU</td><td>not normally in a mature virion</td></tr>
+    <tr><td>Inside capsid</td><td>RNA and nucleocapsid</td><td>as much as the program allows</td></tr>
+    <tr><td>Inside capsid</td><td>Integrase (associated with RNA)</td><td>7</td></tr>
+    <tr><td>Inside capsid</td><td>TAT (associated with RNA)</td><td>2</td></tr>
+    <tr><td>Soluble, inside and outside capsid</td><td>Reverse transcriptase</td><td>7</td></tr>
+    <tr><td>Soluble</td><td>Protease</td><td>7</td></tr>
+    <tr><td>Soluble</td><td>VPR</td><td>19</td></tr>
+    <tr><td>Soluble</td><td>VIF</td><td>1–3</td></tr>
+    <tr><td>Soluble</td><td>P1, P2, P6</td><td>14 of each</td></tr>
+    <tr><td>Soluble</td><td>Cellular proteins</td><td>unknown</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h3>Blood plasma composition, from proteomics</h3>
+<p>Serum albumin is roughly half of all plasma protein and IgG about a fifth; everything else shares what is
+left. Paint in these proportions and the surroundings will look right.</p>
+<div class="tw">
+<table>
+  <thead><tr><th>Gene</th><th>Protein</th><th>Concentration (µM)</th></tr></thead>
+  <tbody>
+    <tr><td>ALB</td><td>Serum albumin</td><td>644</td></tr>
+    <tr><td>IGH / IGK</td><td>IgG</td><td>53–120</td></tr>
+    <tr><td>HPX</td><td>Hemopexin</td><td>65</td></tr>
+    <tr><td>TF</td><td>Serotransferrin</td><td>42.4</td></tr>
+    <tr><td>SERPINA1</td><td>Alpha-1-antitrypsin</td><td>39</td></tr>
+    <tr><td>HP</td><td>Haptoglobin</td><td>38</td></tr>
+    <tr><td>APOA1</td><td>Apolipoprotein A-1 (HDL)</td><td>23.2</td></tr>
+    <tr><td>—</td><td>IgA</td><td>2.8–14.1</td></tr>
+    <tr><td>FGA, FGB</td><td>Fibrinogen</td><td>7.2</td></tr>
+    <tr><td>C3</td><td>Complement C3</td><td>6.9</td></tr>
+    <tr><td>TTR</td><td>Transthyretin</td><td>5.3</td></tr>
+    <tr><td>CFB</td><td>Complement factor B</td><td>4.8</td></tr>
+    <tr><td>A2M</td><td>Alpha-2-macroglobulin</td><td>3.0</td></tr>
+    <tr><td>—</td><td>IgM</td><td>0.6–2.6</td></tr>
+    <tr><td>CFH</td><td>Complement factor H</td><td>2.2</td></tr>
+    <tr><td>CP</td><td>Ceruloplasmin</td><td>2.2</td></tr>
+    <tr><td>C4A</td><td>Complement C4A</td><td>1.4</td></tr>
+    <tr><td>APOB, LPA</td><td>LDL</td><td>1–3</td></tr>
+    <tr><td>INS</td><td>Insulin</td><td>trace</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="note">
+  <span class="t">Going further</span>
+  <ul>
+    <li>Add a T cell. Draw a Cytosol_membrane alongside your virion, stud it with CD4 and CXCR4, and use
+    Pin-to to link an Envelope protein on the virus to a CD4 receptor on the cell. You have just illustrated
+    the first step of infection.</li>
+    <li>Then use Nudge and Pin to distort the virion where it touches the cell, the way a real membrane
+    deforms on contact.</li>
+  </ul>
+</div>
+
+<!-- ============ 10 ============ -->
+<h2 id="troubleshooting"><a class="anchor" href="#troubleshooting" aria-hidden="true">#</a>10. Troubleshooting</h2>
+<div class="tw">
+<table>
+  <thead><tr><th>Symptom</th><th>Cause and fix</th></tr></thead>
+  <tbody>
+    <tr><td>“Membrane protein can only be drawn on top of a membrane.”</td><td>You clicked next to the membrane rather than on it, or there is no membrane yet. Draw the membrane first, then zoom in and click the pale band precisely.</td></tr>
+    <tr><td>The membrane will not close into a compartment.</td><td>Draw clockwise, in one smooth stroke, finishing where you started. Start slightly larger than your target size.</td></tr>
+    <tr><td>A molecule refuses to appear where I click.</td><td>Something is already there and the physics is rejecting the overlap. Erase a neighbour, or switch off collisions for that layer in Physics Options.</td></tr>
+    <tr><td>Everything has stopped moving.</td><td>Either the temperature is at absolute zero — drag the thermometer up — or the simulation is paused (control 12).</td></tr>
+    <tr><td>Dragging moves the background image, not my molecules.</td><td>“Interactive Mode” is still ticked in the LOAD IMAGE panel. Untick it.</td></tr>
+    <tr><td>cellPAINT has become sluggish.</td><td>Lock the finished parts of the scene, or turn off collisions on one or two layers. Browsers have limits.</td></tr>
+    <tr><td>ILLUSTRATE spins forever, or shows a sad face.</td><td>The picture comes from the mesoscope server, not your browser. Wait up to a minute, then click ILLUSTRATE again.</td></tr>
+    <tr><td>My scene vanished.</td><td>Trash clears without asking. Try Undo (control 13); otherwise reload your last saved file. Save often.</td></tr>
+    <tr><td>The canvas feels cramped.</td><td>Use the expand icon at the bottom-right of the program area to go full-screen.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ============ 11 ============ -->
+<h2 id="next"><a class="anchor" href="#next" aria-hidden="true">#</a>11. Where to go next</h2>
+<ul>
+  <li>The Help overlay (control 5) has an <strong>Online Doc</strong> button that opens the current reference
+  documentation, and a <strong>Go to mesoscope</strong> button.</li>
+  <li><a href="https://mesoscope.scripps.edu/beta" target="_blank" rel="noopener">mesoscope.scripps.edu</a> —
+  build recipes far more complex than cellPAINT’s palettes allow, with several compartments and defined
+  concentrations, then bring them back here.</li>
+  <li><a href="https://www.rcsb.org" target="_blank" rel="noopener">rcsb.org</a> — the Protein Data Bank.
+  Every PDB ID you type into Create Ingredient comes from here.</li>
+  <li>David Goodsell’s illustrations, and his book <em>The Machinery of Life</em>, are the artistic and
+  scientific tradition cellPAINT grows out of. Worth an afternoon.</li>
+</ul>
+
+<h3>For instructors</h3>
+<p>Section 3 works as a ten-minute demonstration. Section 4 fits a single lab period and produces something
+students want to keep, which makes it a good assessment piece — ask for the Snapshot plus a short written
+justification of the copy numbers they chose. Section 9 suits a second session or a take-home assignment,
+since it requires students to read the literature rather than the software.</p>
+<p>The habit most worth reinforcing is measurement. Students will cheerfully draw a virus five times too
+large; the Measure tool turns that into a teachable moment rather than an invisible error.</p>
+
+<footer>
+  <p><strong>cellPAINT 2D</strong> is free for educational use. Software by Adam Gardner and Ludovic Autin,
+  scientific support by Martina Maritan, supported by US National Institutes of Health R01-GM120604
+  (Ludovic Autin, principal investigator).</p>
+  <p>Tutorial checked step by step against cellPAINT version 2.0.6 running in the browser.</p>
+</footer>
+
+</div>
+</main>
+</div>
+
+<div id="lb" role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <button class="close" aria-label="Close">×</button>
+  <img alt="">
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---- theme ---- */
+  var root = document.documentElement;
+  function store(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function read(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+  var saved = read('cp-theme');
+  if(saved){ root.setAttribute('data-theme', saved); }
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    root.setAttribute('data-theme','dark');
+  }
+  document.getElementById('themeBtn').addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    store('cp-theme', next);
+  });
+
+  /* ---- mobile nav ---- */
+  var toc = document.getElementById('toc');
+  var menuBtn = document.getElementById('menuBtn');
+  menuBtn.addEventListener('click', function(){
+    var open = toc.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  toc.addEventListener('click', function(e){
+    if(e.target.tagName === 'A' && window.innerWidth <= 900){
+      toc.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded','false');
+    }
+  });
+
+  /* ---- scroll-spy + progress ---- */
+  var links = Array.prototype.slice.call(toc.querySelectorAll('a[href^="#"]'));
+  var targets = links.map(function(a){
+    return { a:a, el:document.getElementById(a.getAttribute('href').slice(1)) };
+  }).filter(function(t){ return t.el; });
+  var bar = document.getElementById('bar');
+
+  function onScroll(){
+    var y = window.scrollY || window.pageYOffset;
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+
+    var current = null;
+    for(var i = 0; i < targets.length; i++){
+      if(targets[i].el.getBoundingClientRect().top <= 110){ current = targets[i]; }
+    }
+    links.forEach(function(a){ a.classList.remove('active'); });
+    if(current){
+      current.a.classList.add('active');
+      var sub = current.a.closest('.sub');
+      if(sub){
+        var parentLi = sub.closest('li');
+        var parentA = parentLi && parentLi.querySelector(':scope > a');
+        if(parentA){ parentA.classList.add('active'); }
+      }
+    }
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(!ticking){ ticking = true; requestAnimationFrame(function(){ onScroll(); ticking = false; }); }
+  }, {passive:true});
+  onScroll();
+
+  /* ---- lightbox ---- */
+  var lb = document.getElementById('lb');
+  var lbImg = lb.querySelector('img');
+  var lastFocus = null;
+  function openLb(src, alt){
+    lastFocus = document.activeElement;
+    lbImg.src = src; lbImg.alt = alt || '';
+    lb.classList.add('on');
+    lb.querySelector('.close').focus();
+  }
+  function closeLb(){
+    lb.classList.remove('on');
+    lbImg.src = '';
+    if(lastFocus && lastFocus.focus){ lastFocus.focus(); }
+  }
+  document.querySelectorAll('figure img').forEach(function(img){
+    img.setAttribute('tabindex','0');
+    img.setAttribute('role','button');
+    img.addEventListener('click', function(){ openLb(img.currentSrc || img.src, img.alt); });
+    img.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openLb(img.currentSrc || img.src, img.alt); }
+    });
+  });
+  lb.addEventListener('click', closeLb);
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && lb.classList.contains('on')){ closeLb(); }
+  });
+})();
+</script>
+</body>
+</html>

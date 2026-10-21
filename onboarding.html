@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Unlisted page: reachable by URL only. Not in sitemap.xml or llms.txt, and kept out of search results.
+         Do not put anything private here (printer IPs, access codes, tokens): the page and its source are public. -->
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Onboarding &amp; Help | Ludo's Molecular Graphics Lab</title>
+    <script defer src="https://mesoscope.scripps.edu/umami/script.js" data-website-id="f38ba217-277e-4327-bda1-dfcf0a08365e" data-domains="autinlab.org"></script>
+    <style>
+      body { background: #0f172a; color: #e2e8f0; font-family: Inter, system-ui, sans-serif; line-height: 1.6; margin: 0; }
+      main { max-width: 780px; margin: 0 auto; padding: 3rem 1.25rem 5rem; }
+      h1, h2, h3 { color: #fff; line-height: 1.25; }
+      h2 { margin-top: 3.5rem; padding-top: 1rem; border-top: 1px solid #1e293b; }
+      h3 { margin-top: 2rem; }
+      a { color: #2dd4bf; }
+      li { margin-bottom: 0.4rem; }
+      code { background: #1e293b; padding: 0.1rem 0.35rem; border-radius: 4px; font-size: 0.9em; }
+      pre { background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 0.9rem 1rem; overflow-x: auto; }
+      pre code { background: none; padding: 0; }
+      table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.95em; }
+      th, td { text-align: left; vertical-align: top; padding: 0.6rem 0.7rem; border-bottom: 1px solid #1e293b; }
+      th { color: #fff; }
+      .muted { color: #94a3b8; }
+      .note { background: #1e293b; border-left: 3px solid #2dd4bf; padding: 0.7rem 1rem; border-radius: 4px; }
+      .warn { background: #1e293b; border-left: 3px solid #f59e0b; padding: 0.7rem 1rem; border-radius: 4px; }
+      .toc { background: #111c33; border: 1px solid #1e293b; border-radius: 10px; padding: 1rem 1.25rem; }
+      .toc ol { margin: 0.25rem 0 0; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p><a href="https://autinlab.org/">&larr; Ludo's Molecular Graphics Lab</a></p>
+      <h1>Onboarding &amp; Help</h1>
+      <p class="muted">Setup guides and useful links for people working in the lab.</p>
+
+      <nav class="toc">
+        <strong>On this page</strong>
+        <ol>
+          <li><a href="#quest-setup">Meta Quest developer setup</a></li>
+          <li><a href="#templates">Start from a template project (Quest XR &amp; Photon Fusion)</a></li>
+          <li><a href="#unity-mcp">Unity Claude MCP</a></li>
+          <li><a href="#blender-mcp">Blender Claude MCP</a></li>
+          <li><a href="#printing">3D printing (Bambu Lab &amp; Snapmaker)</a></li>
+          <li><a href="#links">Useful links</a></li>
+        </ol>
+      </nav>
+
+      <!-- ─────────────────────────────── Meta Quest setup ─────────────────────────────── -->
+      <h2 id="quest-setup">1. Meta Quest developer setup</h2>
+      <p><strong>Get your computer and headset ready to build Unity apps for Meta Quest.</strong></p>
+      <p>Do this once per computer and once per headset. At the end you build a test app and see it running in the headset, so you know everything works before starting real work. Plan about an hour the first time (most of it is downloads).</p>
+
+      <h3>What you need</h3>
+      <ul>
+        <li>A Windows 10/11 (64-bit) PC or a Mac.</li>
+        <li>A Meta Quest 2, 3, 3S or Pro, and a phone with the <strong>Meta Horizon</strong> app, signed in with the account that owns the headset.</li>
+        <li>A <strong>data</strong> USB-C cable (some charging-only cables don't carry data; if the headset is never detected, try another cable).</li>
+      </ul>
+
+      <h3>Step 1 — Accounts</h3>
+      <ol>
+        <li>Create a Meta developer account at <a href="https://developers.meta.com/horizon/sign-up/">developers.meta.com/horizon/sign-up</a> and complete the account verification it asks for.</li>
+        <li>Create a Unity ID at <a href="https://id.unity.com/">id.unity.com</a> if you don't have one.</li>
+      </ol>
+
+      <h3>Step 2 — Install Unity with Android support</h3>
+      <ol>
+        <li>Install <a href="https://unity.com/download">Unity Hub</a>.</li>
+        <li>In Unity Hub, go to <strong>Installs → Install Editor</strong> and pick a Unity 6 version, <strong>6000.0.66f2 or newer</strong> (the Photon VR Training sample below needs Unity 6.3).</li>
+        <li>On the modules page, tick <strong>Android Build Support</strong> and, under it, <strong>OpenJDK</strong> and <strong>Android SDK &amp; NDK Tools</strong>. All three are needed: the Quest runs Android.</li>
+      </ol>
+      <p class="note">Already have Unity installed without Android? In Unity Hub, click the gear next to that version → <strong>Add modules</strong>, and tick the same three.</p>
+
+      <h3>Step 3 — Install the Meta tools</h3>
+      <ol>
+        <li><strong>Meta Quest Developer Hub (MQDH)</strong>: download and install it from <a href="https://developers.meta.com/horizon/documentation/unity/ts-mqdh-getting-started/">MQDH Getting Started</a>, then sign in with your developer account. It shows your headset, installs apps and creates projects.</li>
+        <li><strong>Windows only — USB driver</strong>: download the <a href="https://developers.meta.com/horizon/downloads/package/oculus-adb-drivers/">Oculus ADB driver</a>, unzip it, open the <code>usb_driver</code> folder, right-click <code>android_winusb.inf</code> and choose <strong>Install</strong>. (Not needed on Mac.)</li>
+        <li><strong>Optional, Windows only — Meta Horizon Link</strong> (the Quest Link PC app) lets you press Play in Unity and see the scene in the headset without building. Handy for quick tests, but always check with a real build too.</li>
+      </ol>
+
+      <h3>Step 4 — Turn on Developer Mode on the headset</h3>
+      <ol>
+        <li>In the <strong>Meta Horizon</strong> app on your phone: tap the headset icon in the toolbar, tap your headset, then <strong>Headset Settings → Developer Mode</strong>, and switch it on. (It only appears once your developer account is set up — Step 1.)</li>
+        <li>Restart the headset if it asks.</li>
+        <li>Plug the headset into your computer with the USB-C cable and put it on.</li>
+        <li>When the headset asks <strong>Allow USB debugging?</strong>, tick <em>Always allow from this computer</em> and choose <strong>Allow</strong>.</li>
+        <li>If the prompt doesn't appear: open <strong>Quick Settings → Settings (gear) → Developer</strong>, switch on <strong>MTP Notification</strong>, then unplug and plug the cable back in.</li>
+      </ol>
+      <p><strong>Check:</strong> in MQDH, open <strong>Device Manager</strong>: your headset should show a green <strong>Active</strong> status. (In a terminal, <code>adb devices</code> should list it as <code>device</code>, not <code>unauthorized</code>.)</p>
+
+      <h3>Step 5 — Build and run a test app</h3>
+      <p>This proves that the whole chain works.</p>
+      <ol>
+        <li>In MQDH, open <strong>XR Projects → Create project</strong>. Give it a name, choose your Unity version and a folder, set <strong>XR Plugin</strong> to <strong>OpenXR</strong> and <strong>SDKs</strong> to <strong>All</strong>. The project opens in Unity. (You can also start from one of the templates in the next section.)</li>
+        <li>In Unity, open <strong>Window → Meta → Tools → Project Setup Tool</strong>. In both the <strong>Android</strong> and <strong>Standalone</strong> tabs, click <strong>Fix All</strong>, then <strong>Apply All</strong>, and accept if Unity asks to change the graphics API or restart.</li>
+        <li>Check <strong>Edit → Project Settings → XR Plug-in Management → OpenXR</strong>: <strong>Meta XR</strong> should be ticked, on the Android tab.</li>
+        <li>Open <strong>File → Build Profiles</strong>. Under <strong>Platforms</strong>, select <strong>Meta Quest</strong> (on Unity older than 6.1: <strong>Android</strong>) and click <strong>Switch Platform</strong> (or <strong>Enable Platform</strong>). The first switch can take a while.</li>
+        <li>Click <strong>Open Scene List → Add Open Scenes</strong> so your scene is included.</li>
+        <li>With the headset plugged in and awake, pick it in the <strong>Run Device</strong> drop-down. (If it isn't listed, click <strong>Refresh</strong>; if still missing, go back to Step 4.)</li>
+        <li>Click <strong>Build And Run</strong> and choose a folder for the <code>.apk</code> (for example a <code>Builds</code> folder next to <code>Assets</code>).</li>
+        <li>Put on the headset: the app starts by itself when the build finishes. 🎉</li>
+      </ol>
+      <p>To open it again later: in the headset's <strong>Library</strong>, use the filter and choose <strong>Unknown sources</strong>. You can also start, stop and uninstall it from MQDH.</p>
+
+      <h3>When something goes wrong</h3>
+      <table>
+        <tr><th scope="col">What you see</th><th scope="col">What to do</th></tr>
+        <tr><td>No <strong>Developer Mode</strong> option in the Meta Horizon app</td><td>The developer account isn't finished: complete sign-up and verification (Step 1), then reopen the app.</td></tr>
+        <tr><td>Headset not in MQDH or <strong>Run Device</strong></td><td>Use a data USB-C cable, wake the headset, accept <strong>Allow USB debugging</strong> inside the headset. On Windows, install the USB driver (Step 3).</td></tr>
+        <tr><td><code>adb devices</code> says <code>unauthorized</code></td><td>Put the headset on and accept the USB debugging prompt; tick <em>Always allow</em>.</td></tr>
+        <tr><td>Build fails mentioning Android SDK, NDK or JDK</td><td>The Android modules are missing: Unity Hub → Installs → gear → <strong>Add modules</strong> → Android Build Support with OpenJDK and Android SDK &amp; NDK Tools.</td></tr>
+        <tr><td>The app runs but shows a flat window, or nothing moves with your head</td><td>XR isn't enabled for Android: re-run the <strong>Project Setup Tool</strong> (Fix All / Apply All) and check <strong>Meta XR</strong> under XR Plug-in Management → OpenXR, Android tab.</td></tr>
+      </table>
+      <p class="muted">Official guides: <a href="https://developers.meta.com/horizon/documentation/unity/unity-software-setup/">software setup</a> · <a href="https://developers.meta.com/horizon/documentation/unity/unity-project-setup/">project setup</a> · <a href="https://developers.meta.com/horizon/documentation/unity/unity-build/">build and run</a>.</p>
+
+      <!-- ─────────────────────────────── Templates ─────────────────────────────── -->
+      <h2 id="templates">2. Start from a template project</h2>
+      <p>In the lab we always start from a project, never from a blank folder: either the empty Meta project from <strong>MQDH → XR Projects</strong> (Step 5 above), or one of the templates below. Pick the closest one, check that it builds to the headset first (same steps as Step 5), then change it. Keep it in Git from day one.</p>
+
+      <h3>Meta Quest (single user)</h3>
+      <ul>
+        <li><strong>Empty Meta XR project</strong>: <strong>MQDH → XR Projects → Create project</strong> (OpenXR, SDKs: All). The best starting point for a new idea.</li>
+        <li><a href="https://github.com/oculus-samples/Unity-StarterSamples">Meta Unity Starter Samples</a>: small scenes for the basics (controllers, hands, passthrough, UI…).</li>
+        <li><a href="https://github.com/oculus-samples">All Meta Quest samples on GitHub</a> (oculus-samples): bigger example apps, for example passthrough camera, mixed reality, multiplayer.</li>
+      </ul>
+
+      <h3>Multiplayer XR with Photon Fusion</h3>
+      <p>Photon Fusion keeps several headsets in the same shared scene. Every Fusion project needs a free <strong>App ID</strong> from the <a href="https://dashboard.photonengine.com/">Photon dashboard</a> (create one for <strong>Fusion</strong>, plus one for <strong>Voice</strong> if the sample uses voice chat), pasted into the project's Photon <strong>Realtime Settings</strong>. Read each sample's page before opening it: it lists the exact Unity version and setup.</p>
+      <ul>
+        <li><a href="https://doc.photonengine.com/fusion/current/industries-samples/fusion-vr-training">VR Training</a> (the drone teaching sample): a teacher and learners go through three drone activities — naming the parts, assembling a drone, flying it. Fusion 2, Unity 6.3, with voice. Good base for teaching and lesson apps.</li>
+        <li><a href="https://doc.photonengine.com/arvr/current/technical-samples/fusion-vr-shared">VR Shared</a>: the simplest multiplayer VR starting point — rig, teleport and grabbing objects. Fusion 2.</li>
+        <li><a href="https://doc.photonengine.com/fusion/current/game-samples/fusion-dragonhunters-vr">Dragonhunters VR</a> (<a href="https://assetstore.unity.com/packages/templates/tutorials/fusion-dragonhunters-vr-multiplayer-217108">Asset Store</a>): multiplayer bow-and-arrow game with voice. Note: still on <strong>Fusion 1</strong>; use it as a reference rather than a base for new projects.</li>
+        <li>More: <a href="https://doc.photonengine.com/arvr/current/headsets/quest-intro">Photon's Meta Quest guide</a>, the <a href="https://doc.photonengine.com/arvr/current/extended-reality-overview">Photon XR samples overview</a>, and <a href="https://www.photonengine.com/samples">all Photon samples</a>.</li>
+      </ul>
+
+      <!-- ─────────────────────────────── Unity ─────────────────────────────── -->
+      <h2 id="unity-mcp">3. Unity Claude MCP</h2>
+      <p><strong>Let Claude work inside your Unity project.</strong></p>
+      <p>This guide connects Claude Code (the AI assistant) to the Unity Editor, so Claude can look at your scene, change objects, read the Console and run things in Unity for you. It uses a free Unity package called <strong>AI Game Developer — MCP</strong> (MCP is just the name of the "plug" between an AI and a program). No coding is needed. Plan about 15 minutes the first time.</p>
+
+      <h3>What you need</h3>
+      <ul>
+        <li>Unity installed, with your project.</li>
+        <li>Claude Code installed and signed in (the desktop app or the terminal version).</li>
+        <li>An internet connection the first time (Unity downloads the package and a small helper program).</li>
+      </ul>
+
+      <h3>Step 1 — Add the package to your Unity project</h3>
+      <p>You only do this once per project.</p>
+      <ol>
+        <li>Open your project in Unity.</li>
+        <li>Open <strong>Edit → Project Settings…</strong> (on Mac, <strong>Unity → Settings…</strong> also works) and click <strong>Package Manager</strong> in the list on the left.</li>
+        <li>Under <strong>Scoped Registries</strong>, click the <strong>+</strong> button and fill in exactly:
+          <ul>
+            <li>Name: <code>package.openupm.com</code></li>
+            <li>URL: <code>https://package.openupm.com</code></li>
+            <li>Scope(s): <code>com.ivanmurzak</code> — then click the small <strong>+</strong> under scopes and add a second line: <code>extensions.unity</code></li>
+          </ul>
+        </li>
+        <li>Click <strong>Save</strong> (or <strong>Apply</strong>) and close the window.</li>
+        <li>Open <strong>Window → Package Manager</strong>. In the top-left drop-down choose <strong>My Registries</strong>.</li>
+        <li>Find <strong>AI Game Developer — MCP</strong> in the list, select it and click <strong>Install</strong>.</li>
+        <li>Wait until Unity has finished (the progress bar at the bottom right disappears).</li>
+      </ol>
+      <p class="note">If you don't see <strong>My Registries</strong>, re-check step 3 — a typo in the URL or scope is the usual cause.</p>
+
+      <h3>Step 2 — Open the MCP window and start it</h3>
+      <ol>
+        <li>In Unity, open <strong>Window → AI Game Developer — MCP</strong>. (Shortcut: <code>Ctrl+Alt+A</code> on Windows, <code>Cmd+Option+A</code> on Mac.)</li>
+        <li>The first time, the window may ask to download the server. Click <strong>Download</strong> (or <strong>Download / Retry server</strong>) and wait for it to finish.</li>
+        <li>Click <strong>Connect / Start</strong> so the status turns green (connected).</li>
+      </ol>
+
+      <h3>Step 3 — Tell Claude Code where Unity is</h3>
+      <p>The window does this for you — do not type addresses by hand.</p>
+      <ol>
+        <li>In the same MCP window, find the <strong>AI agent</strong> section.</li>
+        <li>Choose <strong>Claude Code</strong> from the list.</li>
+        <li>Click <strong>Configure</strong>. The status should change from <em>Not configured</em> to <em>configured</em>.</li>
+      </ol>
+      <p>This writes a small file named <code>.mcp.json</code> into your project folder. It contains a local address like <code>http://localhost:12345/...</code> — that address is specific to your computer and project.</p>
+
+      <h3>Step 4 — Check that it works</h3>
+      <ol>
+        <li>Keep Unity open (Claude can only reach Unity while the Editor is running).</li>
+        <li>Start Claude Code in your project folder (the folder that contains <code>Assets</code> and <code>Packages</code>).
+          <ul>
+            <li>Desktop app: open that folder as the project.</li>
+            <li>Terminal: <code>cd</code> into the folder, then type <code>claude</code>.</li>
+          </ul>
+        </li>
+        <li>If Claude asks whether to trust/enable the MCP server <code>ai-game-developer</code>, say yes.</li>
+        <li>Type <code>/mcp</code> and press Enter. You should see <code>ai-game-developer</code> marked as connected.</li>
+        <li>Try a first request, for example: <em>"List the objects in the open Unity scene."</em></li>
+      </ol>
+
+      <h3>Everyday use</h3>
+      <ul>
+        <li>Open Unity first, then Claude Code.</li>
+        <li>If you restart Unity, the connection usually comes back by itself. If Claude says it can't reach Unity, open <strong>Window → AI Game Developer — MCP</strong> and click <strong>Connect</strong> again, then type <code>/mcp</code> in Claude Code and reconnect.</li>
+        <li>Claude will ask before doing things; read what it proposes before saying yes, especially for changes to scenes and prefabs. Keep your project in version control (Git) or make a backup copy, so any change can be undone.</li>
+      </ul>
+
+      <h3>When something goes wrong</h3>
+      <table>
+        <tr><th scope="col">What you see</th><th scope="col">What to do</th></tr>
+        <tr><td><code>/mcp</code> shows <code>ai-game-developer</code> — failed, or "connection refused"</td><td>Unity is closed, or the MCP window isn't connected. Open Unity, open the MCP window, click <strong>Connect</strong>, then reconnect in Claude Code with <code>/mcp</code>.</td></tr>
+        <tr><td>It worked yesterday, not today</td><td>The address may have changed. In the MCP window, choose <strong>Claude Code</strong> again and click <strong>Configure</strong>, then restart Claude Code.</td></tr>
+        <tr><td>The package isn't in the Package Manager</td><td>Re-check the scoped registry (Step 1, point 3): URL <code>https://package.openupm.com</code>, scopes <code>com.ivanmurzak</code> and <code>extensions.unity</code>.</td></tr>
+        <tr><td>The server won't start</td><td>In Unity: <strong>Tools → AI Game Developer → Server → Download Binaries</strong>, then <strong>Connect</strong> again. <strong>Tools → AI Game Developer → Server → Open Logs</strong> shows what went wrong — send that to whoever helps you.</td></tr>
+        <tr><td>Everything is confused</td><td><strong>Tools → AI Game Developer → Reset Config</strong>, then redo Steps 2 and 3.</td></tr>
+        <tr><td>Two Unity projects open at the same time</td><td>Each project gets its own address. Run Claude Code in the folder of the project you want, and make sure that project's MCP window is connected.</td></tr>
+      </table>
+
+      <h3>Good to know</h3>
+      <ul>
+        <li>Everything runs on your own computer: the address is <code>localhost</code>, which means "this machine".</li>
+        <li>The <code>.mcp.json</code> file is per computer. If you share the project with others, each person runs Step 3 on their own machine.</li>
+        <li>Package home page and help: <a href="https://github.com/IvanMurzak/Unity-MCP">github.com/IvanMurzak/Unity-MCP</a> (the window also has <strong>Help / Talk</strong> and <strong>YouTube Tutorial</strong> buttons).</li>
+      </ul>
+
+      <!-- ─────────────────────────────── Blender ─────────────────────────────── -->
+      <h2 id="blender-mcp">4. Blender Claude MCP</h2>
+      <p><strong>Let Claude build and edit scenes in Blender.</strong></p>
+      <p>This guide connects Claude Code to Blender with the free <strong>MCP for Blender</strong> add-on, so Claude can inspect your scene, create and change objects and materials, take viewport screenshots and run Blender Python for you. Plan about 10 minutes the first time.</p>
+
+      <h3>What you need</h3>
+      <ul>
+        <li><a href="https://www.blender.org/download/">Blender</a> 3.0 or newer.</li>
+        <li>Claude Code installed and signed in.</li>
+        <li>An internet connection the first time.</li>
+      </ul>
+
+      <h3>Step 1 — Run the installer</h3>
+      <p>One command installs <code>uv</code> (the small tool that runs the server) if you don't have it, adds Blender to Claude Code, and installs and enables the Blender add-on. It keeps your existing settings and saves a <code>.bak</code> copy of any file it changes.</p>
+      <p><strong>Windows</strong> (PowerShell):</p>
+      <pre><code>powershell -ExecutionPolicy ByPass -c "irm https://www.mcp-for-blender.com/install.ps1 | iex"</code></pre>
+      <p><strong>Mac / Linux</strong> (Terminal):</p>
+      <pre><code>curl -LsSf https://www.mcp-for-blender.com/install.sh | sh</code></pre>
+      <p>When it lists the AI apps it found, pick <strong>Claude Code</strong>. Already have <code>uv</code>? Run <code>uvx mcp-for-blender setup</code> instead.</p>
+
+      <h3>Step 2 — Restart and connect</h3>
+      <ol>
+        <li>Fully quit Claude Code and start it again.</li>
+        <li>Open Blender. The add-on starts its server when Blender opens.</li>
+        <li>To check: in the 3D viewport press <code>N</code>, open the <strong>MCP for Blender</strong> tab, and click <strong>Start MCP Server</strong> if it isn't running.</li>
+        <li>In Claude Code, type <code>/mcp</code>: <code>blender</code> should be connected. Try <em>"Describe the objects in my Blender scene."</em></li>
+      </ol>
+
+      <h3>If the installer doesn't work: manual setup</h3>
+      <ol>
+        <li>Install <code>uv</code> with its official installer (not <code>pip install uv</code>):
+          <pre><code>powershell -c "irm https://astral.sh/uv/install.ps1 | iex"</code></pre>
+          On Mac: <code>brew install uv</code>. Other options: <a href="https://docs.astral.sh/uv/getting-started/installation/">docs.astral.sh/uv</a>.
+        </li>
+        <li>Add the server to Claude Code:
+          <pre><code>claude mcp add blender uvx mcp-for-blender</code></pre>
+          On Windows, if Claude Code can't start <code>uvx</code>, use instead:
+          <pre><code>claude mcp add blender -- cmd /c uvx mcp-for-blender</code></pre>
+        </li>
+        <li>Install the add-on: <code>uvx mcp-for-blender install-addon</code>, then in Blender go to <strong>Edit → Preferences → Add-ons</strong> and enable <strong>Interface: MCP for Blender</strong>.</li>
+        <li>Continue with Step 2 above.</li>
+      </ol>
+
+      <h3>Everyday use</h3>
+      <ul>
+        <li>Open Blender first, then Claude Code.</li>
+        <li><strong>Save your .blend file before asking for big changes.</strong> Claude can run any Python code inside Blender.</li>
+        <li>Ask in small steps ("add a sphere above the cube", then "make it metallic") rather than one huge request.</li>
+        <li>Connect only one AI app to Blender at a time (for example Claude Code <em>or</em> Claude Desktop, not both).</li>
+      </ul>
+
+      <h3>When something goes wrong</h3>
+      <table>
+        <tr><th scope="col">What you see</th><th scope="col">What to do</th></tr>
+        <tr><td><code>/mcp</code> shows <code>blender</code> failed, or Claude can't reach Blender</td><td>Make sure Blender is open and the server is running (<code>N</code> → <strong>MCP for Blender</strong> → <strong>Start MCP Server</strong>). Don't run the <code>uvx</code> command yourself in a terminal. The first request sometimes fails; try again.</td></tr>
+        <tr><td><code>spawn uvx ENOENT</code></td><td>Claude can't find <code>uvx</code>. On Windows use the <code>cmd /c</code> form from the manual setup, or point to the full path shown by <code>where uvx</code>.</td></tr>
+        <tr><td>Timeouts</td><td>Break the request into smaller steps.</td></tr>
+        <tr><td>Blender freezes while downloading a Poly Haven asset</td><td>Downloads block Blender until they finish; ask for 1k or 2k textures instead of larger ones.</td></tr>
+        <tr><td>Still stuck</td><td>Quit and restart both Claude Code and Blender.</td></tr>
+      </table>
+
+      <h3>Good to know</h3>
+      <ul>
+        <li>Blender and the server talk over <code>localhost</code> (port 9876), on your own computer.</li>
+        <li>Older setups that use <code>uvx blender-mcp</code> keep working; the package was renamed <code>mcp-for-blender</code>.</li>
+        <li>Telemetry: by default the add-on sends only minimal anonymous usage data (tool names, success, timing); your prompts, code and screenshots are sent only if you opt in under <strong>Edit → Preferences → Add-ons → MCP for Blender</strong>. To turn it off completely, add the server with <code>claude mcp add blender -e DISABLE_TELEMETRY=true -- uvx mcp-for-blender</code> (run <code>claude mcp remove blender</code> first if it's already there).</li>
+        <li>Project home page and full docs: <a href="https://github.com/ahujasid/mcp-for-blender">github.com/ahujasid/mcp-for-blender</a>.</li>
+      </ul>
+
+      <!-- ─────────────────────────────── 3D printing ─────────────────────────────── -->
+      <h2 id="printing">5. 3D printing (Bambu Lab &amp; Snapmaker)</h2>
+      <p>The lab has two printers: a <strong>Bambu Lab P2S</strong> and a <strong>Snapmaker U1</strong>.</p>
+      <p class="warn">Lab printing guidelines are being written. Until then, ask in the <strong>#3d-printing</strong> Slack channel before starting a print.</p>
+
+      <h3>Bambu Lab P2S</h3>
+      <ul>
+        <li>Manual, maintenance and troubleshooting: <a href="https://wiki.bambulab.com/en/p2s">Bambu Lab Wiki — P2S</a></li>
+        <li>Slicer: <a href="https://github.com/bambulab/BambuStudio/releases">Bambu Studio</a></li>
+        <li>All Bambu Lab guides: <a href="https://wiki.bambulab.com/en/home">wiki.bambulab.com</a></li>
+      </ul>
+
+      <h3>Snapmaker U1</h3>
+      <ul>
+        <li>Manual, maintenance and troubleshooting: <a href="https://wiki.snapmaker.com/en/snapmaker_u1">Snapmaker Wiki — U1</a></li>
+        <li>Slicer: <a href="https://www.snapmaker.com/snapmaker-orca">Snapmaker Orca</a></li>
+        <li>All Snapmaker guides: <a href="https://wiki.snapmaker.com/en/home">wiki.snapmaker.com</a></li>
+      </ul>
+
+      <h3>In the lab</h3>
+      <ul>
+        <li>Questions and coordination: <strong>#3d-printing</strong> on Slack.</li>
+        <li>Printer status: type <code>/printer-status</code> anywhere in Slack.</li>
+        <li>What we've printed so far: the <strong>3D Printing</strong> gallery in the <a href="https://autinlab.org/#playground">Playground</a>.</li>
+      </ul>
+
+      <!-- ─────────────────────────────── Links ─────────────────────────────── -->
+      <h2 id="links">6. Useful links</h2>
+      <h3>Claude Code</h3>
+      <ul>
+        <li><a href="https://code.claude.com/docs/en/mcp">Connecting Claude Code to tools with MCP</a></li>
+      </ul>
+      <h3>Lab tools</h3>
+      <ul>
+        <li><a href="https://github.com/mesoscope/cellpack">cellPACK</a> (GitHub) · <a href="https://autinlab.org/cellpack.html">about cellPACK</a></li>
+        <li><a href="https://mesoscope.scripps.edu/beta/">Mesoscope</a> · <a href="https://autinlab.org/mesoscope.html">about Mesoscope</a></li>
+        <li><a href="https://molstar.org/me/">Mesoscale Explorer</a> (Mol*)</li>
+        <li><a href="https://molstar.org/mol-view-stories/">MolViewStories</a></li>
+        <li><a href="https://github.com/autinlab">Lab GitHub</a></li>
+      </ul>
+      <h3>Joining the lab</h3>
+      <ul>
+        <li><a href="https://autinlab.org/labintern.html">LabIntern Planner</a>: find an internship project</li>
+        <li>Contact: <a href="mailto:autin@scripps.edu">autin@scripps.edu</a></li>
+      </ul>
+
+      <p class="muted" style="margin-top:3rem">Ludo's Molecular Graphics Lab · Scripps Research · La Jolla, CA</p>
+    </main>
+  </body>
+</html>

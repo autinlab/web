@@ -1,0 +1,37 @@
+# Ludo's Molecular Graphics Lab (Ludo's MGL) at Scripps Research
+
+> Research group led by Ludovic Autin, PhD, Institute Investigator at Scripps Research (La Jolla, CA). We build tools to model, simulate and paint the molecular world, from cellPACK to Mesoscope: integrative structural modeling, GPU computing and molecular graphics for the biological mesoscale. Canonical site: https://autinlab.org/
+
+The lab continues the legacy of the Molecular Graphics Laboratory (MGL) founded by Art Olson and continued by David Goodsell at Scripps Research. "Ludo's MGL" refers to Ludovic Autin's current lab. Each tool has its own citation, listed below.
+
+## Key pages
+- [Home](https://autinlab.org/): research areas, software, playground, team, selected publications
+- [cellPACK](https://autinlab.org/cellpack.html): what cellPACK and CellPackGPU are, and how to cite them
+- [Mesoscope](https://autinlab.org/mesoscope.html): what Mesoscope is, and how to cite it
+- [LabIntern Planner](https://autinlab.org/labintern.html): matches prospective interns to lab projects
+
+## Software
+- [cellPACK](https://github.com/mesoscope/cellpack): virtual mesoscope that packs molecular structures into cellular compartments following curated recipes; developed with Graham Johnson and the Allen Institute for Cell Science. Cite: Johnson et al., Nat Methods 12(1):85-91, 2015, https://doi.org/10.1038/nmeth.3204
+- CellPackGPU: GPU-accelerated packing of molecular structures into defined volumes, used to build the whole-cell Mycoplasma genitalium models (source not yet public). Cite: Klein et al., IEEE TVCG 24(1):862-872, 2018, https://doi.org/10.1109/TVCG.2017.2744258
+- [Mesoscope](https://mesoscope.scripps.edu/beta/): web-based explorer for mesoscale biological models (HIV, Influenza, blood plasma). Cite: https://doi.org/10.2312/molva.20201098
+- [Mesoscale Explorer](https://molstar.org/me/): tool for exploring mesoscale models, built on Mol* with the Mol* team. Cite: https://doi.org/10.1002/pro.5177
+- [Illustrate](https://mesoscope.scripps.edu/beta/illustrate.html) ([source](https://github.com/ccsb-scripps/Illustrate)): non-photorealistic rendering of biomolecules. Cite: https://doi.org/10.1016/j.str.2019.08.011
+- [CellPaint](https://mesoscope.scripps.edu/beta/cellPAINT_dev/): digital painting of molecular landscapes in the browser. Cite: https://doi.org/10.3389/fbinf.2021.660936
+- [ePMV](https://epmv.scripps.edu): embedded Python Molecular Viewer, bridging molecular science and Blender, Maya and Cinema 4D
+
+## Publications
+- [cellPACK: a virtual mesoscope to model and visualize structural systems biology](https://doi.org/10.1038/nmeth.3204): Johnson GT, Autin L, Al-Alusi M, Goodsell DS, Sanner MF, Olson AJ. Nat Methods 12(1):85-91, 2015
+- [Instant construction and visualization of crowded biological environments](https://doi.org/10.1109/TVCG.2017.2744258): Klein T, Autin L, Kozlikova B, Goodsell DS, Olson A, Groller ME, Viola I. IEEE TVCG 24(1):862-872, 2018
+- [Mesoscale explorer: Visual exploration of large-scale molecular models](https://doi.org/10.1002/pro.5177): Rose A, Sehnal D, Goodsell DS, Autin L. Protein Science 33(10):e5177, 2024
+- [Integrative structural modelling and visualisation of a cellular organelle](https://doi.org/10.1017/qrd.2022.10): Autin L et al. QRB Discovery 3:e11, 2022
+- [Building structural models of a whole mycoplasma cell](https://doi.org/10.1016/j.jmb.2021.167351): Maritan M, Autin L et al. J Mol Biol 434(2):167351, 2022
+- [CellPAINT: Turnkey illustration of molecular cell biology](https://doi.org/10.3389/fbinf.2021.660936): Gardner A, Autin L et al. Front Bioinform 1:660936, 2021
+- [Mesoscope: A web-based tool for mesoscale data integration and curation](https://doi.org/10.2312/molva.20201098): Autin L et al. MolVa 2020
+- [Illustrate: software for biomolecular illustration](https://doi.org/10.1016/j.str.2019.08.011): Goodsell DS, Autin L, Olson AJ. Structure 27(11), 2019
+
+## People
+- Ludovic Autin, PhD, Institute Investigator: [Scripps profile](https://www.scripps.edu/faculty/autin/) · [ORCID 0000-0002-2197-191X](https://orcid.org/0000-0002-2197-191X) · [Google Scholar](https://scholar.google.com/citations?user=LQzd0s4AAAAJ) · [GitHub](https://github.com/autinlab)
+- Contact: autin@scripps.edu
+
+## Optional
+- [Playground](https://autinlab.org/#playground): experimental in-browser apps (cellPAINT 2D, Mesoscope Modern, Fluoddity, SpheresSquared, Fullerenes Explorer)
