@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>How a Ribosome Builds a Protein</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #viewer {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 34%;
+            bottom: 0;
+        }
+
+        #controls {
+            position: absolute;
+            left: 66%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            padding: 16px;
+            padding-bottom: 20px;
+            border: 1px solid #ccc;
+            border-left: none;
+            background: #F6F5F3;
+            z-index: -2;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        #links {
+            position: absolute;
+            bottom: 4px;
+            right: 8px;
+            font-family: "Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 0.6rem;
+            z-index: -1;
+            color: #666;
+        }
+
+        #links a {
+            color: #666;
+            text-decoration: none;
+        }
+
+        #links .sep {
+            color: #aaa;
+        }
+
+        @media (orientation:portrait) {
+            #viewer {
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 40%;
+            }
+
+            #controls {
+                position: absolute;
+                left: 0;
+                top: 60%;
+                right: 0;
+                bottom: 0;
+                border-top: none;
+            }
+
+            .msp-viewport-controls-buttons {
+                display: none;
+            }
+        }
+    </style>
+    <script src="assets/mvs-stories.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/mvs-stories.css" />
+</head>
+<body>
+    <div id="viewer">
+        <mvs-stories-viewer></mvs-stories-viewer>
+    </div>
+    <div id="controls">
+        <mvs-stories-snapshot-markdown style="flex-grow: 1;"></mvs-stories-snapshot-markdown>
+    </div>
+
+    <div id="links">
+        
+        <a href="story/session.mvstory" title="Download a session file which can be opened in the MolViewStories Builder">Download Story Session</a>&nbsp;<span class="sep">•</span>
+
+        <a href="#" id="mvs-data" title="MolViewSpec State for this story. Can be opened in the Mol* app.">Download MVS</a> <span class="sep">•</span>
+        <a href="https://molstar.org/mol-view-stories/" id="mvs-data" target="_blank" rel="noopener noreferrer">Created with MolViewStories</a> <span class="sep">•</span>
+        <a href="https://molstar.org" id="mvs-data" target="_blank" rel="noopener noreferrer">Mol*</a>
+    </div>
+
+    <script>
+        
+        mvsStories.loadFromURL('story/data.mvsx', { format: 'mvsx' });
+    
+
+        document.getElementById('mvs-data').addEventListener('click', (e) => {
+            e.preventDefault();
+            mvsStories.downloadCurrentStory();
+        });
+    </script>
+</body>
+</html>
