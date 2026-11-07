@@ -27,13 +27,13 @@ This is **not** a single-page app despite being React-based. `vite.config.ts` de
 
 When adding a new top-level page, add an HTML file, a TSX bootstrap, **and** a new entry in `vite.config.ts`'s `rollupOptions.input`. Missing the third step means the page won't appear in `dist/`.
 
-### Two coexisting React versions (intentional)
+### React is bundled
 
-`package.json` pins React 18 (used by `@vitejs/plugin-react` during the build/typecheck) but each `*.html` ships an **import map** pointing the browser at React 19 from `aistudiocdn.com`. At runtime the browser uses React 19; the build toolchain still type-checks against the local React 18 types. Don't "fix" this mismatch without understanding the deployment story — the import map is what actually runs in production.
+React 18 from `package.json` is bundled by Vite into `dist/assets/`. The HTML files must not load React (or any app JS) from a CDN; the site should serve its code only from its own domain. (An old AI Studio import map pointing at `aistudiocdn.com` was removed; it was never used at runtime.)
 
-### Styling: Tailwind via CDN
+### Styling: Tailwind (bundled)
 
-Tailwind is loaded from `cdn.tailwindcss.com` in each HTML file with a `tailwind.config` inline `<script>` (custom `science` color palette, `Inter`/`Space Grotesk` fonts, float keyframes). There is no PostCSS/Tailwind build step. If you change the Tailwind theme, update the inline config in **all three** HTML files to keep them in sync.
+Tailwind v3 is compiled at build time through PostCSS (`postcss.config.js`, `tailwind.config.js`). `index.css` holds the `@tailwind` directives and is imported by each TSX bootstrap. The theme (custom `science` color palette, `Inter`/`Space Grotesk` fonts, float keyframes) lives in `tailwind.config.js` only. Class names must appear as literal strings in files matched by `content` in the config. A class built at runtime (for example `` `bg-${color}-500` ``) gets no CSS.
 
 ### Content vs. components
 

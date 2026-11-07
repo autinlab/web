@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import './index.css';
 import XRStudyPage from './components/XRStudyPage';
 
 const rootElement = document.getElementById('root');
